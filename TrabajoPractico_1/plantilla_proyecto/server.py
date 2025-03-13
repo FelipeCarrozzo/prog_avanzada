@@ -5,8 +5,7 @@ from modules.config import app
 # Página de inicio
 @app.route('/')
 def index():
-    cantidad = 5
-    return render_template('inicio.html', una_cant = cantidad)
+    return render_template('inicio.html')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
