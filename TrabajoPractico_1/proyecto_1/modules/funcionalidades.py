@@ -76,6 +76,3 @@ def cargar_datos_peliculas(nombre_archivo: str) -> dict:
     return datos
 
 
-# if __name__ == "__main__":
-#     prueba = cargar_datos_usuario("./data/datos_usuario.txt")
-#     print(prueba)
