@@ -7,12 +7,12 @@ from random import sample
 import random
 
 ruta = "./data/"
-ruta_archivo = ruta + "datos_usuario.txt"
+ruta_archivo = ruta + "datos_usuario.txt" 
 
 lista_usuarios = [] #lista auxiliar
 
 try:
-    cargar_lista(ruta_archivo, lista_usuarios)            
+    cargar_lista('Trabajo_practico_1/data/datos_usuario.txt', lista_usuarios)            
 except FileNotFoundError:
     with open(ruta_archivo, "w") as archi:
         pass
