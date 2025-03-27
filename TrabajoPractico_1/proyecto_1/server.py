@@ -7,12 +7,12 @@ from random import sample
 import random
 
 ruta = "./data/"
-ruta_archivo = ruta + "datos_usuario.txt" 
+ruta_archivo = ruta + "datos_usuario.txt"
 
 lista_usuarios = [] #lista auxiliar
 
 try:
-    cargar_lista('Trabajo_practico_1/data/datos_usuario.txt', lista_usuarios)            
+    cargar_lista(ruta_archivo, lista_usuarios)            
 except FileNotFoundError:
     with open(ruta_archivo, "w") as archi:
         pass
@@ -20,7 +20,7 @@ except FileNotFoundError:
 @app.route('/', methods=['GET', 'POST'])
 def p_inicio():
     if request.method == 'POST':
-        print("Formulario recibido")
+        print("Formulario recibido")  # Ver si entra en el bloque
 
         nombre_usuario = request.form.get("username")
         n_frases = request.form.get("nfrases")
@@ -47,7 +47,27 @@ def p_inicio():
 #pagina del juego
 @app.route('/trivia')
 def p_iniciar_trivia():
-    return render_template('trivia.html')
+    #leer nombe de usuario y cant de frases
+    nusuario, nfrases = cargar_datos_usuario(ruta_archivo)
+    #se debe leer el archivo de peliculas y frases
+
+    datos_peliculas = cargar_datos_peliculas("data/frases_de_peliculas.txt")
+    frases_pelis_aleatorias = sample(list(datos_peliculas.items()), nfrases)
+    print(frases_pelis_aleatorias)
+    trivia = []
+    peliculas_totales = list(datos_peliculas.values())
+    
+    for frase, pelicula_correcta in frases_pelis_aleatorias:
+        opciones = [pelicula_correcta]
+    
+        peliculas_incorrectas = list(set(peliculas_totales) - {pelicula_correcta})
+        opciones += sample(peliculas_incorrectas, 2) #agrego dos incorrectas
+
+        random.shuffle(opciones)
+
+        trivia.append({'frase': frase, 'opciones': opciones, 'correcta': pelicula_correcta})
+        
+    return render_template('trivia.html', trivia = trivia)
 
 
 #pagina de listado de películas
