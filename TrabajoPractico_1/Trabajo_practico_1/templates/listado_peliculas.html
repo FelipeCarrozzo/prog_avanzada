@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia de peliculas: lista</title>
+</head>
+<body>
+    <h1>Trivia de peliculas</h1>
+    <p>Listado de películas.</p>
+    <ul>
+        {% for pelicula in peliculas %}
+            <li>{{ pelicula }}</li>
+        {% endfor %}
+    </ul>
+    <!-- url_for: siempre se pone una funcion (def) dentro del decorador -->
+    <form action = "{{ url_for('p_inicio') }}">
+        <input type="submit" value="Volver al inicio">
+    </form>
+</body>
+</html>

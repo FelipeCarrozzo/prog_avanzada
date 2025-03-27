@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia de películas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Trivia de películas</h1>
+    <p>Es un divertido juego en el que los participantes 
+        deben adivinar de qué película proviene una frase famosa. 
+        Al iniciar, el usuario elige cuántas frases quiere adivinar. 
+        Luego, el juego muestra una frase junto con tres opciones de películas. 
+        El jugador selecciona la que cree correcta y recibe retroalimentación inmediata. 
+        Al finalizar todas las rondas, se muestra el puntaje obtenido. 
+        ¡Pon a prueba tus conocimientos cinematográficos y desafía tu memoria con este entretenido reto! 🎬🎭</p>
+
+    <form action="{{url_for('p_inicio')}}" method="POST">
+        <label for="username">Ingrese nombre de usuario:</label>
+        <input type="text" id="username" name="username" required>
+        <br> </br>
+        <label for="nfrases">Ingrese el número de frases:</label>
+        <input type="number" id="nfrases" name="nfrases" min="1" max="10" required>
+        <br> </br>
+        <button type="submit" value="Iniciar_trivia">Iniciar trivia</button>
+    </form>
+    <br> 
+    <form action="{{url_for('p_listado_peliculas')}}">
+        <input type ='submit' value = 'Listar peliculas'>
+    </form>
+    <br>
+    <form action="{{url_for('p_resultados_historicos')}}">
+        <input type ='submit' value = 'Ver resultados'>
+</body>
+</html>
