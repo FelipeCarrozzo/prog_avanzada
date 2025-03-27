@@ -22,8 +22,9 @@ def listar_peliculas(nombre_archivo: str) -> list:
     '''
     datos_diccionario = cargar_datos_peliculas(nombre_archivo)
     
-    # Aplicamos title() a cada película y eliminamos duplicados con set
+    # Aplicamos title() a cada película y guardo solo los valores
     conjunto_peliculas = {pelicula.title() for pelicula in datos_diccionario.values()}
+
     
     lista_peliculas_ordenada = sorted(conjunto_peliculas)  # Ordenamos la lista
 
@@ -34,7 +35,7 @@ def listar_peliculas(nombre_archivo: str) -> list:
 
 def cargar_datos_usuario(nombre_archivo: str) -> list:
     """
-    Lee un archivo con datos de usuarios y la cantidad de frases. Tetorna la ultima linea del archivo
+    Lee un archivo con datos de usuarios y la cantidad de frases. Retorna la ultima linea del archivo
 
     Args:
         nombre_archivo (str): Ruta del archivo a leer.
@@ -75,6 +76,6 @@ def cargar_datos_peliculas(nombre_archivo: str) -> dict:
     return datos
 
 
-if __name__ == "__main__":
-    prueba = cargar_datos_usuario("./data/datos_usuario.txt")
-    print(prueba)
+# if __name__ == "__main__":
+#     prueba = cargar_datos_usuario("./data/datos_usuario.txt")
+#     print(prueba)
