@@ -47,9 +47,12 @@ Explica la funcionalidad de tu aplicación:
 
 ## 🙎‍♀️🙎‍♂️Autores
 
-- Apellido y Nombre del primer integrante
-- Apellido y Nombre del segundo integrante
-
+- Caporizzo Agustina
+- Felipe Carrozzo
 ---
 
-> **Consejo**: Mantén el README **actualizado** conforme evoluciona el proyecto, y elimina (o añade) secciones según necesites. Esta plantilla es sólo un punto de partida general.
+> **PENDIENTES**:
+- agregar 'felicitacion' al acertar la película correcta.
+- guardar los datos del usuario, con aciertos y fecha/hora del inicio del juego.
+- mostrar resultados históricos (tabla con datos guardados)
+- graficos de resultados. 
