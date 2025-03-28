@@ -1,3 +1,6 @@
+#dependencias
+import random
+
 #funciones
 def guardar_nombre_usuario(nombre_usuario: str, n_frases: int):
     '''
@@ -75,4 +78,64 @@ def cargar_datos_peliculas(nombre_archivo: str) -> dict:
                 datos[clave] = valor
     return datos
 
+def generar_frases_aleatorias(datos_peliculas: dict, n_frases: int) -> dict:
+    """
+    Genera un diccionario con N preguntas y respuestas de trivia a partir de un diccionario de datos de películas.
 
+    Args:
+        datos_peliculas (dict): Diccionario con frases como claves y películas como valores.
+        n_frases (int): Número de frases a seleccionar para la trivia.
+
+    Returns:
+        dict: Diccionario con preguntas y respuestas.
+    """
+    preguntas_respuestas = dict()
+    for i in range(n_frases):
+        clave = random.choice(list(datos_peliculas.keys()))
+        valor = datos_peliculas[clave]
+        preguntas_respuestas[clave] = valor
+        del datos_peliculas[clave]  # Eliminar la frase seleccionada para evitar repeticiones
+    return preguntas_respuestas
+
+
+def generar_intentos(preguntas_respuestas: dict, datos_peliculas: dict) -> list:
+    """
+    Genera una lista de preguntas con opciones aleatorias para mostrar en una página HTML.
+
+    Args:
+        preguntas_respuestas (dict): Diccionario con frases como claves y películas correctas como valores.
+        datos_peliculas (dict): Diccionario original con frases y películas para obtener opciones incorrectas.
+
+    Returns:
+        list: Lista de preguntas, donde cada pregunta es un diccionario con la frase, opciones y la correcta.
+    """
+    preguntas_html = []
+
+    for frase, pelicula_correcta in preguntas_respuestas.items():
+        # Obtener todas las películas posibles y eliminar la correcta
+        peliculas_incorrectas = list(set(datos_peliculas.values()) - {pelicula_correcta})
+        
+        # Seleccionar dos opciones incorrectas al azar
+        opciones_incorrectas = random.sample(peliculas_incorrectas, 2)
+        
+        # Crear una lista con las opciones (correcta + incorrectas)
+        opciones = opciones_incorrectas + [pelicula_correcta]
+        
+        # Mezclar el orden de las opciones
+        random.shuffle(opciones)
+        
+        # Crear la estructura de la pregunta
+        pregunta = {
+            "frase": frase,
+            "opciones": opciones,
+            "correcta": pelicula_correcta
+        }
+        
+        preguntas_html.append(pregunta)
+
+    return preguntas_html
+
+if __name__ == '__main__':
+    frases = generar_frases_aleatorias(cargar_datos_peliculas("data/frases_de_peliculas.txt"), 2)
+    trivia = generar_intentos(frases, cargar_datos_peliculas("data/frases_de_peliculas.txt"))
+    print(trivia)
