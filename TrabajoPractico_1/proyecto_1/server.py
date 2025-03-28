@@ -1,21 +1,23 @@
 #dependencias
 from flask import render_template, session, request, redirect, url_for
 from modules.config import app
-from modules.funcionalidades import guardar_nombre_usuario, listar_peliculas, cargar_datos_peliculas, cargar_datos_usuario
+from modules.funcionalidades import guardar_nombre_usuario, listar_peliculas, cargar_datos_peliculas, cargar_datos_usuario, generar_frases_aleatorias, generar_intentos
 from modules.info_usuario import guardar_usuario_en_archivo, agregar_usuario_nfrases, cargar_lista
 from random import sample
 import random
+app.secret_key = 'clave_secreta'
 
 ruta = "./data/"
 ruta_archivo = ruta + "datos_usuario.txt"
 
 lista_usuarios = [] #lista auxiliar
+lista_temporal_usuario = []
 
-try:
-    cargar_lista(ruta_archivo, lista_usuarios)            
-except FileNotFoundError:
-    with open(ruta_archivo, "w") as archi:
-        pass
+# try:
+#     cargar_lista(ruta_archivo, lista_usuarios)            
+# except FileNotFoundError:
+#     with open(ruta_archivo, "w") as archi:
+#         pass
 
 @app.route('/', methods=['GET', 'POST'])
 def p_inicio():
@@ -28,46 +30,71 @@ def p_inicio():
         if not nombre_usuario or not n_frases:
             print("Error: Datos incompletos")
             return redirect(url_for("p_inicio"))
-
+        
         try:
             n_frases = int(n_frases)
         except ValueError:
             print("Error: n_frases no es un número")
             return redirect(url_for("p_inicio"))
+        
+        lista_temporal_usuario.append(nombre_usuario)
+        lista_temporal_usuario.append(n_frases)
+        print(lista_temporal_usuario)
+        # print(f"Guardando usuario: {nombre_usuario}, {n_frases}")
 
-        print(f"Guardando usuario: {nombre_usuario}, {n_frases}")
-
-        guardar_usuario_en_archivo(ruta_archivo, nombre_usuario, n_frases)
+        # guardar_usuario_en_archivo(ruta_archivo, nombre_usuario, n_frases)
 
         return redirect(url_for("p_iniciar_trivia"))
 
     return render_template('inicio.html')
 
 
-#pagina del juego
-@app.route('/trivia')
+@app.route('/trivia', methods=['GET', 'POST'])
 def p_iniciar_trivia():
-    #leer nombe de usuario y cant de frases
-    nusuario, nfrases = cargar_datos_usuario(ruta_archivo)
-    #se debe leer el archivo de peliculas y frases
+    if request.method == 'POST':
+        # Procesar la respuesta del usuario
+        respuesta = request.form.get('respuesta')
+        indice = session.get('indice', 0)
+        pregunta_actual = session['trivia'][indice]
 
-    datos_peliculas = cargar_datos_peliculas("data/frases_de_peliculas.txt")
-    frases_pelis_aleatorias = sample(list(datos_peliculas.items()), nfrases)
-    print(frases_pelis_aleatorias)
-    trivia = []
-    peliculas_totales = list(datos_peliculas.values())
-    
-    for frase, pelicula_correcta in frases_pelis_aleatorias:
-        opciones = [pelicula_correcta]
-    
-        peliculas_incorrectas = list(set(peliculas_totales) - {pelicula_correcta})
-        opciones += sample(peliculas_incorrectas, 2) #agrego dos incorrectas
+        # Verificar si la respuesta es correcta
+        if respuesta == pregunta_actual['correcta']:
+            session['puntaje'] += 1
 
-        random.shuffle(opciones)
+        # Avanzar al siguiente índice
+        session['indice'] += 1
 
-        trivia.append({'frase': frase, 'opciones': opciones, 'correcta': pelicula_correcta})
-        
-    return render_template('trivia.html', trivia = trivia)
+        # Si ya no hay más preguntas, redirigir a la página de resultados
+        if session['indice'] >= len(session['trivia']):
+            return redirect(url_for('resultado_trivia'))
+    else:
+
+        datos_peliculas = cargar_datos_peliculas("data/frases_de_peliculas.txt")
+        frases_aleatorias = generar_frases_aleatorias(datos_peliculas, lista_temporal_usuario[1]) #n_frases
+        intentos = generar_intentos(frases_aleatorias, datos_peliculas)
+
+        session['trivia'] = intentos
+        session['indice'] = 0 #control de los intentos
+        session['puntaje'] = 0
+        session['usuario'] = lista_temporal_usuario[0] #nombre de usuario
+        session['n_frases'] = lista_temporal_usuario[1]
+
+    indice = session.get('indice', 0)
+    pregunta_actual = session['trivia'][indice]
+    return render_template('trivia.html', pregunta = pregunta_actual)
+
+    # respuesta = request.from.get
+    # return render_template('trivia.html', peliculas=frases_aleatorias)
+
+    # return render_template('trivia.html')
+
+@app.route('/resultado')
+def resultado_trivia():
+    puntaje = session.get('puntaje', 0)
+    session.pop('trivia', None)
+    session.pop('indice', None)
+    session.pop('puntaje', None)
+    return f"Tu puntuación final es: {puntaje}"
 
 
 #pagina de listado de películas
