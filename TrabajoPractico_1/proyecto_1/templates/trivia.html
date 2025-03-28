@@ -7,15 +7,12 @@
 </head>
 <body>
     <h1>Trivia de Películas</h1>
-    <form action="/verificar" method="POST">
-        {% for pregunta in trivia %}
-            <p><strong>{{ pregunta.frase }}</strong></p>
-            {% for opcion in pregunta.opciones %}
-                <input type="radio" name="{{ pregunta.frase }}" value="{{ opcion }}"> {{ opcion }}<br>
-            {% endfor %}
+    <form method="POST" action="{{ url_for('p_iniciar_trivia') }}">
+        <p>{{ pregunta['frase'] }}</p>
+        {% for opcion in pregunta['opciones'] %}
+            <input type="radio" name="respuesta" value="{{ opcion }}" required> {{ opcion }}<br>
         {% endfor %}
-        <br>
-        <button type="submit">Enviar Respuestas</button>
+        <button type="submit">Responder</button>
     </form>
 </body>
 </html>

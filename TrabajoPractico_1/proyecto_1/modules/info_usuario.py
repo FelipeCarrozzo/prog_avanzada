@@ -7,7 +7,7 @@ def agregar_usuario_nfrases(lista_usuarios, n_usuario, n_frases):
             "frases": n_frases
         }
     lista_usuarios.append(datos_usuario) 
-
+ 
 def cargar_lista(nombre_archivo, lista_usuarios):
     """Función que lee la información de los usuarios desde un archivo
     y lo carga a una lista.

@@ -135,7 +135,3 @@ def generar_intentos(preguntas_respuestas: dict, datos_peliculas: dict) -> list:
 
     return preguntas_html
 
-if __name__ == '__main__':
-    frases = generar_frases_aleatorias(cargar_datos_peliculas("data/frases_de_peliculas.txt"), 2)
-    trivia = generar_intentos(frases, cargar_datos_peliculas("data/frases_de_peliculas.txt"))
-    print(trivia)

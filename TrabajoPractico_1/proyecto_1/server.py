@@ -40,9 +40,6 @@ def p_inicio():
         lista_temporal_usuario.append(nombre_usuario)
         lista_temporal_usuario.append(n_frases)
         print(lista_temporal_usuario)
-        # print(f"Guardando usuario: {nombre_usuario}, {n_frases}")
-
-        # guardar_usuario_en_archivo(ruta_archivo, nombre_usuario, n_frases)
 
         return redirect(url_for("p_iniciar_trivia"))
 
@@ -82,11 +79,6 @@ def p_iniciar_trivia():
     indice = session.get('indice', 0)
     pregunta_actual = session['trivia'][indice]
     return render_template('trivia.html', pregunta = pregunta_actual)
-
-    # respuesta = request.from.get
-    # return render_template('trivia.html', peliculas=frases_aleatorias)
-
-    # return render_template('trivia.html')
 
 @app.route('/resultado')
 def resultado_trivia():
