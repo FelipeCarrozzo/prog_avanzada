@@ -48,6 +48,8 @@ def p_inicio():
 
 @app.route('/trivia', methods=['GET', 'POST'])
 def p_iniciar_trivia():
+    fecha_hora_inicio = datetime.datetime.now()
+    fecha_hora_inicio = fecha_hora_inicio.strftime("%Y-%m-%d %H:%M:%S")
     if request.method == 'POST':
         # Procesar la respuesta del usuario
         respuesta = request.form.get('respuesta')
@@ -63,10 +65,13 @@ def p_iniciar_trivia():
 
         # Si ya no hay más preguntas, redirigir a la página de resultados
         if session['indice'] >= len(session['trivia']):
+
             lista_temporal_usuario.append(session['puntaje']) #agrego a los datos usuario la cant de aciertos
+            lista_temporal_usuario.append(fecha_hora_inicio) #agrego a los datos usuario la fecha y hora de inicio
             # lista_temporal_usuario.append(fechayhora_inicio)
             print(lista_temporal_usuario)
             guardar_usuario_en_archivo(lista_temporal_usuario, ruta_archivo_datos_usuario)
+
             return redirect(url_for('resultado_trivia'))
     else:
 
