@@ -17,12 +17,19 @@ def cargar_lista(nombre_archivo, lista_usuarios):
             libro = linea.rstrip().split(',')
             agregar_usuario_nfrases(lista_usuarios, libro[0], libro[1]) 
 
-def guardar_usuario_en_archivo(nombre_archivo, n_usuario: str, n_frases: int, aciertos: int, fechayhora: str): 
-    """Guarda la información del usuario: 
-    nombre de usuario, num de frases, aciertos, fecha y hora del inicio de la trivia.
-    """   
+def guardar_usuario_en_archivo(lista, nombre_archivo): 
+    """Guarda la información del usuario en un archivo .txt a partir de una lista
+
+    Args: 
+        - lista con datos recopilados de 1 usuario
+        - nombre de usuario
+        - numero de frases
+        - canidad de aciertos
+        - fecha y hora del inicio de la partida
+
+    """
     with open(nombre_archivo, "a") as archi:
-        archi.write(f"{n_usuario},{n_frases},{aciertos},{fechayhora}\n")
+        archi.write(f"{lista[0]},{lista[1]},{lista[2]}\n")
 
 if __name__ == '__main__':
     guardar_usuario_en_archivo("./data/datos_usuario.txt", "usuario1", 5, 3, "2021-09-01 12:00:00")

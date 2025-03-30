@@ -4,11 +4,11 @@ from modules.config import app
 from modules.funcionalidades import guardar_nombre_usuario, listar_peliculas, cargar_datos_peliculas, cargar_datos_usuario, generar_frases_aleatorias, generar_intentos
 from modules.info_usuario import guardar_usuario_en_archivo, agregar_usuario_nfrases, cargar_lista
 from random import sample
-import random
+import datetime
 app.secret_key = 'clave_secreta'
 
 ruta = "./data/"
-ruta_archivo = ruta + "datos_usuario.txt"
+ruta_archivo_datos_usuario = ruta + "datos_usuario.txt"
 
 lista_usuarios = [] #lista auxiliar
 lista_temporal_usuario = []
@@ -63,13 +63,17 @@ def p_iniciar_trivia():
 
         # Si ya no hay más preguntas, redirigir a la página de resultados
         if session['indice'] >= len(session['trivia']):
+            lista_temporal_usuario.append(session['puntaje']) #agrego a los datos usuario la cant de aciertos
+            # lista_temporal_usuario.append(fechayhora_inicio)
+            print(lista_temporal_usuario)
+            guardar_usuario_en_archivo(lista_temporal_usuario, ruta_archivo_datos_usuario)
             return redirect(url_for('resultado_trivia'))
     else:
 
         datos_peliculas = cargar_datos_peliculas("data/frases_de_peliculas.txt")
         frases_aleatorias = generar_frases_aleatorias(datos_peliculas, lista_temporal_usuario[1]) #n_frases
         intentos = generar_intentos(frases_aleatorias, datos_peliculas)
-
+        print(intentos)
         session['trivia'] = intentos
         session['indice'] = 0 #control de los intentos
         session['puntaje'] = 0
