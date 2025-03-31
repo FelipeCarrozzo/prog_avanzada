@@ -6,10 +6,7 @@
     <title>Trivia de películas: resultados históricos</title>
 </head>
 <body>
-<p>{{ usuario }}: su puntaje es {{ puntaje }} de {{ intentos }}</p>
-
-<form action="{{url_for('p_resultados_historicos')}}">
-    <input type ='submit' value = 'Ver resultados históricos'>
-</form>
+    <h1>Resultados Históricos</h1>
+    <pre>{{ p_tabla }}</pre>
 </body>
 </html>

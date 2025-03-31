@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivia de Películas</title>
+    <title>Trivia de Películas: a jugar!</title>
 </head>
 <body>
-    <h1>Trivia de Películas</h1>
+    <h1>Trivia de Películas: a jugar {{ usuario }}!</h1>
     <form method="POST" action="{{ url_for('p_iniciar_trivia') }}">
         <p>{{ pregunta['frase'] }}</p>
         {% for opcion in pregunta['opciones'] %}
             <input type="radio" name="respuesta" value="{{ opcion }}" required> {{ opcion }}<br>
         {% endfor %}
         <button type="submit">Responder</button>
+    </form>
+    <br>
+    <form method="GET" action="{{ url_for('p_inicio') }}">
+        <button type="submit">Volver al Inicio</button>
     </form>
 </body>
 </html>
