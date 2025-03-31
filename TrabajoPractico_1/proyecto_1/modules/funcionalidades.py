@@ -12,6 +12,8 @@ def guardar_nombre_usuario(nombre_usuario: str, n_frases: int):
     with open("data/datos_usuario.txt", "w", encoding="utf-8") as archivo:
         archivo.write(f"{nombre_usuario},{n_frases}\n")
 
+    
+
 
 def listar_peliculas(nombre_archivo: str) -> list:
     '''
@@ -144,11 +146,8 @@ def mostrar_resultados_formateados(lista_usuarios):
         tabla.append(f"{usuario:<20}{n_frases:<10}{aciertos:<10}{fecha_hora:<20}")
     return "\n".join(tabla)
 
-if __name__ == '__main__':
-    a = leer_archivo_resultados_historicos("data/datos_usuario.txt")
-    mostrar_resultados_formateados(a)
 
-    def guardar_usuario_en_archivo(usuario, n_frases, aciertos, fecha_hora, nombre_archivo): 
+def guardar_usuario_en_archivo(usuario, n_frases, aciertos, fecha_hora, nombre_archivo): 
         """Guarda la información del usuario en un archivo .txt a partir de una lista
 
         Args: 

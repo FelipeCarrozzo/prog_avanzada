@@ -8,5 +8,12 @@
 <body>
     <h1>Resultados Históricos</h1>
     <pre>{{ p_tabla }}</pre>
+    <br>
+    <!-- <form method="GET" action="{{ url_for('p_inicio') }}">
+        <button type="submit">Volver al Inicio</button>
+    </form> -->
+    <form action="{{url_for('p_inicio')}}">
+        <input type ='submit' value = 'Volver al inicio'>
+    </form>
 </body>
 </html>
