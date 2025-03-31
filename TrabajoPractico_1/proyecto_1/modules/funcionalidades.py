@@ -36,26 +36,6 @@ def listar_peliculas(nombre_archivo: str) -> list:
     return lista_peliculas_ord_index
 
 
-def cargar_datos_usuario(nombre_archivo: str) -> list:
-    """
-    Lee un archivo con datos de usuarios y la cantidad de frases. Retorna la ultima linea del archivo
-
-    Args:
-        nombre_archivo (str): Ruta del archivo a leer.
-
-    Returns:
-        list: Lista con los datos del último usuario registrado.
-    """
-    with open(nombre_archivo, "r", encoding="utf-8") as archivo:
-        for linea in archivo:
-            partes = linea.split(",")
-            usuario = partes[0].strip()
-            nfrases = int(partes[1].strip())
-
-    if usuario and nfrases:
-        return usuario, nfrases
-    else:
-        print("No hay datos")
 
 def cargar_datos_peliculas(nombre_archivo: str) -> dict:
     """
@@ -135,3 +115,50 @@ def generar_intentos(preguntas_respuestas: dict, datos_peliculas: dict) -> list:
 
     return preguntas_html
 
+def leer_archivo_resultados_historicos(nombre_archivo):
+    """Lee un archivo de texto con resultados históricos y devuelve una lista de listas con los datos de cada usuario.
+
+    Args:
+        nombre_archivo (str): Ruta del archivo a leer.
+
+    Returns:
+        list: Lista de listas con los datos de cada usuario.
+    """
+    lista_usuarios = []
+    with open(nombre_archivo, "r") as archi:
+        for linea in archi:
+            datos_usuario = linea.strip().split(",")
+            lista_usuarios.append(datos_usuario)
+    return lista_usuarios
+
+def mostrar_resultados_formateados(lista_usuarios):
+    """Muestra los resultados históricos en formato de tabla.
+
+    Args:
+        lista_usuarios (list): Lista de listas con los datos de cada usuario.
+    """
+    tabla = []
+    tabla.append(f"{'Usuario':<20}{'Frases':<10}{'Aciertos':<10}{'Fecha y Hora':<20}")
+    tabla.append("-" * 60)
+    for usuario, n_frases, aciertos, fecha_hora in lista_usuarios:
+        tabla.append(f"{usuario:<20}{n_frases:<10}{aciertos:<10}{fecha_hora:<20}")
+    return "\n".join(tabla)
+
+if __name__ == '__main__':
+    a = leer_archivo_resultados_historicos("data/datos_usuario.txt")
+    mostrar_resultados_formateados(a)
+
+    def guardar_usuario_en_archivo(usuario, n_frases, aciertos, fecha_hora, nombre_archivo): 
+        """Guarda la información del usuario en un archivo .txt a partir de una lista
+
+        Args: 
+            - lista con datos recopilados de 1 usuario
+            - nombre de usuario
+            - numero de frases
+            - canidad de aciertos
+            - fecha y hora del inicio de la partida
+
+        """
+        with open(nombre_archivo, "a") as archi:
+            # archi.write(f"{lista[0]},{lista[1]},{lista[2]},{lista[3]}\n")
+            archi.write(f"{usuario},{n_frases},{aciertos},{fecha_hora}\n")
