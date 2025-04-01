@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivia de Películas: a jugar!</title>
+    <title>Trivia de Películas:  a jugar!</title>
 </head>
 <body>
     <h1>Trivia de Películas: a jugar {{ usuario }}!</h1>
@@ -14,6 +14,14 @@
         {% endfor %}
         <button type="submit">Responder</button>
     </form>
+    <!-- {% if mensaje %}
+    <div>
+        <p>{{ mensaje }}</p>
+        {% if mensaje.startswith('¡Felicitaciones!') %}
+            <img src="{{ url_for('static', filename='images/felicitaciones.png') }}" alt="Felicitaciones">
+        {% endif %}
+    </div>
+{% endif %} -->
     <br>
     <form method="GET" action="{{ url_for('p_inicio') }}">
         <button type="submit">Volver al Inicio</button>

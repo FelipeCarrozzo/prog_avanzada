@@ -51,7 +51,7 @@ def p_iniciar_trivia():
         # Verificar si la respuesta es correcta
         if respuesta == pregunta_actual['correcta']:
             session['puntaje'] += 1
-
+            session['mensaje'] = "¡Correcto!"
         # Avanzar al siguiente índice
         session['indice'] += 1
         # Si ya no hay más preguntas, redirigir a la página de resultados
@@ -70,12 +70,11 @@ def p_iniciar_trivia():
         session['trivia'] = intentos
         session['indice'] = 0 #control de los intentos
         session['puntaje'] = 0
-        # session['usuario'] = lista_temporal_usuario[0] #nombre de usuario
-        # session['n_frases'] = lista_temporal_usuario[1]
 
     indice = session.get('indice', 0)
     pregunta_actual = session['trivia'][indice]
-    return render_template('trivia.html', pregunta = pregunta_actual, usuario = session['usuario'], intentos = session['n_frases'])
+    return render_template('trivia.html', pregunta = pregunta_actual, usuario = session['usuario'], intentos = session['n_frases'],
+                           mensaje = session.get('mensaje', None))
 
 @app.route('/resultados')
 def p_resultado_trivia():
