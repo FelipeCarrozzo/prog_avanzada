@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivia de películas: resultados históricos</title>
+    <title>Trivia de películas: Resultados Históricos</title>
 </head>
 <body>
     <h1>Resultados Históricos</h1>
     <pre>{{ p_tabla }}</pre>
-    <br>
-    <!-- <form method="GET" action="{{ url_for('p_inicio') }}">
-        <button type="submit">Volver al Inicio</button>
-    </form> -->
-    <form action="{{url_for('p_inicio')}}">
-        <input type ='submit' value = 'Volver al inicio'>
+    
+    <!-- Botón para ver los resultados en gráficos -->
+    <form action="{{ url_for('p_resultados_graficos') }}">
+        <button type='submit'>Ver Resultados en gráficos</button>
+    </form>
+    
+    <!-- Botón para volver al inicio -->
+    <form action="{{ url_for('p_inicio') }}">
+        <button type='submit'>Volver al inicio</button>
     </form>
 </body>
 </html>

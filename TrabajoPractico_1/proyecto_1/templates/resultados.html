@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivia de películas: resultados históricos</title>
+    <title>Resultados de la Trivia</title>
 </head>
 <body>
-<p>{{ usuario }}: su puntaje es {{ puntaje }} frases correctas de {{ intentos }} intentos</p>
+    <h1>Resultados de la Trivia</h1>
+    <p><strong>{{ usuario }}</strong>, su puntuación final es <strong>{{ puntaje }}</strong> respuestas correctas de <strong>{{ intentos }}</strong> intentos.</p>
 
-<form action="{{url_for('p_resultados_historicos')}}">
-    <input type ='submit' value = 'Ver resultados históricos'>
-</form>
+    <form action="{{ url_for('p_inicio') }}">
+        <input type='submit' value='Volver al menú inicial'>
+    </form>
 </body>
 </html>

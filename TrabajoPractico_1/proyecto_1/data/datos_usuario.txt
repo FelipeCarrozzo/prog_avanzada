@@ -1,21 +1,20 @@
-feli,5
-elton,8
-juan,3
-juan,3
-felipecarrozzo,6
-papa_tallada,2
-carrozzovidrios,2
-escoba_pelada,6
-muniecoentecho,10
-cachocastania,3
-dante,5
-dante,5
-gloria_panaderia,6
-feli,10
-reina y soberana,3
-feli,3
-feli,6
-feli,4
-feli,5
-pepe,6
-anteojitos,3
+agus,3,2,01-04-25 11:40
+feli,7,1,01-04-25 11:42
+juan,5,3,01-04-25 11:43
+agus,10,0,01-04-25 12:30
+feli,4,2,01-04-25 12:32
+juan,6,1,01-04-25 12:33
+agus,5,1,02-04-25 10:13
+feli,3,3,02-04-25 10:15
+juan,9,0,02-04-25 10:16
+agus,6,2,02-04-25 14:50
+feli,8,1,02-04-25 14:54
+juan,7,2,02-04-25 14:57
+agus,9,1,03-04-25 09:20
+feli,4,2,03-04-25 09:26
+juan,5,1,03-04-25 09:28
+agus,2,3,03-04-25 17:45
+feli,10,0,03-04-25 17:48
+juan,3,2,03-04-25 17:49
+agus,7,1,04-04-25 11:30
+feli,6,3,04-04-25 11:35

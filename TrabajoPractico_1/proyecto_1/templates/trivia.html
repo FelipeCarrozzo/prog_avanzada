@@ -3,25 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivia de Películas:  a jugar!</title>
+    <title>Trivia de Películas: a jugar!</title>
 </head>
 <body>
     <h1>Trivia de Películas: a jugar {{ usuario }}!</h1>
+    <h2>Pregunta {{ indice + 1 }} de {{ total_preguntas }}</h2>
+    
     <form method="POST" action="{{ url_for('p_iniciar_trivia') }}">
         <p>{{ pregunta['frase'] }}</p>
+
         {% for opcion in pregunta['opciones'] %}
-            <input type="radio" name="respuesta" value="{{ opcion }}" required> {{ opcion }}<br>
+            <label>
+                <input type="radio" name="respuesta" value="{{ opcion }}" 
+                    {% if opcion == seleccion %} checked {% endif %}
+                    {% if estado == "evaluando" %} disabled {% endif %}
+                    required> {{ opcion }}
+            </label><br>
         {% endfor %}
-        <button type="submit">Responder</button>
-    </form>
-    <!-- {% if mensaje %}
-    <div>
-        <p>{{ mensaje }}</p>
-        {% if mensaje.startswith('¡Felicitaciones!') %}
-            <img src="{{ url_for('static', filename='images/felicitaciones.png') }}" alt="Felicitaciones">
+
+        <br>
+
+        {% if mensaje %}
+            <p><strong>{{ mensaje }}</strong></p>
         {% endif %}
-    </div>
-{% endif %} -->
+
+        {% if estado == "evaluando" %}
+            <button type="submit" name="accion" value="siguiente">Siguiente</button>
+        {% else %}
+            <button type="submit" name="accion" value="responder">Responder</button>
+        {% endif %}
+    </form>
+
     <br>
     <form method="GET" action="{{ url_for('p_inicio') }}">
         <button type="submit">Volver al Inicio</button>

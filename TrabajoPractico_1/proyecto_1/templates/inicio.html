@@ -5,32 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivia de películas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            max-width: 600px;
+            margin: auto;
+            font-size: 16px;
+            color: #555;
+        }
+        form {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+        }
+        button, input[type="submit"] {
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover, input[type="submit"]:hover {
+            background-color: #e04e2a;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        img {
+            width: 300px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
     <h1>Trivia de películas</h1>
+    <img src="https://images.pexels.com/photos/65128/pexels-photo-65128.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Trivia de películas">
     <p>Es un divertido juego en el que los participantes 
         deben adivinar de qué película proviene una frase famosa. 
         Al iniciar, el usuario elige cuántas frases quiere adivinar. 
         Luego, el juego muestra una frase junto con tres opciones de películas. 
         El jugador selecciona la que cree correcta y recibe retroalimentación inmediata. 
         Al finalizar todas las rondas, se muestra el puntaje obtenido. 
-        ¡Pon a prueba tus conocimientos cinematográficos y desafía tu memoria con este entretenido reto! 🎬🎭</p>
+        ¡Pon a prueba tus conocimientos cinematográficos y desafía tu memoria con este entretenido reto! 🎬🎭
+    </p>
 
-    <form action="{{url_for('p_inicio')}}" method="POST">
+    <form action="{{ url_for('p_inicio') }}" method="POST">
         <label for="username">Ingrese nombre de usuario:</label>
         <input type="text" id="username" name="username" required>
-        <br> </br>
+        <br>
         <label for="nfrases">Ingrese el número de frases:</label>
         <input type="number" id="nfrases" name="nfrases" min="1" max="10" required>
-        <br> </br>
-        <button type="submit" value="Iniciar_trivia">Iniciar trivia</button>
+        <br>
+        <button type="submit">Iniciar trivia</button>
     </form>
-    <br> 
-    <form action="{{url_for('p_listado_peliculas')}}">
-        <input type ='submit' value = 'Listar peliculas'>
-    </form>
+
     <br>
-    <form action="{{url_for('p_resultados_historicos')}}">
-        <input type ='submit' value = 'Ver resultados históricos'>
+
+    <form action="{{ url_for('p_listado_peliculas') }}">
+        <input type="submit" value="Listar películas">
+    </form>
+
+    <br>
+
+    <form action="{{ url_for('p_resultados_historicos') }}">
+        <input type="submit" value="Ver resultados históricos">
+    </form>
 </body>
 </html>

@@ -1,5 +1,9 @@
 #dependencias
 import random
+import datetime
+import matplotlib.pyplot as plt
+import pandas as pd
+import os
 
 #funciones
 def guardar_nombre_usuario(nombre_usuario: str, n_frases: int):
@@ -11,8 +15,6 @@ def guardar_nombre_usuario(nombre_usuario: str, n_frases: int):
     '''
     with open("data/datos_usuario.txt", "w", encoding="utf-8") as archivo:
         archivo.write(f"{nombre_usuario},{n_frases}\n")
-
-    
 
 
 def listar_peliculas(nombre_archivo: str) -> list:
@@ -117,6 +119,27 @@ def generar_intentos(preguntas_respuestas: dict, datos_peliculas: dict) -> list:
 
     return preguntas_html
 
+def guardar_usuario_en_archivo(usuario, n_frases, aciertos, fecha_hora, nombre_archivo): 
+        """Guarda la información del usuario en un archivo .txt a partir de una lista
+
+        Args: 
+            - lista con datos recopilados de 1 usuario
+            - nombre de usuario
+            - numero de frases
+            - cantidad de aciertos
+            - fecha y hora del inicio de la partida
+
+        """
+        try:
+            # Asegurar que la fecha esté en el formato correcto antes de escribirla
+            fecha_hora = datetime.datetime.strptime(fecha_hora, "%d-%m-%y %H:%M").strftime("%d-%m-%y %H:%M")
+        except ValueError:
+            # Si la fecha no está en el formato correcto, intentamos convertir desde otro formato
+            fecha_hora = datetime.datetime.strptime(fecha_hora, "%Y-%m-%d %H:%M:%S").strftime("%d-%m-%y %H:%M")
+
+        with open(nombre_archivo, "a", encoding="utf-8") as archi:
+            archi.write(f"{usuario},{n_frases},{aciertos},{fecha_hora}\n")
+
 def leer_archivo_resultados_historicos(nombre_archivo):
     """Lee un archivo de texto con resultados históricos y devuelve una lista de listas con los datos de cada usuario.
 
@@ -140,24 +163,92 @@ def mostrar_resultados_formateados(lista_usuarios):
         lista_usuarios (list): Lista de listas con los datos de cada usuario.
     """
     tabla = []
-    tabla.append(f"{'Usuario':<20}{'Frases':<10}{'Aciertos':<10}{'Fecha y Hora':<20}")
-    tabla.append("-" * 60)
+    tabla.append(f"{'Usuario':<20}{'Aciertos/N':<15}{'Fecha y Hora':<20}")
+    tabla.append("-" * 55)
+
     for usuario, n_frases, aciertos, fecha_hora in lista_usuarios:
-        tabla.append(f"{usuario:<20}{n_frases:<10}{aciertos:<10}{fecha_hora:<20}")
+        aciertos_n = f"{aciertos}/{n_frases}"  # Formato correcto
+        tabla.append(f"{usuario:<20}{aciertos_n:<15}{fecha_hora:<20}")
     return "\n".join(tabla)
 
+import matplotlib.pyplot as plt
+import pandas as pd
+import os
 
-def guardar_usuario_en_archivo(usuario, n_frases, aciertos, fecha_hora, nombre_archivo): 
-        """Guarda la información del usuario en un archivo .txt a partir de una lista
+def generar_graficos():
+    """
+    Genera gráficos de evolución de aciertos y desaciertos acumulados por fecha y de distribución total,
+    y los guarda en la carpeta static.
+    """
+    ruta_static = "./static"
+    
+    # Asegurar que la carpeta static existe
+    if not os.path.exists(ruta_static):
+        os.makedirs(ruta_static)
 
-        Args: 
-            - lista con datos recopilados de 1 usuario
-            - nombre de usuario
-            - numero de frases
-            - canidad de aciertos
-            - fecha y hora del inicio de la partida
+    # Leer los datos desde el archivo de resultados
+    ruta_archivo_resultados = "./data/datos_usuario.txt"
+    if not os.path.exists(ruta_archivo_resultados):
+        return
 
-        """
-        with open(nombre_archivo, "a") as archi:
-            # archi.write(f"{lista[0]},{lista[1]},{lista[2]},{lista[3]}\n")
-            archi.write(f"{usuario},{n_frases},{aciertos},{fecha_hora}\n")
+    datos = []
+    with open(ruta_archivo_resultados, "r", encoding="utf-8") as archivo:
+        for linea in archivo:
+            partes = linea.strip().split(",")
+            if len(partes) == 4:
+                usuario, n_frases, aciertos, fecha_hora = partes
+                fecha = fecha_hora.split(" ")[0]  # Extraer solo la fecha (dd-mm-aa)
+                datos.append((fecha, int(aciertos), int(n_frases) - int(aciertos)))
+
+    if not datos:
+        return  # No hay datos para graficar
+
+    df = pd.DataFrame(datos, columns=["Fecha", "Aciertos", "Desaciertos"])
+
+    # Agrupar por fecha y calcular el acumulado
+    df_agrupado = df.groupby("Fecha").sum().reset_index()
+
+    # Gráfico de evolución (líneas acumuladas)
+    plt.figure(figsize=(8, 4))
+    plt.plot(df_agrupado["Fecha"], df_agrupado["Aciertos"], marker="o", label="Aciertos", color="green")
+    plt.plot(df_agrupado["Fecha"], df_agrupado["Desaciertos"], marker="x", label="Desaciertos", color="red")
+    plt.xlabel("Fecha")
+    plt.ylabel("Cantidad Acumulada")
+    plt.title("Evolución Acumulada de Aciertos y Desaciertos")
+    plt.xticks(rotation=45)
+    plt.legend()
+    plt.grid()
+    plt.tight_layout()  # Ajusta márgenes automáticamente
+    plt.subplots_adjust(bottom=0.2)  # Asegura espacio para el eje X
+    plt.savefig(os.path.join(ruta_static, "grafico_lineas.png"))
+    plt.close()
+
+    # Gráfico de distribución (torta)
+    total_aciertos = df["Aciertos"].sum()
+    total_desaciertos = df["Desaciertos"].sum()
+
+    plt.figure(figsize=(5, 5))
+    plt.pie([total_aciertos, total_desaciertos], labels=["Aciertos", "Desaciertos"], autopct="%1.1f%%", colors=["green", "red"])
+    plt.title("Distribución de Aciertos y Desaciertos")
+    plt.savefig(os.path.join(ruta_static, "grafico_pie.png"))
+    plt.close()
+
+from fpdf import FPDF
+from flask import send_file
+
+def generar_pdf():
+    pdf_path = "static/graficos.pdf"
+    
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+    pdf.set_font("Arial", "B", 16)
+    pdf.cell(190, 10, "Resultados en Graficos", ln=True, align="C")
+
+    # Agregar gráficos
+    pdf.image("static/grafico_lineas.png", x=10, y=30, w=180)
+    pdf.ln(110)
+    pdf.image("static/grafico_pie.png", x=10, y=150, w=180)
+
+    pdf.output(pdf_path)
+    return pdf_path
