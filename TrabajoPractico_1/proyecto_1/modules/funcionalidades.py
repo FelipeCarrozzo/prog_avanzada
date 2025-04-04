@@ -4,6 +4,8 @@ import datetime
 import matplotlib.pyplot as plt
 import pandas as pd
 import os
+from fpdf import FPDF
+from flask import send_file
 
 #funciones
 def guardar_nombre_usuario(nombre_usuario: str, n_frases: int):
@@ -171,9 +173,6 @@ def mostrar_resultados_formateados(lista_usuarios):
         tabla.append(f"{usuario:<20}{aciertos_n:<15}{fecha_hora:<20}")
     return "\n".join(tabla)
 
-import matplotlib.pyplot as plt
-import pandas as pd
-import os
 
 def generar_graficos():
     """
@@ -233,8 +232,6 @@ def generar_graficos():
     plt.savefig(os.path.join(ruta_static, "grafico_pie.png"))
     plt.close()
 
-from fpdf import FPDF
-from flask import send_file
 
 def generar_pdf():
     pdf_path = "static/graficos.pdf"

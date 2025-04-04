@@ -6,7 +6,7 @@ from modules.funcionalidades import (listar_peliculas, cargar_datos_peliculas,
                                      leer_archivo_resultados_historicos, 
                                      mostrar_resultados_formateados, 
                                      guardar_usuario_en_archivo,
-                                     generar_graficos, generar_pdf)  # Asegúrate de importar generar_pdf
+                                     generar_graficos, generar_pdf)
 import datetime
 
 app.secret_key = 'clave_secreta'

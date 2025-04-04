@@ -4,36 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivia de películas: Resultados en Gráficos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        h1, h2 {
-            color: #333;
-        }
-        img {
-            width: 60%;
-            max-width: 600px;
-            margin: 20px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-        button {
-            padding: 10px 15px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            background-color: #007BFF;
-            color: white;
-            border-radius: 5px;
-            margin: 10px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
     <h1>Resultados en Gráficos</h1>
@@ -45,7 +17,7 @@
     <!-- Gráfico de distribución de aciertos y desaciertos -->
     <h2>Distribución de Aciertos y Desaciertos</h2>
     <img src="{{ url_for('static', filename='grafico_pie.png') }}" alt="Gráfico de distribución">
-    
+    <br>
     <!-- Botón para descargar PDF -->
     <form method="GET" action="{{ url_for('descargar_pdf') }}">
         <button type="submit">Descargar Gráficos en PDF</button>
@@ -54,6 +26,11 @@
     <!-- Botón para volver a los resultados históricos -->
     <form action="{{ url_for('p_resultados_historicos') }}">
         <button type='submit'>Volver a Resultados Históricos</button>
+    </form>
+
+    <!-- Botón para volver al inicio -->
+    <form action="{{ url_for('p_inicio') }}">
+        <button type='submit'>Volver al Inicio</button>
     </form>
 </body>
 </html>
