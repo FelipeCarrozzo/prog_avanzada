@@ -1,2 +1,5 @@
 #modulos necesarios para trabajar
 flask
+fpdf
+matplotlib
+pandas
