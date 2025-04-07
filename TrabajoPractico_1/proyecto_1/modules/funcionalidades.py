@@ -179,11 +179,11 @@ def generar_graficos():
     Genera gráficos de evolución de aciertos y desaciertos acumulados por fecha y de distribución total,
     y los guarda en la carpeta static.
     """
-    ruta_static = "./static"
+    ruta_data = "./data"
     
     # Asegurar que la carpeta static existe
-    if not os.path.exists(ruta_static):
-        os.makedirs(ruta_static)
+    if not os.path.exists(ruta_data):
+        os.makedirs(ruta_data)
 
     # Leer los datos desde el archivo de resultados
     ruta_archivo_resultados = "./data/datos_usuario.txt"
@@ -219,7 +219,7 @@ def generar_graficos():
     plt.grid()
     plt.tight_layout()  # Ajusta márgenes automáticamente
     plt.subplots_adjust(bottom=0.2)  # Asegura espacio para el eje X
-    plt.savefig(os.path.join(ruta_static, "grafico_lineas.png"))
+    plt.savefig(os.path.join(ruta_data, "grafico_lineas.png"))
     plt.close()
 
     # Gráfico de distribución (torta)
@@ -229,12 +229,12 @@ def generar_graficos():
     plt.figure(figsize=(5, 5))
     plt.pie([total_aciertos, total_desaciertos], labels=["Aciertos", "Desaciertos"], autopct="%1.1f%%", colors=["green", "red"])
     plt.title("Distribución de Aciertos y Desaciertos")
-    plt.savefig(os.path.join(ruta_static, "grafico_pie.png"))
+    plt.savefig(os.path.join(ruta_data, "grafico_pie.png"))
     plt.close()
 
 
 def generar_pdf():
-    pdf_path = "static/graficos.pdf"
+    pdf_path = "data/graficos.pdf"
     
     pdf = FPDF()
     pdf.set_auto_page_break(auto=True, margin=15)
@@ -243,9 +243,9 @@ def generar_pdf():
     pdf.cell(190, 10, "Resultados en Graficos", ln=True, align="C")
 
     # Agregar gráficos
-    pdf.image("static/grafico_lineas.png", x=10, y=30, w=180)
+    pdf.image("data/grafico_lineas.png", x=10, y=30, w=180)
     pdf.ln(110)
-    pdf.image("static/grafico_pie.png", x=10, y=150, w=180)
+    pdf.image("data/grafico_pie.png", x=10, y=150, w=180)
 
     pdf.output(pdf_path)
     return pdf_path
