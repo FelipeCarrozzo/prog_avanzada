@@ -51,8 +51,3 @@ Explica la funcionalidad de tu aplicación:
 - Felipe Carrozzo
 ---
 
-> **PENDIENTES**:
-- agregar 'felicitacion' al acertar la película correcta.
-- guardar los datos del usuario, con aciertos y fecha/hora del inicio del juego.
-- mostrar resultados históricos (tabla con datos guardados)
-- graficos de resultados. 
