@@ -5,7 +5,6 @@ Repositorio inicial para las clases de práctica de Programación Avanzada. En e
 ## Integrantes del grupo:
     - Caporizzo Agustina
     - Carrozzo Felipe
-    - Vega David
 
 ## Cuatrimestre de cursado:
     1er cuatrimestre del 2025
