@@ -12,11 +12,11 @@
 
     <!-- Gráfico de evolución de aciertos y desaciertos -->
     <h2>Evolución de Aciertos y Desaciertos</h2>
-    <img src="{{ url_for('static', filename='grafico_lineas.png') }}" alt="Gráfico de evolución">
+    <img src="{{ url_for('mostrar_imagen_data', filename='grafico_lineas.png') }}" alt="Gráfico de evolución">
     
     <!-- Gráfico de distribución de aciertos y desaciertos -->
     <h2>Distribución de Aciertos y Desaciertos</h2>
-    <img src="{{ url_for('static', filename='grafico_pie.png') }}" alt="Gráfico de distribución">
+    <img src="{{ url_for('mostrar_imagen_data', filename='grafico_pie.png') }}" alt="Gráfico de distribución">
     <br>
     <!-- Botón para descargar PDF -->
     <form method="GET" action="{{ url_for('descargar_pdf') }}">

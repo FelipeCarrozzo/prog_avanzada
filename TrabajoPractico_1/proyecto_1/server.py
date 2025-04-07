@@ -1,5 +1,5 @@
 # dependencias
-from flask import render_template, session, request, redirect, url_for, send_file
+from flask import render_template, session, request, redirect, url_for, send_file, send_from_directory
 from modules.config import app
 from modules.funcionalidades import (listar_peliculas, cargar_datos_peliculas, 
                                      generar_frases_aleatorias, generar_intentos, 
@@ -11,7 +11,7 @@ import datetime
 
 app.secret_key = 'clave_secreta'
 ruta = "./data/"
-ruta_archivo_datos_usuario = ruta + "datos_usuario.txt"
+ruta_archivo_datos_usuario = ruta + "resultados_partidas.txt"
 
 @app.route('/', methods=['GET', 'POST'])
 def p_inicio():
@@ -24,14 +24,14 @@ def p_inicio():
         
         try:
             n_frases = int(n_frases)
-            if n_frases < 1 or n_frases > 10:  # Validar rango de frases
+            if n_frases < 3 or n_frases > 10:  # cantidad de frases entre 3 y 10
                 return redirect(url_for("p_inicio"))
         except ValueError:
             return redirect(url_for("p_inicio"))
         
         session['usuario'] = nombre_usuario
         session['n_frases'] = n_frases
-        session['puntaje'] = 0  # Inicializar puntaje
+        session['puntaje'] = 0  #inicializar puntaje
 
         return redirect(url_for("p_iniciar_trivia"))
 
@@ -43,14 +43,14 @@ def p_iniciar_trivia():
         accion = request.form.get('accion')
 
         if accion == 'responder' and session['estado'] == 'siguiente':  
-            # Usuario responde la pregunta
+            #usuario responde la pregunta
             respuesta = request.form.get('respuesta')
             session['seleccion'] = respuesta  
 
             indice = session.get('indice', 0)
             pregunta_actual = session['trivia'][indice]
 
-            # Verificamos la respuesta
+            # verifico la respuesta
             if respuesta == pregunta_actual['correcta']:
                 session['puntaje'] += 1
                 session['mensaje'] = "¡Correcto!"
@@ -60,7 +60,7 @@ def p_iniciar_trivia():
             session['estado'] = 'evaluando'  
 
         elif accion == 'siguiente' and session['estado'] == 'evaluando':
-            # Avanzamos a la siguiente pregunta
+            #siguiente pregunta
             session['indice'] += 1
             session['estado'] = 'siguiente'  
             session['mensaje'] = None  
@@ -71,10 +71,10 @@ def p_iniciar_trivia():
                 return redirect(url_for('p_resultado_trivia'))
 
     else:
-        # **Cada vez que se inicia una nueva trivia, se actualiza la fecha**
+        #cada vez que se inicia una nueva trivia, se actualiza la fecha
         session['fecha_hora_inicio'] = datetime.datetime.now().strftime("%d-%m-%y %H:%M")
 
-        # Cargar nuevas preguntas
+        #cargar nuevas preguntas
         datos_peliculas = cargar_datos_peliculas("data/frases_de_peliculas.txt")
         frases_aleatorias = generar_frases_aleatorias(datos_peliculas, session['n_frases'])
         intentos = generar_intentos(frases_aleatorias, datos_peliculas)
@@ -108,7 +108,7 @@ def p_resultado_trivia():
     guardar_usuario_en_archivo(session['usuario'], session['n_frases'], session['puntaje_final'], 
                                session['fecha_hora_inicio'], ruta_archivo_datos_usuario)
 
-    # Limpiar la sesión para la siguiente trivia
+    #limpiar la sesión para la siguiente trivia
     session.pop('trivia', None)
     session.pop('indice', None)
     session.pop('puntaje', None)
@@ -135,16 +135,20 @@ def p_resultados_historicos():
     resultados_tabla = mostrar_resultados_formateados(resultados)
     return render_template('resultados_historicos.html', p_tabla=resultados_tabla)
 
+@app.route('/data/<path:filename>')
+def mostrar_imagen_data(filename):
+    return send_from_directory('data', filename)
+
 @app.route('/resultados_graficos')
 def p_resultados_graficos():
-    generar_graficos()  # Genera los gráficos antes de mostrar la página
+    generar_graficos()  #genera los gráficos antes de mostrar la página
     return render_template("resultados_graficos.html")
 
 
 @app.route("/descargar_pdf")
 def descargar_pdf():
     try:
-        pdf_path = generar_pdf()  # Llamada a la función que genera el PDF
+        pdf_path = generar_pdf()  #llamada a la función que genera el PDF
         return send_file(pdf_path, as_attachment=True, download_name="resultados.pdf", mimetype="application/pdf")
     except Exception as e:
         return f"Error al generar el PDF: {str(e)}", 500  # Manejo de errores

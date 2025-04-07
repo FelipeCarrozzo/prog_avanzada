@@ -8,16 +8,6 @@ from fpdf import FPDF
 from flask import send_file
 
 #funciones
-def guardar_nombre_usuario(nombre_usuario: str, n_frases: int):
-    '''
-    Guarda el nombre del usuario en un diccionario
-
-    Args:
-        nombre_usuario (str): Nombre del usuario a guardar.
-    '''
-    with open("data/datos_usuario.txt", "w", encoding="utf-8") as archivo:
-        archivo.write(f"{nombre_usuario},{n_frases}\n")
-
 
 def listar_peliculas(nombre_archivo: str) -> list:
     '''
@@ -31,17 +21,13 @@ def listar_peliculas(nombre_archivo: str) -> list:
     '''
     datos_diccionario = cargar_datos_peliculas(nombre_archivo)
     
-    # Aplicamos title() a cada película y guardo solo los valores
+    # title() a cada película y guardo solo los valores
     conjunto_peliculas = {pelicula.title() for pelicula in datos_diccionario.values()}
-
-    
     lista_peliculas_ordenada = sorted(conjunto_peliculas)  # Ordenamos la lista
 
     # Lista por comprensión con índice
     lista_peliculas_ord_index = [f"{i}. {pelicula}" for i, pelicula in enumerate(lista_peliculas_ordenada, start=1)]
     return lista_peliculas_ord_index
-
-
 
 def cargar_datos_peliculas(nombre_archivo: str) -> dict:
     """
@@ -80,7 +66,7 @@ def generar_frases_aleatorias(datos_peliculas: dict, n_frases: int) -> dict:
         clave = random.choice(list(datos_peliculas.keys()))
         valor = datos_peliculas[clave]
         preguntas_respuestas[clave] = valor
-        del datos_peliculas[clave]  # Eliminar la frase seleccionada para evitar repeticiones
+        del datos_peliculas[clave]  #eliminar la frase seleccionada para evitar repeticiones
     return preguntas_respuestas
 
 
@@ -98,13 +84,13 @@ def generar_intentos(preguntas_respuestas: dict, datos_peliculas: dict) -> list:
     preguntas_html = []
 
     for frase, pelicula_correcta in preguntas_respuestas.items():
-        # Obtener todas las películas posibles y eliminar la correcta
+        #obtener todas las películas posibles y eliminar la correcta
         peliculas_incorrectas = list(set(datos_peliculas.values()) - {pelicula_correcta})
         
-        # Seleccionar dos opciones incorrectas al azar
+        #seleccionar dos opciones incorrectas al azar
         opciones_incorrectas = random.sample(peliculas_incorrectas, 2)
         
-        # Crear una lista con las opciones (correcta + incorrectas)
+        #crear una lista con las opciones (correcta + incorrectas)
         opciones = opciones_incorrectas + [pelicula_correcta]
         
         # Mezclar el orden de las opciones
@@ -169,7 +155,7 @@ def mostrar_resultados_formateados(lista_usuarios):
     tabla.append("-" * 55)
 
     for usuario, n_frases, aciertos, fecha_hora in lista_usuarios:
-        aciertos_n = f"{aciertos}/{n_frases}"  # Formato correcto
+        aciertos_n = f"{aciertos}/{n_frases}"
         tabla.append(f"{usuario:<20}{aciertos_n:<15}{fecha_hora:<20}")
     return "\n".join(tabla)
 
@@ -181,12 +167,12 @@ def generar_graficos():
     """
     ruta_data = "./data"
     
-    # Asegurar que la carpeta static existe
+    # aseguro que exista la carpeta static
     if not os.path.exists(ruta_data):
         os.makedirs(ruta_data)
 
-    # Leer los datos desde el archivo de resultados
-    ruta_archivo_resultados = "./data/datos_usuario.txt"
+    #leo los datos desde el archivo de resultados
+    ruta_archivo_resultados = "./data/resultados_partidas.txt"
     if not os.path.exists(ruta_archivo_resultados):
         return
 
@@ -204,7 +190,7 @@ def generar_graficos():
 
     df = pd.DataFrame(datos, columns=["Fecha", "Aciertos", "Desaciertos"])
 
-    # Agrupar por fecha y calcular el acumulado
+    #agrupo por fecha y calcular el acumulado
     df_agrupado = df.groupby("Fecha").sum().reset_index()
 
     # Gráfico de evolución (líneas acumuladas)
