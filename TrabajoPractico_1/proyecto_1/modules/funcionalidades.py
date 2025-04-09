@@ -84,49 +84,37 @@ def generar_intentos(preguntas_respuestas: dict, datos_peliculas: dict) -> list:
     preguntas_html = []
 
     for frase, pelicula_correcta in preguntas_respuestas.items():
-        #obtener todas las películas posibles y eliminar la correcta
-        peliculas_incorrectas = list(set(datos_peliculas.values()) - {pelicula_correcta})
+        peliculas_incorrectas = list(set(datos_peliculas.values()) - {pelicula_correcta}) #todas las películas posibles y eliminar la correcta
+        opciones_incorrectas = random.sample(peliculas_incorrectas, 2) #seleccionar dos opciones incorrectas al azar
+        opciones = opciones_incorrectas + [pelicula_correcta] #opciones correcta + incorrectas
         
-        #seleccionar dos opciones incorrectas al azar
-        opciones_incorrectas = random.sample(peliculas_incorrectas, 2)
-        
-        #crear una lista con las opciones (correcta + incorrectas)
-        opciones = opciones_incorrectas + [pelicula_correcta]
-        
-        # Mezclar el orden de las opciones
-        random.shuffle(opciones)
-        
-        # Crear la estructura de la pregunta
+        random.shuffle(opciones) #mezclo el orden de las opciones       
+
         pregunta = {
             "frase": frase,
             "opciones": opciones,
-            "correcta": pelicula_correcta
+            "correcta": pelicula_correcta #estructura de la pregunta: dict
         }
-        
-        preguntas_html.append(pregunta)
+
+        preguntas_html.append(pregunta) #agrego a la lista los diccionarios: lista de diccionarios
 
     return preguntas_html
 
 def guardar_usuario_en_archivo(usuario, n_frases, aciertos, fecha_hora, nombre_archivo): 
-        """Guarda la información del usuario en un archivo .txt a partir de una lista
+    """Guarda la información del usuario en un archivo .txt a partir de una lista
 
-        Args: 
-            - lista con datos recopilados de 1 usuario
-            - nombre de usuario
-            - numero de frases
-            - cantidad de aciertos
-            - fecha y hora del inicio de la partida
+    Args: 
+        - lista con datos recopilados de 1 usuario
+        - nombre de usuario
+        - numero de frases
+        - cantidad de aciertos
+        - fecha y hora del inicio de la partida
+    """
+    # aseguro que esté en el formato correcto
+    fecha_hora = datetime.datetime.strptime(fecha_hora, "%d-%m-%y %H:%M").strftime("%d-%m-%y %H:%M")
 
-        """
-        try:
-            # Asegurar que la fecha esté en el formato correcto antes de escribirla
-            fecha_hora = datetime.datetime.strptime(fecha_hora, "%d-%m-%y %H:%M").strftime("%d-%m-%y %H:%M")
-        except ValueError:
-            # Si la fecha no está en el formato correcto, intentamos convertir desde otro formato
-            fecha_hora = datetime.datetime.strptime(fecha_hora, "%Y-%m-%d %H:%M:%S").strftime("%d-%m-%y %H:%M")
-
-        with open(nombre_archivo, "a", encoding="utf-8") as archi:
-            archi.write(f"{usuario},{n_frases},{aciertos},{fecha_hora}\n")
+    with open(nombre_archivo, "a", encoding="utf-8") as archi: #modo append
+        archi.write(f"{usuario},{n_frases},{aciertos},{fecha_hora}\n")
 
 def leer_archivo_resultados_historicos(nombre_archivo):
     """Lee un archivo de texto con resultados históricos y devuelve una lista de listas con los datos de cada usuario.
@@ -151,12 +139,12 @@ def mostrar_resultados_formateados(lista_usuarios):
         lista_usuarios (list): Lista de listas con los datos de cada usuario.
     """
     tabla = []
-    tabla.append(f"{'Usuario':<20}{'Aciertos/N':<15}{'Fecha y Hora':<20}")
-    tabla.append("-" * 55)
+    tabla.append(f"{'Usuario':<20}{'Aciertos/N':<15}{'Fecha y Hora':<20}") #linea de titulos
+    tabla.append("-" * 55) #linea de separacion
 
-    for usuario, n_frases, aciertos, fecha_hora in lista_usuarios:
-        aciertos_n = f"{aciertos}/{n_frases}"
-        tabla.append(f"{usuario:<20}{aciertos_n:<15}{fecha_hora:<20}")
+    for usuario, n_frases, aciertos, fecha_hora in lista_usuarios: #recorro elementos del .txt
+        aciertos_n = f"{aciertos}/{n_frases}" #se juntan los aciertos/frases
+        tabla.append(f"{usuario:<20}{aciertos_n:<15}{fecha_hora:<20}") #agrego linea a linea
     return "\n".join(tabla)
 
 
@@ -225,10 +213,10 @@ def generar_pdf():
     pdf = FPDF()
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
-    pdf.set_font("Arial", "B", 16)
+    pdf.set_font("Arial", "B", 16) # defino los estilos
     pdf.cell(190, 10, "Resultados en Graficos", ln=True, align="C")
 
-    # Agregar gráficos
+    #agrego gráficos
     pdf.image("data/grafico_lineas.png", x=10, y=30, w=180)
     pdf.ln(110)
     pdf.image("data/grafico_pie.png", x=10, y=150, w=180)

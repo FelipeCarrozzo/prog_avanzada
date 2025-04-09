@@ -57,14 +57,14 @@ def p_iniciar_trivia():
             else:
                 session['mensaje'] = f"Incorrecto. La respuesta correcta es: {pregunta_actual['correcta']}."
 
-            session['estado'] = 'evaluando'  
+            session['estado'] = 'evaluando'
 
         elif accion == 'siguiente' and session['estado'] == 'evaluando':
             #siguiente pregunta
             session['indice'] += 1
-            session['estado'] = 'siguiente'  
-            session['mensaje'] = None  
-            session['seleccion'] = None  
+            session['estado'] = 'siguiente'
+            session['mensaje'] = None
+            session['seleccion'] = None
 
             if session['indice'] >= len(session['trivia']):
                 session['puntaje_final'] = session['puntaje']
