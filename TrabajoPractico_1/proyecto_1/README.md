@@ -1,24 +1,22 @@
-# 🐍Nombre del proyecto (darle un nombre significativo) 
+# 🐍Trivia de Películas
 
-Breve descripción del proyecto:
+Al comenzar, el usuario elige cuántas frases quiere adivinar. Luego, se le presentan frases famosas y debe seleccionar la película correcta entre tres opciones. El sistema da retroalimentación inmediata y, al finalizar, muestra el puntaje obtenido, un resumen de resultados históricos y gráficos de desempeño. Además, se puede generar un PDF con los gráficos estadísticos.
 
-Ejemplo: “Esta es una aplicación web construida con el framework [Flask](https://flask.palletsprojects.com/). Permite [describir funcionalidades principales].
 
 ---
 ## 🏗Arquitectura General
 
-Explica brevemente cómo está organizado el código (funciones y/o clases)
-
-El diagrama de relaciones entre clases está disponible en la carpeta [docs](./docs) del proyecto.
-
+EL código está organizado en un archivo principal **server.py**, que integra todas las funcionalidades y define las rutas de la aplicación usando Flask, administrando la lógica del juego. 
+Luego está el archivo **funcionalidades.py**, que define las funciones que realizan tareas específicas. 
+Por último, en el módulo *templates* se encuentran los archivos **.html**, para cada parte del juego. 
 ---
 ## 📑Dependencias
 
-1. **Python 3.x**
-2. **Flask** (`pip install flask`)
-3. **SQLalchemy** (`pip install sqlalchemy`)
-4. listar dependencias principales
-5. Dependencias listadas en requierements.txt
+1. **Python 3.12.4**
+2. **Flask**
+3. **fpdf**
+4. **matplotlib**
+5. **pandas**
 
 ---
 ## 🚀Cómo Ejecutar el Proyecto
@@ -35,19 +33,20 @@ El diagrama de relaciones entre clases está disponible en la carpeta [docs](./d
 
 ## 💻Uso de la aplicación
 
-Explica la funcionalidad de tu aplicación:  
-- Cómo se navega por las rutas o URLs.
-- Si requiere autenticación, describe el flujo de login o registro.
-
 **Ejemplo**:
-- **Ruta principal** (`/`): muestra la página de inicio.
-- **Ruta de usuario** (`/user/<id>`): muestra información del usuario.
+- **Inicio** (`/`): muestra la página de inicio.
+- **Listado películas** (`/listado-peliculas`): lista todas las películas entre las que elegirás. 
+- **Trivia** (`/trivia`): muestra la página del juego.
+- **Resultados** (`/resultados`): mmuestra los resultados del usuario luego de jugar
+- **Resultados históricos** (`/resultados_historicos`): muestra los resultados de todas las partidas ordenadas por fecha. 
+- **Resultados gráficos** (`/resultados_graficos`): muestra gráficamente los resultados. 
+
 
 ---
 
 ## 🙎‍♀️🙎‍♂️Autores
 
 - Caporizzo Agustina
-- Felipe Carrozzo
+- Carrozzo Felipe
 ---
 

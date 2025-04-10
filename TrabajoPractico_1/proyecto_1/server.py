@@ -44,7 +44,7 @@ def p_iniciar_trivia():
 
         if accion == 'responder' and session['estado'] == 'siguiente':   #usuario respondió la pregunta actual
             respuesta = request.form.get('respuesta')
-            session['seleccion'] = respuesta  
+            session['seleccion'] = respuesta  #respuesta usuario
 
             indice = session.get('indice', 0)
             pregunta_actual = session['trivia'][indice]
