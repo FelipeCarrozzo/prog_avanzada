@@ -5,8 +5,8 @@ from modules.funcionalidades import (listar_peliculas, cargar_datos_peliculas,
                                      generar_frases_aleatorias, generar_intentos, 
                                      leer_archivo_resultados_historicos, 
                                      mostrar_resultados_formateados, 
-                                     guardar_resultado_partida,
-                                     generar_graficos, generar_pdf)
+                                     guardar_resultado_partida)
+from modules.graficos import generar_graficos, generar_pdf
 import datetime
 
 app.secret_key = 'clave_secreta' #clave para la sesión
