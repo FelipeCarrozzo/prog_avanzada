@@ -44,12 +44,12 @@ def crear_facultad_desde_archivo(nombre_facultad):
         for linea in f:
             datos = linea.strip().split(',')
             if datos[0] == 'ESTUDIANTE' and estudiantes_agregados < 4:
-                nombre, apellido, edad = datos[1], datos[2], int(datos[3])
-                estudiante = Estudiante(nombre, apellido, edad)
+                nombre, apellido, dni = datos[1], datos[2], datos[3]
+                estudiante = Estudiante(nombre, apellido, dni)
                 facultad.agregar_estudiante(estudiante)
                 estudiantes_agregados += 1
             elif datos[0] == 'PROFESOR' and profesores_agregados < 4:
-                nombre, apellido, materia = datos[1], datos[2], datos[3]
+                nombre, apellido, dni = datos[1], datos[2], datos[3]
                 profesor = Profesor(nombre, apellido, materia)
                 facultad.contratar_profesor(profesor)
                 profesores_agregados += 1
