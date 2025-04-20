@@ -1,12 +1,64 @@
+# -*- coding: utf-8 -*-
 from modules.facultad import Facultad
 from modules.departamento import Departamento
 from modules.profesor import Profesor
 from modules.estudiante import Estudiante
 from modules.curso import Curso
 
+facultades = []
 
-facultades = [Facultad("Ingeniería"), Facultad("Ciencias Económicas")]
+def inicializar_facultades():
+    #se crean 2 facultades
+    facultades = [Facultad("Ingeniería"), Facultad("Ciencias Económicas")]
+    #se crean 2 profesores por facultad
+    facultades[0].contratar_profesor(Profesor("Juan", "Pérez", "12345678"))
+    facultades[0].contratar_profesor(Profesor("María", "Gómez", "87654321"))
+    facultades[1].contratar_profesor(Profesor("Ana", "López", "11223344"))
+    facultades[1].contratar_profesor(Profesor("Luis", "Martínez", "44332211"))
+    #se crea 1 departamento por facultad
+    Departamento1 = Departamento("Sistemas", facultades[0].profesores[0])
+    Departamento2 = Departamento("Contabilidad", facultades[1].profesores[0])
+    facultades[0].agregar_departamento(Departamento1)
+    facultades[1].agregar_departamento(Departamento2)
+    #se crean 2 estudiantes para la facultad de ingeniería
+    estudiante1 = Estudiante("Pedro", "García", "12345678")
+    estudiante2 = Estudiante("Laura", "Fernández", "87654321")
+    facultades[0].agregar_estudiante(estudiante1)
+    facultades[0].agregar_estudiante(estudiante2)
+    #se crea 1 curso por departamento
+    curso1 = Curso("Programación", "INF101", facultades[0].profesores[0])
+    curso2 = Curso("Contabilidad I", "ECO101", facultades[1].profesores[0])
+    Departamento1.agregar_curso(curso1)
+    Departamento2.agregar_curso(curso2)
 
+    return facultades
+
+#facultades = inicializar_facultades()
+
+def crear_facultad_desde_archivo(nombre_facultad):
+    facultad = Facultad(nombre_facultad)
+    estudiantes_agregados = 0
+    profesores_agregados = 0
+
+    with open("data/personas.txt", 'r', encoding='utf-8') as f:
+        for linea in f:
+            datos = linea.strip().split(',')
+            if datos[0] == 'ESTUDIANTE' and estudiantes_agregados < 4:
+                nombre, apellido, edad = datos[1], datos[2], int(datos[3])
+                estudiante = Estudiante(nombre, apellido, edad)
+                facultad.agregar_estudiante(estudiante)
+                estudiantes_agregados += 1
+            elif datos[0] == 'PROFESOR' and profesores_agregados < 4:
+                nombre, apellido, materia = datos[1], datos[2], datos[3]
+                profesor = Profesor(nombre, apellido, materia)
+                facultad.contratar_profesor(profesor)
+                profesores_agregados += 1
+            if estudiantes_agregados == 4 and profesores_agregados == 4:
+                break
+
+    return facultad
+
+facultades = [crear_facultad_desde_archivo("Facultad de Ingeniería")]
 
 while True:
     print("##########################################")
@@ -27,7 +79,7 @@ while True:
             #cómo hacer con la facultad?
             print("Seleccione la facultad:")
             for i, facultad in enumerate(facultades):
-                print(f"{i + 1} - {facultad.get_nombre()}")
+                print(f"{i + 1} - {facultad.nombre}")
             facultad_index = int(input("Opción: ")) - 1
             facultad = facultades[facultad_index]
 
@@ -48,7 +100,7 @@ while True:
         # lógica para contratar profesor
         print("Seleccione la facultad:")
         for i, facultad in enumerate(facultades):
-            print(f"{i + 1} - {facultad.get_nombre()}")
+            print(f"{i + 1} - {facultad.nombre}")
         facultad_index = int(input("Opción: ")) - 1
         if facultad_index < 0 or facultad_index >= len(facultades):
             print("Opción no válida.")
@@ -67,7 +119,7 @@ while True:
         # lógica para crear departamento nuevo
         print("Seleccione la facultad:")
         for i, facultad in enumerate(facultades):
-            print(f"{i + 1} - {facultad.get_nombre()}")
+            print(f"{i + 1} - {facultad.nombre}")
         facultad_index = int(input("Opción: ")) - 1
         if facultad_index < 0 or facultad_index >= len(facultades):
             print("Opción no válida.")
@@ -76,9 +128,9 @@ while True:
 
         nuevo_departamento = input("Nombre del nuevo departamento: ")
 
-        # Verificar si el departamento ya existe
-        for depto in facultad.listar_departamentos():
-            if depto.get_nombre() == nuevo_departamento:
+        #se verifica si el departamento ya existe
+        for depto in facultad.departamentos:
+            if depto.nombre == nuevo_departamento:
                 print(f"El departamento {nuevo_departamento} ya existe en la facultad {facultad}.")
                 break
         else:
@@ -106,15 +158,107 @@ while True:
         print("Departamentos en la facultad:")
         for depto in facultad.listar_departamentos():
             print(depto)
-
-
+        print("\n")
         
     elif opcion == "4":
-        # lógica para crear curso nuevo
-        pass
+        print("Seleccione la facultad:")
+        for i, facultad in enumerate(facultades):
+            print(f"{i + 1} - {facultad.nombre}")
+        facultad_index = int(input("Opción: ")) - 1
+        if facultad_index < 0 or facultad_index >= len(facultades):
+            print("Opción no válida.")
+            continue
+        facultad = facultades[facultad_index]
+
+        #1ero se valida si hay departamentos
+        if not facultad.listar_departamentos():
+            print("La facultad aún no tiene departamentos.")
+            continue
+
+        print("Seleccione el departamento donde se creará el curso:")
+        for i, depto in enumerate(facultad.departamentos):
+            print(f"{i + 1} - {depto.nombre}")
+        depto_index = int(input("Opción: ")) - 1
+        if depto_index < 0 or depto_index >= len(facultad.listar_departamentos()):
+            print("Opción no válida.")
+            continue
+        departamento = facultad.departamentos[depto_index]
+
+        #ingresar nombre y código del curso
+        nombre_curso = input("Nombre del curso: ")
+        codigo_curso = input("Código del curso: ")
+
+        #se verifica que haya profesores disponibles
+        if not facultad.listar_profesores():
+            print("No hay profesores en esta facultad para asignar como titular.")
+            continue
+
+        print("Seleccione el profesor titular:")
+        for i, prof in enumerate(facultad.listar_profesores()):
+            print(f"{i + 1} - {prof}")
+        prof_index = int(input("Opción: ")) - 1
+        if prof_index < 0 or prof_index >= len(facultad.listar_profesores()):
+            print("Opción no válida.")
+            continue
+        profesor = facultad.listar_profesores()[prof_index]
+
+        #crear el curso y agregarlo al departamento
+        nuevo_curso = Curso(nombre_curso, codigo_curso, profesor)
+        departamento.agregar_curso(nuevo_curso)
+
+        print(f"\nCurso '{nombre_curso}' creado correctamente en el departamento {departamento.nombre}.\n")
+
+        print("Cursos actuales en el departamento:")
+        for curso_str in departamento.listar_cursos():
+            print(curso_str)
+    
     elif opcion == "5":
         # lógica para inscribir estudiante a un curso
-        pass
+        print("Seleccione la facultad:")
+        for i, facultad in enumerate(facultades):
+            print(f"{i + 1} - {facultad.nombre}")
+        facultad_index = int(input("Opción: ")) - 1
+        if facultad_index < 0 or facultad_index >= len(facultades):
+            print("Opción no válida.")
+            continue
+        facultad = facultades[facultad_index]
+
+        if not facultad.estudiantes:
+            print("No hay estudiantes registrados en esta facultad.")
+            continue
+
+        print("Seleccione el estudiante a inscribir:")
+        for i, est in enumerate(facultad.estudiantes):
+            print(f"{i + 1} - {est}")
+        est_index = int(input("Opción: ")) - 1
+        if est_index < 0 or est_index >= len(facultad.estudiantes):
+            print("Opción no válida.")
+            continue
+        estudiante = facultad.estudiantes[est_index]
+
+        cursos_y_depto = facultad.obtener_cursos_con_departamento()
+        if not cursos_y_depto:
+            print("No hay cursos disponibles en esta facultad.")
+            continue
+        
+        print("Seleccione el curso:")
+        for i, (curso, depto) in enumerate(cursos_y_depto):
+            print(f"{i + 1} - {curso} (Departamento: {depto.nombre})")
+        curso_index = int(input("Opción: ")) - 1
+        if curso_index < 0 or curso_index >= len(cursos_y_depto):
+            print("Opción no válida.")
+            continue
+
+        curso, departamento = cursos_y_depto[curso_index]
+        if estudiante in curso.estudiantes:
+            print(f"El estudiante {estudiante} ya está inscrito en el curso '{curso}'.")
+            continue
+
+        curso.inscribir_estudiante(estudiante)
+        estudiante.inscribir_curso(curso)
+
+        print(f"\nEstudiante {estudiante} inscripto en '{curso}' del departamento {departamento.nombre}.\n")
+
     elif opcion == "6":
         print("Saliendo del sistema...")
         break
