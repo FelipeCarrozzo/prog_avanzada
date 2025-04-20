@@ -50,7 +50,7 @@ def crear_facultad_desde_archivo(nombre_facultad):
                 estudiantes_agregados += 1
             elif datos[0] == 'PROFESOR' and profesores_agregados < 4:
                 nombre, apellido, dni = datos[1], datos[2], datos[3]
-                profesor = Profesor(nombre, apellido, materia)
+                profesor = Profesor(nombre, apellido, dni)
                 facultad.contratar_profesor(profesor)
                 profesores_agregados += 1
             if estudiantes_agregados == 4 and profesores_agregados == 4:
