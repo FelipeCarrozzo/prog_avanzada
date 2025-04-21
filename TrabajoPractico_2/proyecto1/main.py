@@ -40,6 +40,7 @@ def crear_facultad_desde_archivo(nombre_facultad):
     estudiantes_agregados = 0
     profesores_agregados = 0
 
+    #crear 1 txt por cada entidad
     with open("data/personas.txt", 'r', encoding='utf-8') as f:
         for linea in f:
             datos = linea.strip().split(',')
@@ -58,7 +59,14 @@ def crear_facultad_desde_archivo(nombre_facultad):
 
     return facultad
 
-facultades = [crear_facultad_desde_archivo("Facultad de Ingeniería")]
+print("Bienvenido al sistema de gestión de facultades.")
+nombre_facultad = input("Ingrese el nombre de la facultad: ")
+
+facultades = crear_facultad_desde_archivo(nombre_facultad)
+
+#facultades = [crear_facultad_desde_archivo("Facultad de Ingeniería")]
+
+#cuando creamos la facultad desde el archivo, se deberían crear los departamentos y cursos automáticamente
 
 while True:
     print("##########################################")
