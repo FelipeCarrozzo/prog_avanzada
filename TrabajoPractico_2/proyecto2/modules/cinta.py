@@ -2,7 +2,7 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-class Cinta():
+class Cinta:
     """ clase que representa la cinta transportadora de la planta de alimentos.
     toma el alimento aleatorio del detector y lo coloca en el cajon correspondiente."""
     def __init__(self, n_elementos):
@@ -50,7 +50,7 @@ class DetectorAlimento:
         peso_detectado = random.choices(self.peso_alimentos, self.prob_pesos)[0]
         return {"alimento": alimento_detectado, "peso": peso_detectado}
     
-class Cajon(): #podria reemplazarse por bolson
+class Cajon: #podria reemplazarse por bolson
     def __init__(self, n_elementos):
         self.elementos = [None] * n_elementos #lista con n_elementos que se reemplazan por el alimento
 
