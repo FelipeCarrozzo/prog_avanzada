@@ -1,19 +1,21 @@
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+from calculador import CalculadorBromatologico
+from alimentos import Kiwi, Manzana, Papa, Zanahoria, AlimentoInvalido
 
 class Cinta:
     """ clase que representa la cinta transportadora de la planta de alimentos.
     toma el alimento aleatorio del detector y lo coloca en el cajon correspondiente."""
-    def __init__(self, n_elementos):
-        self.iteraciones = n_elementos #variable para hacer la cantidad exacta de alimentos ingresados
-        self.detector = DetectorAlimento()
-        self.cajon = Cajon(n_elementos)
-
+    def __init__(self, n_elementos, detector, cajon, calculador=None):
+        self.elementos = n_elementos #variable para hacer la cantidad exacta de alimentos ingresados
+        self.detector = detector
+        self.cajon = cajon
+        self.calculador = calculador
 
     def agregar_alimento(self):
         """método que agrega un alimento al cajon correspondiente."""
-        for i in range(self.iteraciones):
+        for i in range(self.elementos):
             alimento = self.detector.detectar_alimento()
             if self.cajon.elementos[i] is None:
                 self.cajon.elementos[i] = alimento
@@ -21,9 +23,15 @@ class Cinta:
                 break
 
 
+    # def mostrar_cajon(self):
+    #     """método que muestra el estado actual del cajón."""
+    #     print(f'Estado del cajón: {self.cajon.elementos}')
+
     def mostrar_cajon(self):
-        """método que muestra el estado actual del cajón."""
-        print(f'Estado del cajón: {self.cajon.elementos}')
+        print("Estado del cajón:")
+        for i, elem in enumerate(self.cajon.elementos):
+            print(f"{i}: {elem}")
+
 
 
 class DetectorAlimento:
@@ -48,7 +56,21 @@ class DetectorAlimento:
         n_alimentos = len(self.alimentos)
         alimento_detectado = self.alimentos[random.randint(0, n_alimentos-1)]
         peso_detectado = random.choices(self.peso_alimentos, self.prob_pesos)[0]
-        return {"alimento": alimento_detectado, "peso": peso_detectado}
+        # return {"alimento": alimento_detectado, "peso": peso_detectado}
+        return self._crear_instancia_alimento(alimento_detectado, peso_detectado)
+    
+    def _crear_instancia_alimento(self, nombre, peso):
+        clases = {
+            "kiwi": Kiwi,
+            "manzana": Manzana,
+            "papa": Papa,
+            "zanahoria": Zanahoria,
+        }
+        clase = clases.get(nombre, AlimentoInvalido)
+
+        if clase is None:
+            raise ValueError(f"Alimento desconocido: {nombre}")
+        return clase(peso)
     
 class Cajon: #podria reemplazarse por bolson
     def __init__(self, n_elementos):
@@ -56,18 +78,8 @@ class Cajon: #podria reemplazarse por bolson
 
 
 if __name__ == "__main__":
-    # random.seed(1)
-    # sensor = DetectorAlimento()
-    # lista_pesos = []
-    
-    # for _ in range(10):
-    #     lista_pesos.append(sensor.detectar_alimento()["peso"])
-
-    # plt.hist(lista_pesos, bins=12)
-    # plt.xlabel('Peso (kg)')
-    # plt.ylabel('Frecuencia')
-    # plt.title('Histograma de Pesos de Alimentos')
-    # plt.show()
-    cinta = Cinta(2)
+    detector = DetectorAlimento()
+    cajon = Cajon(n_elementos=10)
+    cinta = Cinta(n_elementos=10, detector=detector, cajon=cajon)
     cinta.agregar_alimento()
     cinta.mostrar_cajon()
