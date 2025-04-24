@@ -1,57 +1,59 @@
 import math
 import random
+from cajon import Cajon
+from alimentos import Kiwi, Manzana, Papa, Zanahoria, AlimentoInvalido
 
 class CalculadorBromatologico:
-    """Clase para calcular la actividad acuosa de cada alimento y
+    """
+    Clase para calcular la actividad acuosa de cada alimento y
     el promedio según cada alimento, por tipo de alimento y del total
     del conjunto de alimentos.
     """
-    def __init__(self, alimento):
-        self.alimento = alimento
-        self.resultados = {}
-        self.rangos_m = {
-            "manzana": (1.0, 3.0),
-            "kiwi": (2.0, 4.0),
-            "papa": (1.0, 2.5),
-            "zanahoria": (3.0, 5.0),
-            "undefined": (0.0, 0.0)
-        }
+    def __init__(self):
+        pass
 
     def verificador_aw(self, resultado):
-        if resultado < 0.2 or resultado > 1:
-            return "aw fuera de rango válido (0.2 - 1.0)"
+        """
+        Método que verifica si la actividad acuosa está dentro del rango válido (0 - 1.0).
+        Si no lo está, devuelve un mensaje indicando que el alimento no es apto para el consumo.
+        """
+        if resultado < 0 or resultado > 1:
+            return "aw fuera de rango válido (0 - 1.0)"
 
         if resultado >= 0.90:
             return "El alimento no es apto para el consumo"
         else:
-            return "Alimento apto para el consumo"
+            return resultado
+    
+    def aw_prom(self, clase, cajon: Cajon):
+        """
+        Método que calcula el promedio de la actividad acuosa de los alimentos.
+        Se verifica que no sea mayor a 1 o menor a 0. 
+        Args:
+        - Para el promedio de cada alimento: clase = (Manzana|Kiwi|Papa|Zanahoria)
+        - Para el promedio del tipo de alimento: clase = (Fruta|Verdura)
+        - Para el promedio de todos los alimentos: clase = Alimentos
+        Returns:
+        - El promedio de la actividad acuosa de los alimentos
 
-    def calcular_aw(self):
-        if self.alimento not in self.rangos_m:
-            raise ValueError("No se reconoce como alimento")
-        
-        self.m = random.uniform(*self.rangos_m[self.alimento])
+        """
+        resultado_aw = 0
+        contador = 0
 
-        if self.alimento == "manzana":
-            self.manzana = 0.97 * ((15 * self.m)**2) / (1 + (15 * self.m)**2)
-            self.aw = self.manzana
-        elif self.alimento == "kiwi":
-            exp_term = math.exp(-18 * self.m)
-            self.kiwi = 0.96 * (1 - exp_term) / (1 + exp_term)
-            self.aw = self.kiwi
-        elif self.alimento == "papa":
-            self.papa = 0.66 * math.atan(18 * self.m)
-            self.aw = self.papa
-        elif self.alimento == "zanahoria":
-            self.zanahoria = 0.96 * (1 - math.exp(-10 * self.m))
-            self.aw = self.zanahoria
-            # return self.aw
-
-        resultado = self.verificador_aw(self.aw)
-        return f"{resultado} | m = {round(self.m, 3)} kg/kg | aw = {round(self.aw, 3)}"
+        for alimento in cajon:
+            if isinstance(alimento, clase):
+                resultado_aw += alimento.calcular_aw()
+                contador += 1
+            if contador == 0:
+                return 0
+        promedio = resultado_aw / contador
+        resultado = self.verificador_aw(promedio)
+        return resultado
 
 if __name__ == '__main__':
-    for alimento in ["zanahoria", "papa", "manzana", "kiwi"]:
-        calculador = CalculadorBromatologico(alimento)
-        aw = calculador.calcular_aw()
-        print(f"Alimento: {alimento.capitalize()} | {aw}")
+    alim = Kiwi(0.20)
+    cajon = Cajon(5)
+    cajon.agregar_alimento(alim)
+    calculador = CalculadorBromatologico()
+    aw = calculador.aw_prom(Kiwi, cajon)
+    print(f"Alimento: {type(alim).__name__} | {aw}")
