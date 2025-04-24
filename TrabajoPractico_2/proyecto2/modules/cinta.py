@@ -16,23 +16,19 @@ class Cinta:
     def agregar_alimento(self):
         """método que agrega un alimento al cajon correspondiente."""
         for i in range(self.elementos):
-            alimento = self.detector.detectar_alimento()
-            if self.cajon.elementos[i] is None:
-                self.cajon.elementos[i] = alimento
-            else:
-                break
+            crear_alimento = self.detector.detectar_alimento()
+            print("Salida: ", crear_alimento)
+            instancia_alimento = self.detector.crear_instancia_alimento(crear_alimento["alimento"], crear_alimento["peso"])
 
+            if isinstance(instancia_alimento, AlimentoInvalido):
+                print("Alimento inválido detectado, se omite el cálculo.")
+                continue  # o lo que quieras hacer
 
-    # def mostrar_cajon(self):
-    #     """método que muestra el estado actual del cajón."""
-    #     print(f'Estado del cajón: {self.cajon.elementos}')
-
-    def mostrar_cajon(self):
-        print("Estado del cajón:")
-        for i, elem in enumerate(self.cajon.elementos):
-            print(f"{i}: {elem}")
-
-
+            #calulador
+            calculador = CalculadorBromatologico(instancia_alimento.nombre)
+            resultado_aw = calculador.calcular_aw()
+            
+            print(f"se detectó {instancia_alimento.nombre} con -> {resultado_aw} de aw")
 
 class DetectorAlimento:
     """clase que representa un conjunto de sensores de la cinta transportadora
@@ -56,10 +52,10 @@ class DetectorAlimento:
         n_alimentos = len(self.alimentos)
         alimento_detectado = self.alimentos[random.randint(0, n_alimentos-1)]
         peso_detectado = random.choices(self.peso_alimentos, self.prob_pesos)[0]
-        # return {"alimento": alimento_detectado, "peso": peso_detectado}
-        return self._crear_instancia_alimento(alimento_detectado, peso_detectado)
+        # return self._crear_instancia_alimento(alimento_detectado, peso_detectado)
+        return {"alimento": alimento_detectado, "peso": peso_detectado}
     
-    def _crear_instancia_alimento(self, nombre, peso):
+    def crear_instancia_alimento(self, nombre, peso):
         clases = {
             "kiwi": Kiwi,
             "manzana": Manzana,
@@ -68,8 +64,6 @@ class DetectorAlimento:
         }
         clase = clases.get(nombre, AlimentoInvalido)
 
-        if clase is None:
-            raise ValueError(f"Alimento desconocido: {nombre}")
         return clase(peso)
     
 class Cajon: #podria reemplazarse por bolson
@@ -82,4 +76,3 @@ if __name__ == "__main__":
     cajon = Cajon(n_elementos=10)
     cinta = Cinta(n_elementos=10, detector=detector, cajon=cajon)
     cinta.agregar_alimento()
-    cinta.mostrar_cajon()
