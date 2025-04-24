@@ -1,3 +1,4 @@
+#CLASE BASE PERSONA
 class Persona:
     def __init__(self, nombre, apellido, dni):
         self.__nombre = nombre
@@ -30,3 +31,38 @@ class Persona:
 
     def __str__(self):
         return f"{self.__nombre} {self.__apellido}, DNI: {self.__dni}"
+    
+#CLASE ESTUDIANTE
+class Estudiante(Persona):
+    def __init__(self, nombre, apellido, dni):
+        super().__init__(nombre, apellido, dni)
+        self.__facultades = []
+        self.__cursos = []
+
+    def inscribir_facultad(self, facultad):
+        if facultad not in self.__facultades:
+            self.__facultades.append(facultad)
+
+    def inscribir_curso(self, curso):
+        if curso not in self.__cursos:
+            self.__cursos.append(curso)
+
+    def listar_cursos(self):
+        for curso in self.__cursos:
+            print(curso)
+
+    def __str__(self):
+        return super().__str__()
+    
+#CLASE PROFESOR
+class Profesor(Persona):
+    def __init__(self, nombre, apellido, dni):
+        super().__init__(nombre, apellido, dni)
+        self.__departamentos = []
+
+    def asociar_departamento(self, depto):
+        if depto not in self.__departamentos:
+            self.__departamentos.append(depto)
+
+    def __str__(self):
+        return super().__str__()

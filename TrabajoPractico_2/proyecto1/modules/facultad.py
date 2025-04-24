@@ -21,23 +21,23 @@ class Facultad:
     def profesores(self):
         return self.__profesores
     
-    def agregar_estudiante(self, estudiante):
-        if estudiante not in self.__estudiantes:
-            self.__estudiantes.append(estudiante)
+    def agregar_estudiante(self, p_estudiante):
+        if p_estudiante not in self.__estudiantes:
+            self.__estudiantes.append(p_estudiante)
 
     def listar_estudiantes(self):
         return [str(estudiante) for estudiante in self.__estudiantes]
 
-    def contratar_profesor(self, profesor):
-        if profesor not in self.__profesores:
-            self.__profesores.append(profesor)
+    def contratar_profesor(self, p_profesor):
+        if p_profesor not in self.__profesores:
+            self.__profesores.append(p_profesor)
 
     def listar_profesores(self):
         return [str(profesor) for profesor in self.__profesores]
     
-    def agregar_departamento(self, departamento):
-        if departamento not in self.__departamentos:
-            self.__departamentos.append(departamento)
+    def agregar_departamento(self, p_departamento):
+        if p_departamento not in self.__departamentos:
+            self.__departamentos.append(p_departamento)
     
     def listar_departamentos(self):
         return [str(departamento) for departamento in self.__departamentos]
