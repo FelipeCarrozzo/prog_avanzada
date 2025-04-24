@@ -5,8 +5,9 @@ from calculador import CalculadorBromatologico
 from alimentos import Kiwi, Manzana, Papa, Zanahoria, AlimentoInvalido
 
 class Cinta:
-    """ clase que representa la cinta transportadora de la planta de alimentos.
-    toma el alimento aleatorio del detector y lo coloca en el cajon correspondiente."""
+    """Clase que representa la cinta transportadora de la planta de alimentos.
+    Toma el alimento aleatorio del detector y calcula su aw. Luego lo coloca 
+    en el cajon correspondiente."""
     def __init__(self, n_elementos, detector, cajon, calculador=None):
         self.elementos = n_elementos #variable para hacer la cantidad exacta de alimentos ingresados
         self.detector = detector
@@ -14,7 +15,9 @@ class Cinta:
         self.calculador = calculador
 
     def agregar_alimento(self):
-        """método que agrega un alimento al cajon correspondiente."""
+        """Método que genera un alimento aleatorio y su peso (detectar_alimento()).
+        Luego crea una instancia del alimento correspondiente y calcula su aw (calcular_aw()).
+        """
         for i in range(self.elementos):
             crear_alimento = self.detector.detectar_alimento()
             print("Salida: ", crear_alimento)
@@ -28,11 +31,13 @@ class Cinta:
             calculador = CalculadorBromatologico(instancia_alimento.nombre)
             resultado_aw = calculador.calcular_aw()
             
+            #aca se deberia agregar al cajón. El resultado del prom aw es eliminatorio?
+
             print(f"se detectó {instancia_alimento.nombre} con -> {resultado_aw} de aw")
 
 class DetectorAlimento:
-    """clase que representa un conjunto de sensores de la cinta transportadora
-    para detectar el tipo de alimento y su peso.
+    """Clase que representa cada alimento que se puede detectar en la planta.
+    Cada alimento tiene un nombre y un peso asociado.
     """
     def __init__(self):
         self.alimentos = ["kiwi", "manzana", "papa", "zanahoria", "undefined"]
@@ -40,13 +45,12 @@ class DetectorAlimento:
         self.prob_pesos = np.round(self.__softmax(self.peso_alimentos)[::-1], 2)
 
     def __softmax(self, x):
-        """función softmax para crear vector de probabilidades 
-        que sumen 1 en total
+        """Función softmax para crear vector de probabilidades que sumen 1 en total
         """
         return (np.exp(x - np.max(x)) / np.exp(x - np.max(x)).sum())
 
     def detectar_alimento(self):
-        """método que simula la detección del alimento y devuelve un diccionario
+        """Método que simula la detección del alimento y devuelve un diccionario
         con la información del tipo y el peso del alimento.
         """
         n_alimentos = len(self.alimentos)
@@ -67,6 +71,9 @@ class DetectorAlimento:
         return clase(peso)
     
 class Cajon: #podria reemplazarse por bolson
+    """Clase que representa el cajón donde se depositan los alimentos.
+    Contiene una lista de elementos que se reemplazan por el alimento.
+    """
     def __init__(self, n_elementos):
         self.elementos = [None] * n_elementos #lista con n_elementos que se reemplazan por el alimento
 
