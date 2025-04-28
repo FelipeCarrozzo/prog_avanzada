@@ -5,34 +5,38 @@ from modules.cinta import Cinta
 from modules.detector import DetectorAlimento
 from modules.cajon import Cajon
 
+app.secret_key = "trabajo2_PA"
+
 # Página de inicio
 @app.route('/', methods=['GET', 'POST'])
 def index():
-
+    alimentos = []
     if request.method == 'POST':
+        
         #genero objetos
-        n_alimentos = request.form.get("n_alimentos") #viene desde html
+        n_alimentos = int(request.form.get("n_alimentos"))  #viene desde html
         if n_alimentos:
-            # session['n_alimentos'] = int(n_alimentos) #convierte a enter
-            session['n_alimentos'] = 10
+            print("se detectó el número de alimentos")
+            # session['n_alimentos'] = int(n_alimentos)  #convierte a entero
             detector = DetectorAlimento()
             cajon = Cajon(n_alimentos)
             cinta = Cinta(detector, cajon)
 
-            alimentos = []
-            for i in range(session['n_alimentos']):
-                print("Alimento en la cinta: ", i)
+            contador = 0
+            while contador < n_alimentos:
+                print("Alimento en la cinta: ")
                 alimento = cinta.clasificar_alimentos()
-                if alimento:
+                if alimento is not None:
                     cajon.agregar_alimento(alimento)
                     alimentos.append(alimento)
-                    # session['alimentos'] = [alimento] #almacena el alimento en la sesion
-        print("Alimentos en la sesión:", alimentos)
+                    contador += 1
+                else:
+                    print("Alimento inválido")
             
-    # return (alimentos)
+        print("Alimentos en la sesión:", cajon.mostrar_contenido_cajon())
+    
 
-
-    return render_template('index.html')
+    return render_template('index.html', lista_alimentos=alimentos, n_alimentos=session.get("n_alimentos"))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

@@ -4,7 +4,7 @@ class Cajon: #podria reemplazarse por bolson
     Clase que representa el cajón donde se depositan los alimentos.
     Contiene una lista de elementos que se reemplazan por el alimento.
     """
-    def __init__(self, n_elementos):
+    def __init__(self, n_elementos: int):
         self.valor = 0
         self.limite = n_elementos
         self._elementos = [None] * n_elementos #lista con n_elementos que se reemplazan por el alimento

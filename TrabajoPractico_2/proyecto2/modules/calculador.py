@@ -1,7 +1,7 @@
-import math
-import random
-from cajon import Cajon
-from alimentos import Kiwi, Manzana, Papa, Zanahoria, AlimentoInvalido
+# import math
+# import random
+from modules.cajon import Cajon
+from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria, AlimentoInvalido
 
 class CalculadorBromatologico:
     """
