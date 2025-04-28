@@ -43,6 +43,7 @@ class CalculadorBromatologico:
         for alimento in cajon:
             if isinstance(alimento, clase):
                 resultado_aw += alimento.calcular_aw()
+                resultado_aw = round(resultado_aw, 2)
                 contador += 1
             if contador == 0:
                 return 0
@@ -51,7 +52,7 @@ class CalculadorBromatologico:
         return resultado
 
 if __name__ == '__main__':
-    alim = Kiwi(0.20)
+    alim = Kiwi(0.13)
     cajon = Cajon(5)
     cajon.agregar_alimento(alim)
     calculador = CalculadorBromatologico()

@@ -3,8 +3,8 @@ import random
 import matplotlib.pyplot as plt
 from calculador import CalculadorBromatologico
 from cajon import Cajon
-from alimentos import Kiwi, Manzana, Papa, Zanahoria, AlimentoInvalido
 from detector import DetectorAlimento
+from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria
 
 class Cinta:
     """
@@ -12,11 +12,10 @@ class Cinta:
     Toma el alimento aleatorio del detector y calcula su aw. Luego lo coloca 
     en el cajon correspondiente.
     """
-    def __init__(self, n_elementos:int, detector, cajon):
-        self.elementos = n_elementos #variable para hacer la cantidad exacta de alimentos ingresados
+    def __init__(self, detector, cajon):
+        # self.elementos = n_elementos #variable para hacer la cantidad exacta de alimentos ingresados
         self.detector = detector
         self.cajon = cajon
-        # self.calculador = calculador
 
     def clasificar_alimentos(self):
         """
@@ -49,7 +48,18 @@ class Cinta:
 
 
 if __name__ == "__main__":
+    pass
+    # simulacion de toda el proceso
     detector = DetectorAlimento()
-    cajon  = Cajon(1)
+    cajon = Cajon(5)
     cinta = Cinta(5, detector, cajon)
-    print(cinta.clasificar_alimentos())
+    calculador = CalculadorBromatologico()
+    lista_alimentos = []
+    for i in range(cinta.elementos):
+        alimento = cinta.clasificar_alimentos()
+        if alimento:
+            cajon.agregar_alimento(alimento)
+            lista_alimentos.append(alimento)
+            print(f"Alimento: {type(alimento).__name__} | Peso: {alimento} | aw: {alimento.calcular_aw()}")
+        else:
+            print("Alimento no válido, se descarta.")

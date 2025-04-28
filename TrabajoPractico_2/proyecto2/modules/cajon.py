@@ -1,4 +1,4 @@
-from alimentos import Kiwi, Manzana, Papa, Zanahoria, Alimentos
+from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria, Alimentos
 class Cajon: #podria reemplazarse por bolson
     """
     Clase que representa el cajón donde se depositan los alimentos.
