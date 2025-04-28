@@ -4,6 +4,7 @@ from modules.departamento import Departamento
 from modules.profesor import Profesor
 from modules.estudiante import Estudiante
 from modules.curso import Curso
+import os
 
 facultades = []
 
@@ -35,13 +36,17 @@ def inicializar_facultades():
 
 #facultades = inicializar_facultades()
 
+# Ruta absoluta al archivo personas.txt
+base_dir = os.path.dirname(__file__)
+path_personas = os.path.join(base_dir, 'data', 'personas.txt')
+
 def crear_facultad_desde_archivo(nombre_facultad):
     facultad = Facultad(nombre_facultad)
     estudiantes_agregados = 0
     profesores_agregados = 0
 
     #crear 1 txt por cada entidad
-    with open("data/personas.txt", 'r', encoding='utf-8') as f:
+    with open(path_personas, 'r', encoding='utf-8') as f:
         for linea in f:
             datos = linea.strip().split(',')
             if datos[0] == 'ESTUDIANTE' and estudiantes_agregados < 4:
@@ -62,7 +67,9 @@ def crear_facultad_desde_archivo(nombre_facultad):
 print("Bienvenido al sistema de gestión de facultades.")
 nombre_facultad = input("Ingrese el nombre de la facultad: ")
 
-facultades = crear_facultad_desde_archivo(nombre_facultad)
+#facultades = crear_facultad_desde_archivo(nombre_facultad)
+facultades = [crear_facultad_desde_archivo(nombre_facultad)]
+
 
 #facultades = [crear_facultad_desde_archivo("Facultad de Ingeniería")]
 
