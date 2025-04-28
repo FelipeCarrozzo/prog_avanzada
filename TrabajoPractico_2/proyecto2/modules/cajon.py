@@ -4,11 +4,9 @@ class Cajon: #podria reemplazarse por bolson
     Clase que representa el cajón donde se depositan los alimentos.
     Contiene una lista de elementos que se reemplazan por el alimento.
     """
-    def __init__(self, n_elementos: int):
+    def __init__(self):
         self.valor = 0
-        self.limite = n_elementos
-        self._elementos = [None] * n_elementos #lista con n_elementos que se reemplazan por el alimento
-        self._pos_actual = 0
+        self._elementos = [] #lista con n_elementos que se reemplazan por el alimento
 
     def __len__(self):
         return len(self._elementos)
@@ -32,10 +30,7 @@ class Cajon: #podria reemplazarse por bolson
         """
         if not isinstance(alimento, Alimentos):
             raise TypeError("Solo se pueden agregar objetos de tipo Alimento")
-        if self._pos_actual >= self.limite:
-            raise ValueError("Cajon lleno")
-        self._elementos[self._pos_actual] = alimento
-        self._pos_actual += 1
+        self._elementos.append(alimento)
 
     def mostrar_contenido_cajon(self):
         return self._elementos
