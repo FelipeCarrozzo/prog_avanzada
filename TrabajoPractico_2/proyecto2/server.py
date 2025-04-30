@@ -7,46 +7,55 @@ from modules.cajon import Cajon
 from modules.calculador import CalculadorBromatologico
 from modules.alimentos import Alimentos, Verdura, Fruta, Kiwi, Manzana, Papa, Zanahoria
 
-
 # Página de inicio
 @app.route('/', methods=['GET', 'POST'])
 def index():
     alimentos = [] #borrar antes de entregar
+    #genero objetos
     detector = DetectorAlimento()
     cajon = Cajon()
     calculador = CalculadorBromatologico()
     cinta = Cinta(detector, cajon)
+
     if request.method == 'POST':
-        #genero objetos
         n_alimentos = int(request.form.get("n_alimentos"))  #viene desde html
         if n_alimentos:
-            print("se detectó el número de alimentos")
+            print("1. Se detectó el número de alimentos")
             contador = 0
             while contador < n_alimentos:
-                print("Alimento en la cinta: ")
+                print("2. Alimento en la cinta: ")
                 alimento = cinta.clasificar_alimentos()
+                print("3. Alimento clasificado", alimento)
                 if alimento is not None:
                     cajon.agregar_alimento(alimento)
+                    print("4. Imprimo cajon", cajon.mostrar_contenido_cajon())
                     alimentos.append(alimento)
                     contador += 1
                 else:
                     print("Alimento inválido")
 
-    calculos_aw_promedio = {
-    "aw_kiwi": calculador.calcular_aw(Kiwi,cajon),
-    "aw_manzana": calculador.calcular_aw(Manzana,cajon),
-    "aw_papa": calculador.calcular_aw(Papa,cajon),
-    "aw_zanahoria": calculador.calcular_aw(Zanahoria,cajon),
-    "aw_frutas": calculador.calcular_aw(Fruta,cajon),
-    "aw_verduras": calculador.calcular_aw(Verdura,cajon),
-    "aw_total": calculador.calcular_aw(Alimentos,cajon)
-    }
+            calculos_aw_promedio = {
+            "aw_kiwi": round(calculador.calcular_aw(Kiwi,cajon),2),
+            "aw_manzana": round(calculador.calcular_aw(Manzana,cajon),2),
+            "aw_papa": round(calculador.calcular_aw(Papa,cajon),2),
+            "aw_zanahoria": round(calculador.calcular_aw(Zanahoria,cajon),2),
+            "aw_frutas": round(calculador.calcular_aw(Fruta,cajon),2),
+            "aw_verduras": round(calculador.calcular_aw(Verdura,cajon),2),
+            "aw_total": round(calculador.calcular_aw(Alimentos,cajon),2)
+            }
 
-    print("Valores de aw promedio:", calculos_aw_promedio)
+            peso_total = round(cajon.calcular_peso(),2)
 
-    
+        print("Valores de aw promedio:", calculos_aw_promedio)
 
-    return render_template('index.html', lista_alimentos=alimentos, n_alimentos=session.get("n_alimentos"))
+    return render_template('index.html', lista_alimentos=alimentos, aw_kiwi=calculos_aw_promedio["aw_kiwi"], 
+                        aw_manzana=calculos_aw_promedio["aw_manzana"],
+                        aw_papa=calculos_aw_promedio["aw_papa"], 
+                        aw_zanahoria=calculos_aw_promedio["aw_zanahoria"], 
+                        aw_fruta=calculos_aw_promedio["aw_frutas"], 
+                        aw_verdura=calculos_aw_promedio["aw_verduras"], 
+                        aw_total=calculos_aw_promedio["aw_total"],
+                        peso_total = peso_total)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
