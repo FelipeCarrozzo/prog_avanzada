@@ -1,4 +1,5 @@
 from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria, Alimentos
+# from alimentos import Kiwi, Manzana, Papa, Zanahoria, Alimentos
 class Cajon: #podria reemplazarse por bolson
     """
     Clase que representa el cajón donde se depositan los alimentos.
@@ -6,7 +7,7 @@ class Cajon: #podria reemplazarse por bolson
     """
     def __init__(self):
         self.valor = 0
-        self._elementos = [] #lista con n_elementos que se reemplazan por el alimento
+        self._elementos = [] 
 
     def __len__(self):
         return len(self._elementos)
@@ -34,6 +35,19 @@ class Cajon: #podria reemplazarse por bolson
 
     def mostrar_contenido_cajon(self):
         return self._elementos
+    
+    def calcular_peso(self):
+        """
+        Método que calcula el peso total de los alimentos existentes en un cajón.
+        """
+        peso_total = 0
+        contador = 0
+        for alimento in self._elementos:
+            peso_total += alimento.peso
+            contador += 1
+        if contador == 0:
+            return 0
+        return peso_total
 
 if __name__ == "__main__":
     kiwi = Kiwi(0.20)
