@@ -39,17 +39,17 @@ class Estudiante(Persona):
         self.__facultades = []
         self.__cursos = []
 
-    def inscribir_facultad(self, facultad):
-        if facultad not in self.__facultades:
-            self.__facultades.append(facultad)
+    def inscribir_facultad(self, p_facultad):
+        if p_facultad not in self.__facultades:
+            self.__facultades.append(p_facultad)
 
-    def inscribir_curso(self, curso):
-        if curso not in self.__cursos:
-            self.__cursos.append(curso)
+    def inscribir_curso(self, p_curso):
+        if p_curso not in self.__cursos:
+            self.__cursos.append(p_curso)
 
     def listar_cursos(self):
         for curso in self.__cursos:
-            print(curso)
+            return(curso) #revisar
 
     def __str__(self):
         return super().__str__()
@@ -60,9 +60,9 @@ class Profesor(Persona):
         super().__init__(nombre, apellido, dni)
         self.__departamentos = []
 
-    def asociar_departamento(self, depto):
-        if depto not in self.__departamentos:
-            self.__departamentos.append(depto)
+    def asociar_departamento(self, p_depto):
+        if p_depto not in self.__departamentos:
+            self.__departamentos.append(p_depto)
 
     def __str__(self):
         return super().__str__()
