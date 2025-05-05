@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from modules.facultad import Facultad
 from modules.departamento import Departamento
-from modules.profesor import Profesor
-from modules.estudiante import Estudiante
+from modules.persona import Persona, Estudiante, Profesor
 from modules.curso import Curso
 import os
 

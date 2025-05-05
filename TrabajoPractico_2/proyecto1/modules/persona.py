@@ -1,5 +1,7 @@
-#CLASE BASE PERSONA
-class Persona:
+from abc import ABC, abstractmethod
+
+# CLASE BASE ABSTRACTA
+class Persona(ABC):
     def __init__(self, nombre, apellido, dni):
         self.__nombre = nombre
         self.__apellido = apellido
