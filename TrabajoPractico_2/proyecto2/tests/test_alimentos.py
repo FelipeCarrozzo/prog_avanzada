@@ -58,29 +58,29 @@ class TestAlimentos(unittest.TestCase):
         aw = zanahoria.calcular_aw()
         self.assertTrue(0 <= aw <= 1) 
 
-    # Test para verificar que el valor de AW calculado para un Kiwi sea aproximadamente 0.5357
+    # Test para verificar que el valor de AW calculado para 0.2kg Kiwi sea correcto
     def test_kiwi_calcular_aw(self):
         kiwi = Kiwi(0.2)
         aw = kiwi.calcular_aw()
-        self.assertAlmostEqual(aw, 0.5357, places=3) 
+        self.assertAlmostEqual(aw, 0.9089, places=3)
 
-    # Test para verificar que el valor de AW calculado para una Manzana sea aproximadamente 0.853
+    # Test para verificar que el valor de AW calculado para 0.4kg Manzana sea correcto
     def test_manzana_calcular_aw(self):
         manzana = Manzana(0.4)
         aw = manzana.calcular_aw()
-        self.assertAlmostEqual(aw, 0.853, places=3)  
+        self.assertAlmostEqual(aw, 0.9438, places=3)  
 
-    # Test para verificar que el valor de AW calculado para una Papa sea aproximadamente 0.803
+    # Test para verificar que el valor de AW calculado para 0.3kg Papa sea correcto
     def test_papa_calcular_aw(self):
         papa = Papa(0.3)
         aw = papa.calcular_aw()
-        self.assertAlmostEqual(aw, 0.803, places=3)  
+        self.assertAlmostEqual(aw, 0.9161, places=3)  
 
-    # Test para verificar que el valor de AW calculado para una Zanahoria sea aproximadamente 0.793
+    # Test para verificar que el valor de AW calculado para 0.5kg Zanahoria sea correcto
     def test_zanahoria_calcular_aw(self):
         zanahoria = Zanahoria(0.5)
         aw = zanahoria.calcular_aw()
-        self.assertAlmostEqual(aw, 0.793, places=3)  
+        self.assertAlmostEqual(aw, 0.9536, places=3)  
 
 if __name__ == '__main__':
     unittest.main()
