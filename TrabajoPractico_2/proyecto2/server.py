@@ -1,4 +1,3 @@
-# Ejemplo de aplicación principal en Flask
 from flask import render_template, session, request, redirect, url_for, send_file, send_from_directory
 from modules.config import app
 from modules.cinta import Cinta
@@ -27,6 +26,7 @@ def index():
         "aw_verduras": 0.0,
     }
     peso_total = 0.0
+    revisar = False 
 
     #verifico si el formulario fue enviado por el usuario
     if request.method == 'POST':
@@ -62,6 +62,11 @@ def index():
     #calculo peso del cajon con la funcion de la clase Cajon
     peso_total = round(cajon.calcular_peso(),2)
 
+    for valor in calculos_aw_promedio.values():
+        if valor > 0.90:
+            revisar = True
+            break
+
     print("Valores de aw promedio:", calculos_aw_promedio)
 
     #renderizo la plantilla pasandole los valores calculados 
@@ -73,7 +78,8 @@ def index():
                         aw_fruta=calculos_aw_promedio["aw_frutas"], 
                         aw_verdura=calculos_aw_promedio["aw_verduras"], 
                         aw_total=calculos_aw_promedio["aw_total"],
-                        peso_total = peso_total)
+                        peso_total = peso_total,
+                        revisar=revisar)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
