@@ -2,9 +2,13 @@ from abc import ABC, abstractmethod
 import math 
 import numpy as np 
 
-"""clases abstractas"""
 
 class Alimentos(ABC):
+    """
+    Clase abstracta que representa un alimento.
+    Contiene un atributo de peso y un método abstracto para calcular la actividad acuosa
+    (aw) en cada tipo de alimento.
+    """
     def __init__(self, peso_alimento):
         if 0.05<=peso_alimento <= 0.6:
             self._peso_alimento = peso_alimento
@@ -20,6 +24,10 @@ class Alimentos(ABC):
         pass 
 
 class Fruta(Alimentos, ABC):
+    """
+    Clase abstracta que representa una fruta.
+    Hereda de la clase Alimentos y contiene un método abstracto para calcular la actividad acuosa (aw).
+    """
     def __init__(self, peso_alimento):
         super().__init__(peso_alimento)
         
@@ -28,6 +36,10 @@ class Fruta(Alimentos, ABC):
         pass
 
 class Verdura(Alimentos, ABC):
+    """
+    Clase abstracta que representa una verdura.
+    Hereda de la clase Alimentos y contiene un método abstracto para calcular la actividad acuosa (aw).
+    """
     def __init__(self, peso_alimento):
         super().__init__(peso_alimento)
 
@@ -37,19 +49,22 @@ class Verdura(Alimentos, ABC):
 
 class Kiwi(Fruta):
     def __init__(self, peso_alimento):
-        """clase que hereda sus atributos de Fruta que a la vez hereda sus atributos de Alimentos 
+        """
+        Clase que hereda sus atributos de Fruta que a la vez hereda sus atributos de Alimentos 
         """
         super().__init__(peso_alimento)
 
 
     def calcular_aw(self):
-        """método que calcula la actividad acuosa del Kiwi
+        """
+        Método que calcula la actividad acuosa del Kiwi
         """
         awk = 0.96 * ((1 - math.exp(-18 * self.peso_del_alimento)) / (1 + math.exp(-18 * self.peso_del_alimento)))
         return(awk)
     
     def __str__(self):
-        """método que devuelve una cadena de texto que incluye el nombre y el peso del alimento
+        """
+        Método que devuelve una cadena de texto que incluye el nombre y el peso del alimento
         """
         return(f"Kiwi ({self._peso_alimento}kg)")
     
@@ -59,18 +74,21 @@ class Kiwi(Fruta):
 
 class Manzana(Fruta):
     def __init__(self, peso_alimento):
-        """Clase que hereda sus atributos de Fruta que a la vez hereda sus atributos de Alimentos 
+        """
+        Clase que hereda sus atributos de Fruta que a la vez hereda sus atributos de Alimentos 
         """
         super().__init__(peso_alimento)
         
     def calcular_aw(self):
-        """método que calcula la actividad acuosa de la Manzana
+        """
+        Método que calcula la actividad acuosa de la Manzana
         """
         awm = 0.97 * ((15 * self.peso_del_alimento) ** 2) / (1 + (15 * self.peso_del_alimento) ** 2)
         return(awm)
 
     def __str__(self):
-        """método que devuelve una cadena de texto que incluye el nombre y el peso del alimento
+        """
+        Método que devuelve una cadena de texto que incluye el nombre y el peso del alimento
         """
         return(f"Manzana ({self._peso_alimento}kg)")
     
@@ -80,18 +98,21 @@ class Manzana(Fruta):
 
 class Papa(Verdura):
     def __init__(self, peso_alimento):
-        """clase que hereda sus atributos de Verdura que a la vez hereda sus atributos de Alimentos 
+        """
+        Clase que hereda sus atributos de Verdura que a la vez hereda sus atributos de Alimentos 
         """
         super().__init__(peso_alimento)
     
     def calcular_aw(self):
-        """método que calcula la actividad acuosa de la Papa
+        """
+        Método que calcula la actividad acuosa de la Papa
         """
         awp = 0.66 * (np.arctan(18 * self.peso_del_alimento))
         return(awp)
 
     def __str__(self):
-        """método que devuelve una cadena de texto que incluye el nombre y el peso del alimento
+        """
+        Método que devuelve una cadena de texto que incluye el nombre y el peso del alimento
         """
         return(f"Papa ({self._peso_alimento}kg)")
     
@@ -101,18 +122,21 @@ class Papa(Verdura):
 
 class Zanahoria(Verdura):
     def __init__(self, peso_alimento):
-        """clase que hereda sus atributos de Verdura que a la vez hereda sus atributos de Alimentos 
+        """-
+        Clase que hereda sus atributos de Verdura que a la vez hereda sus atributos de Alimentos 
         """
         super().__init__(peso_alimento)
  
     def calcular_aw(self):
-        """método que calcula la actividad acuosa de la Zanahoria
+        """
+        Método que calcula la actividad acuosa de la Zanahoria
         """
         awz = 0.96 * ((1 - math.exp(-10 * self.peso_del_alimento)))
         return(awz)
 
     def __str__(self):
-        """método que devuelve una cadena de texto que incluye el nombre y el peso del alimento
+        """
+        Método que devuelve una cadena de texto que incluye el nombre y el peso del alimento
         """
         return f"Zanahoria ({self._peso_alimento}kg)"
     

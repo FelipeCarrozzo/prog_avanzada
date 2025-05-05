@@ -25,11 +25,4 @@ class DetectorAlimento:
         n_alimentos = len(self.lista_alimentos)
         alimento_detectado = self.lista_alimentos[random.randint(0, n_alimentos-1)]
         peso_detectado = random.choices(self.peso_alimentos, self.prob_pesos)[0]
-        # return self._crear_instancia_alimento(alimento_detectado, peso_detectado)
         return {"alimento": alimento_detectado, "peso": peso_detectado}
-    
-
-if __name__ == "__main__":
-    detector = DetectorAlimento()
-    for i in range(10):
-        print(detector.detectar_alimento())
