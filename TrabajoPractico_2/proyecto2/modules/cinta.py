@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from modules.calculador import CalculadorBromatologico
 from modules.cajon import Cajon
 from modules.detector import DetectorAlimento
-from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria, AlimentoInvalido
+from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria
 
 class Cinta:
     """
@@ -31,7 +31,7 @@ class Cinta:
 
         if tipo_alimento == "undefined":
             self.alimento = None
-            return None
+            # return None
 
         elif tipo_alimento == "kiwi":
             self.alimento = Kiwi(peso_alimento)

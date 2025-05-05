@@ -43,7 +43,7 @@ class Cajon: #podria reemplazarse por bolson
         peso_total = 0
         contador = 0
         for alimento in self._elementos:
-            peso_total += alimento.peso
+            peso_total += alimento._peso_alimento
             contador += 1
         if contador == 0:
             return 0

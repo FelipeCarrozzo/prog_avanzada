@@ -119,21 +119,3 @@ class Zanahoria(Verdura):
     @property
     def nombre(self):
         return "zanahoria"
-
-class AlimentoInvalido(Alimentos):
-    """Clase para evitar errores en la creación de objetos de Alimentos
-    o para alimentos 'undefined'.
-    """
-    def tipo(self):
-        return "desconocido"
-
-    def __str__(self):
-        return f"Alimento inválido ({self._peso_alimento}kg)"
-
-    def calcular_aw(self):
-        # return super().calcular_aw()
-        pass
-
-    @property
-    def nombre(self):
-        return "desconocido"
