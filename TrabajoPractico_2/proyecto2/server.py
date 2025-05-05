@@ -1,4 +1,4 @@
-from flask import render_template, session, request, redirect, url_for, send_file, send_from_directory
+from flask import render_template, request
 from modules.config import app
 from modules.cinta import Cinta
 from modules.detector import DetectorAlimento
@@ -9,7 +9,10 @@ from modules.alimentos import Alimentos, Verdura, Fruta, Kiwi, Manzana, Papa, Za
 # Página de inicio
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    alimentos = [] #borrar antes de entregar
+    """
+    Función que maneja la página de inicio de la aplicación.
+    Permite al usuario clasificar alimentos y calcular su actividad acuosa.
+    """
     #genero objetos
     detector = DetectorAlimento()
     cajon = Cajon()
@@ -25,6 +28,7 @@ def index():
         "aw_frutas": 0.0,
         "aw_verduras": 0.0,
     }
+
     peso_total = 0.0
     revisar = False 
 
@@ -32,18 +36,15 @@ def index():
     if request.method == 'POST':
         n_alimentos = int(request.form.get("n_alimentos"))  #viene desde html
         if n_alimentos:
-            print("1. Se detectó el número de alimentos")
+
             #verifico la cantidad de alimentos a clasificar
             contador = 0
             while contador < n_alimentos:
-                print("2. Alimento en la cinta: ")
                 alimento = cinta.clasificar_alimentos()
-                print("3. Alimento clasificado", alimento)
+
                 #mientras el alimento no sea None, lo agrego al cajon
                 if alimento is not None:
                     cajon.agregar_alimento(alimento)
-                    print("4. Imprimo cajon", cajon.mostrar_contenido_cajon())
-                    alimentos.append(alimento)
                     contador += 1
                 else:
                     print("Alimento inválido")
@@ -59,9 +60,11 @@ def index():
     "aw_verduras": round(calculador.calcular_aw(Verdura,cajon),2),
     "aw_total": round(calculador.calcular_aw(Alimentos,cajon),2)
     }
+
     #calculo peso del cajon con la funcion de la clase Cajon
     peso_total = round(cajon.calcular_peso(),2)
 
+    #verifico que el valor de aw promedio no sea mayor a 1 o menor a 0
     for valor in calculos_aw_promedio.values():
         if valor > 0.90:
             revisar = True
@@ -70,8 +73,7 @@ def index():
     print("Valores de aw promedio:", calculos_aw_promedio)
 
     #renderizo la plantilla pasandole los valores calculados 
-    return render_template('index.html', lista_alimentos=alimentos, 
-                        aw_kiwi=calculos_aw_promedio["aw_kiwi"], 
+    return render_template('index.html', aw_kiwi=calculos_aw_promedio["aw_kiwi"], 
                         aw_manzana=calculos_aw_promedio["aw_manzana"],
                         aw_papa=calculos_aw_promedio["aw_papa"], 
                         aw_zanahoria=calculos_aw_promedio["aw_zanahoria"], 

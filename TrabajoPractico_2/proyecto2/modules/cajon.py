@@ -1,13 +1,16 @@
 from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria, Alimentos
-# from alimentos import Kiwi, Manzana, Papa, Zanahoria, Alimentos
-class Cajon: #podria reemplazarse por bolson
+
+class Cajon:
     """
     Clase que representa el cajón donde se depositan los alimentos.
     Contiene una lista de elementos que se reemplazan por el alimento.
     """
     def __init__(self):
+        """ 
+        Inicializa el cajón y una lista vacía.
+        """
         self.valor = 0
-        self._elementos = [] 
+        self._elementos = []
 
     def __len__(self):
         return len(self._elementos)
@@ -17,6 +20,10 @@ class Cajon: #podria reemplazarse por bolson
         return self
     
     def __next__(self):
+        """
+        Devuelve el siguiente alimento en el cajón.
+        Si no hay más alimentos, se lanza una excepción StopIteration.
+        """
         if self._index < len(self._elementos):
                     result = self._elementos[self._index]
                     self._index += 1
@@ -49,14 +56,3 @@ class Cajon: #podria reemplazarse por bolson
             return 0
         return peso_total
 
-if __name__ == "__main__":
-    kiwi = Kiwi(0.20)
-    manzana = Manzana(0.20)
-    papa = Papa(0.20)
-    zanahoria = Zanahoria(0.20)
-    cajon = Cajon(5)
-    cajon.agregar_alimento(papa) #agrega un alimento al cajon
-    cajon.agregar_alimento(kiwi) #agrega un alimento al cajon
-    cajon.agregar_alimento(manzana) #agrega un alimento al cajon
-    cajon.agregar_alimento(zanahoria) #agrega un alimento al cajon
-    print(cajon.mostrar_contenido_cajon()) #imprime la lista de elementos del cajon

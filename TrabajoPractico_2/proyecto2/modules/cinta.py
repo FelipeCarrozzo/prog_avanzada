@@ -13,7 +13,9 @@ class Cinta:
     en el cajon correspondiente.
     """
     def __init__(self, detector, cajon):
-        # self.elementos = n_elementos #variable para hacer la cantidad exacta de alimentos ingresados
+        """
+        Inicializa la cinta con un detector y un cajón.
+        """
         self.detector = detector
         self.cajon = cajon
 
@@ -46,21 +48,3 @@ class Cinta:
             self.alimento = Zanahoria(peso_alimento)
 
         return self.alimento
-
-
-if __name__ == "__main__":
-    pass
-    # simulacion de toda el proceso
-    detector = DetectorAlimento()
-    cajon = Cajon(5)
-    cinta = Cinta(5, detector, cajon)
-    calculador = CalculadorBromatologico()
-    lista_alimentos = []
-    for i in range(cinta.elementos):
-        alimento = cinta.clasificar_alimentos()
-        if alimento:
-            cajon.agregar_alimento(alimento)
-            lista_alimentos.append(alimento)
-            print(f"Alimento: {type(alimento).__name__} | Peso: {alimento} | aw: {alimento.calcular_aw()}")
-        else:
-            print("Alimento no válido, se descarta.")

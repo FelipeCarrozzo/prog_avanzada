@@ -1,10 +1,5 @@
-# import math
-# import random
 from modules.cajon import Cajon
 from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria
-# from cajon import Cajon
-# from alimentos import Kiwi, Manzana, Papa, Zanahoria, Fruta, Verdura, Alimentos
-
 
 class CalculadorBromatologico:
     """
@@ -13,6 +8,10 @@ class CalculadorBromatologico:
     del conjunto de alimentos.
     """
     def __init__(self, clase=None, cajon=None):
+        """
+        Inicializa la clase CalculadorBromatologico.
+        Se le puede pasar un tipo de alimento y un cajón.
+        """
         self.clase = clase
         self.cajon = cajon
         self.promedio = None
@@ -49,34 +48,3 @@ class CalculadorBromatologico:
     def __round__(self, ndigits=None):
         resultado = self.calcular_aw()
         return round (resultado, ndigits) if ndigits is not None else round(resultado)
-
-if __name__ == '__main__':
-    alim1 = Kiwi(0.13)
-    alimm1 = Kiwi(0.12)
-    alimm2 = Kiwi(0.11)
-    alim2 = Manzana(0.13)
-    alim3 = Papa(0.13)
-    alim4 = Zanahoria(0.13)
-    cajon = Cajon()
-    cajon.agregar_alimento(alim1)
-    cajon.agregar_alimento(alimm1)
-    cajon.agregar_alimento(alimm2)
-    cajon.agregar_alimento(alim2)
-    cajon.agregar_alimento(alim3)
-    cajon.agregar_alimento(alim4)
-
-    # calculador = CalculadorBromatologico()
-    # awKiwi = calculador.calcular_aw(Kiwi, cajon)
-    # awManzana = calculador.calcular_aw(Manzana, cajon)
-    # awPapa = calculador.calcular_aw(Papa, cajon)
-    # awZanahoria = calculador.calcular_aw(Zanahoria, cajon)
-    # awFruta = calculador.calcular_aw(Fruta, cajon)
-    # awVerdura = calculador.calcular_aw(Verdura, cajon)
-    # awAlimentos = calculador.calcular_aw(Alimentos, cajon)
-    # print(awFruta)
-    # print(awVerdura)
-    # print(awAlimentos)
-    # print(awKiwi)
-    # print(awManzana)
-    # print(awPapa)
-    # print(awZanahoria)
