@@ -17,15 +17,29 @@ def index():
     calculador = CalculadorBromatologico()
     cinta = Cinta(detector, cajon)
 
+    #creo un diccionario para guardar los valores de aw promedio
+    calculos_aw_promedio = {
+        "aw_kiwi": 0.0,
+        "aw_manzana": 0.0,
+        "aw_papa": 0.0,
+        "aw_zanahoria": 0.0,
+        "aw_frutas": 0.0,
+        "aw_verduras": 0.0,
+    }
+    peso_total = 0.0
+
+    #verifico si el formulario fue enviado por el usuario
     if request.method == 'POST':
         n_alimentos = int(request.form.get("n_alimentos"))  #viene desde html
         if n_alimentos:
             print("1. Se detectó el número de alimentos")
+            #verifico la cantidad de alimentos a clasificar
             contador = 0
             while contador < n_alimentos:
                 print("2. Alimento en la cinta: ")
                 alimento = cinta.clasificar_alimentos()
                 print("3. Alimento clasificado", alimento)
+                #mientras el alimento no sea None, lo agrego al cajon
                 if alimento is not None:
                     cajon.agregar_alimento(alimento)
                     print("4. Imprimo cajon", cajon.mostrar_contenido_cajon())
@@ -34,21 +48,25 @@ def index():
                 else:
                     print("Alimento inválido")
 
-            calculos_aw_promedio = {
-            "aw_kiwi": round(calculador.calcular_aw(Kiwi,cajon),2),
-            "aw_manzana": round(calculador.calcular_aw(Manzana,cajon),2),
-            "aw_papa": round(calculador.calcular_aw(Papa,cajon),2),
-            "aw_zanahoria": round(calculador.calcular_aw(Zanahoria,cajon),2),
-            "aw_frutas": round(calculador.calcular_aw(Fruta,cajon),2),
-            "aw_verduras": round(calculador.calcular_aw(Verdura,cajon),2),
-            "aw_total": round(calculador.calcular_aw(Alimentos,cajon),2)
-            }
+    #genero los calculos de aw para cada alimento. Si el alimento no se encuentra en el cajón,
+    #el valor es 0
+    calculos_aw_promedio = {
+    "aw_kiwi": round(calculador.calcular_aw(Kiwi,cajon),2),
+    "aw_manzana": round(calculador.calcular_aw(Manzana,cajon),2),
+    "aw_papa": round(calculador.calcular_aw(Papa,cajon),2),
+    "aw_zanahoria": round(calculador.calcular_aw(Zanahoria,cajon),2),
+    "aw_frutas": round(calculador.calcular_aw(Fruta,cajon),2),
+    "aw_verduras": round(calculador.calcular_aw(Verdura,cajon),2),
+    "aw_total": round(calculador.calcular_aw(Alimentos,cajon),2)
+    }
+    #calculo peso del cajon con la funcion de la clase Cajon
+    peso_total = round(cajon.calcular_peso(),2)
 
-            peso_total = round(cajon.calcular_peso(),2)
+    print("Valores de aw promedio:", calculos_aw_promedio)
 
-        print("Valores de aw promedio:", calculos_aw_promedio)
-
-    return render_template('index.html', lista_alimentos=alimentos, aw_kiwi=calculos_aw_promedio["aw_kiwi"], 
+    #renderizo la plantilla pasandole los valores calculados 
+    return render_template('index.html', lista_alimentos=alimentos, 
+                        aw_kiwi=calculos_aw_promedio["aw_kiwi"], 
                         aw_manzana=calculos_aw_promedio["aw_manzana"],
                         aw_papa=calculos_aw_promedio["aw_papa"], 
                         aw_zanahoria=calculos_aw_promedio["aw_zanahoria"], 
