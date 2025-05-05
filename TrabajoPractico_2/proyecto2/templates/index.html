@@ -7,35 +7,50 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Transportadora de alimentos</h1>
 
-    <form action="{{ url_for('index') }}" method="POST">
-        <label for="n_alimentos">Ingrese numero de alimentos:</label>
-        <input type="number" id="n_alimentos" name="n_alimentos" required>
-        <button type="submit">Enviar</button>
-    </form>
+    <div class="container">
+  
+        <!--panel izquierdo -->
+        <div class="left-panel">
+          <h1>Transportadora de alimentos</h1>
+          <img src="{{ url_for('static', filename='images/cinta_transportadora_sinfondo.jpg') }}" alt="Cinta transportadora">
+          <form action="{{ url_for('index') }}" method="POST">
+            <label for="n_alimentos">Ingrese número de alimentos:</label>
+            <input type="number" id="n_alimentos" name="n_alimentos" required>
+            <button type="submit">Iniciar carga</button>
+          </form>
+      
+          
+        </div>
+      
+        <!-- panel derecho (tabla) -->
+        <div class="right-panel">
+          <h2>Datos de la carga</h2>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Parámetros</th>
+                <th>Valores</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Peso Total</strong></td><td><strong>{{ peso_total }} kg</strong></td></tr>
+              <tr><td>Aw Kiwi</td><td>{{ aw_kiwi }}</td></tr>
+              <tr><td>Aw Manzana</td><td>{{ aw_manzana }}</td></tr>
+              <tr><td>Aw Papa</td><td>{{ aw_papa }}</td></tr>
+              <tr><td>Aw Zanahoria</td><td>{{ aw_zanahoria }}</td></tr>
+              <tr><td>Aw Fruta</td><td>{{ aw_fruta }}</td></tr>
+              <tr><td>Aw Verdura</td><td>{{ aw_verdura }}</td></tr>
+              <tr><td>Aw Total</td><td>{{ aw_total }}</td></tr>
+            </tbody>
+          </table>
+      
+          {% if revisar %}
+          <div class="alert-box">⚠ Se recomienda inspección del cajón.</div>
+          {% endif %}
+        </div>
+      
+      </div>
 
-    <p>Listado de alimentos.</p>
-    <ul>
-        {% for alimento in lista_alimentos %}
-            <li>{{ alimento }}</li>
-        {% endfor %}
-    </ul>
-
-    <p>Valores de aw promedio:</p>
-    <ul>
-        <li>AW Kiwi: {{ aw_kiwi }}</li>
-        <li>AW Manzana: {{ aw_manzana }}</li>
-        <li>AW Papa: {{ aw_papa }}</li>
-        <li>AW Zanahoria: {{ aw_zanahoria }}</li>
-        <li>AW Fruta: {{ aw_fruta }}</li>
-        <li>AW Verdura: {{ aw_verdura }}</li>
-        <li>AW Total: {{ aw_total }}</li>
-        <li>Peso Total: {{ peso_total }}</li>
-    </ul>
-
-    {% if revisar %}
-    <p class="alerta">⚠ Se recomienda inspección del cajón.</p>
-    {% endif %}
 </body>
 </html>
