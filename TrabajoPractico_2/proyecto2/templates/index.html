@@ -33,5 +33,9 @@
         <li>AW Total: {{ aw_total }}</li>
         <li>Peso Total: {{ peso_total }}</li>
     </ul>
+
+    {% if revisar %}
+    <p class="alerta">⚠ Se recomienda inspección del cajón.</p>
+    {% endif %}
 </body>
 </html>
