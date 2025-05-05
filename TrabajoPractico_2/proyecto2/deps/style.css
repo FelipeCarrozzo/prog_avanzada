@@ -1,0 +1,143 @@
+/* style.css */
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #e9f0ff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    min-height: 100vh;
+    padding-top: 40px;
+  }
+  
+  .container {
+    display: flex;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+  }
+  
+  /* Left panel */
+  .left-panel {
+    background-color: #e3ecff;
+    padding: 30px;
+    width: 300px;
+    text-align: center;
+    border-right: 1px solid #ccc;
+  }
+  
+  .left-panel h2 {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #2c2c2c;
+  }
+  
+  .left-panel label {
+    display: block;
+    margin: 20px 0 5px;
+    font-weight: 500;
+  }
+  
+  .left-panel input[type="number"] {
+    padding: 10px;
+    width: 80%;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  .left-panel img {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .left-panel button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .left-panel button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Right panel */
+  .right-panel {
+    flex: 1;
+    padding: 30px;
+    background-color: #f8f9fa;
+  }
+  
+  .right-panel h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  
+  .weight-info {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  
+  .aw-section {
+    margin-bottom: 20px;
+  }
+  
+  .aw-section h4 {
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 1rem;
+  }
+  
+  .aw-entry {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .aw-entry:last-child {
+    border-bottom: none;
+  }
+  
+  .aw-badge {
+    background-color: #007bff;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    min-width: 45px;
+    text-align: center;
+  }
+  
+  .aw-warning {
+    background-color: #f9c74f;
+    color: #333;
+  }
+  
+  .aw-danger {
+    background-color: #f94144;
+  }
+  
+  .alert-box {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-weight: 500;
+    border: 1px solid #ffeeba;
+  }
+  
