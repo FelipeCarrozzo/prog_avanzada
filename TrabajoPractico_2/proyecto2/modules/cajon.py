@@ -9,7 +9,6 @@ class Cajon:
         """ 
         Inicializa el cajón y una lista vacía.
         """
-        self.valor = 0
         self._elementos = []
 
     def __len__(self):
