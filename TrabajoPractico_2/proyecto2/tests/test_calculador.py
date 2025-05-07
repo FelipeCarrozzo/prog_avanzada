@@ -21,15 +21,19 @@ class TestCalculadorBromatologico(unittest.TestCase):
         self.kiwi2 = Kiwi(0.12)
         self.kiwi3 = Kiwi(0.11)
         self.manzana = Manzana(0.13)
-        self.papa = Papa(0.13)
-        self.zanahoria = Zanahoria(0.13)
+        self.papa1 = Papa(0.14)
+        self.papa2 = Papa(0.12)
+        self.papa3 = Papa(0.10)
+        self.zanahoria = Zanahoria(0.11)
 
         self.cajon = Cajon()
         self.cajon.agregar_alimento(self.kiwi1)
         self.cajon.agregar_alimento(self.kiwi2)
         self.cajon.agregar_alimento(self.kiwi3)
         self.cajon.agregar_alimento(self.manzana)
-        self.cajon.agregar_alimento(self.papa)
+        self.cajon.agregar_alimento(self.papa1)
+        self.cajon.agregar_alimento(self.papa2)
+        self.cajon.agregar_alimento(self.papa3)
         self.cajon.agregar_alimento(self.zanahoria)
 
         self.calculador = CalculadorBromatologico()
@@ -59,7 +63,7 @@ class TestCalculadorBromatologico(unittest.TestCase):
         coincida con el valor del aw individual de la papa.
         """
         aw = self.calculador.calcular_aw(Papa, self.cajon)
-        expected = self.papa.calcular_aw()
+        expected = (self.papa1.calcular_aw() + self.papa2.calcular_aw() + self.papa3.calcular_aw()) / 3
         self.assertAlmostEqual(aw, expected, places=4)
 
     def test_promedio_zanahoria(self):
@@ -93,7 +97,7 @@ class TestCalculadorBromatologico(unittest.TestCase):
         y las zanahorias.
         """
         aw = self.calculador.calcular_aw(Verdura, self.cajon)
-        expected = (self.papa.calcular_aw() + self.zanahoria.calcular_aw()) / 2
+        expected = (self.papa1.calcular_aw() + self.papa2.calcular_aw() + self.papa3.calcular_aw() + self.zanahoria.calcular_aw()) / 4
         self.assertAlmostEqual(aw, expected, places=4)
 
     def test_promedio_total_alimentos(self):

@@ -43,3 +43,6 @@ class TestCajon(unittest.TestCase):
         self.cajon.agregar_alimento(self.kiwi)
         items = [al for al in self.cajon]
         self.assertEqual(items, [self.kiwi])
+    
+if __name__ == '__main__':
+    unittest.main()
