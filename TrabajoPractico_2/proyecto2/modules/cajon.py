@@ -30,14 +30,14 @@ class Cajon:
         else:
             raise StopIteration
     
-    def agregar_alimento(self, alimento: Alimentos):
+    def agregar_alimento(self, p_alimento: Alimentos):
         """
         Método que agrega un alimento al cajón reemplazando los valores None.
         Verifica que el alimento sea del tipo correcto y que el cajón no esté lleno.
         """
-        if not isinstance(alimento, Alimentos):
+        if not isinstance(p_alimento, Alimentos):
             raise TypeError("Solo se pueden agregar objetos de tipo Alimento")
-        self.__elementos.append(alimento)
+        self.__elementos.append(p_alimento)
     
     def calcular_peso(self):
         """
