@@ -17,7 +17,7 @@ def index():
     detector = DetectorAlimento()
     cajon = Cajon()
     calculador = CalculadorBromatologico()
-    cinta = Cinta(detector, cajon)
+    cinta = Cinta(detector)
 
     #creo un diccionario para guardar los valores de aw promedio
     calculos_aw_promedio = {

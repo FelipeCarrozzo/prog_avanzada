@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from modules.facultad import Facultad
 from modules.departamento import Departamento
 from modules.persona import Persona, Estudiante, Profesor
@@ -44,7 +43,6 @@ def crear_facultad_desde_archivo(nombre_facultad):
     estudiantes_agregados = 0
     profesores_agregados = 0
 
-    #crear 1 txt por cada entidad
     with open(path_personas, 'r', encoding='utf-8') as f:
         for linea in f:
             datos = linea.strip().split(',')
@@ -69,12 +67,8 @@ nombre_facultad = input("Ingrese el nombre de la facultad: ")
 #facultades = crear_facultad_desde_archivo(nombre_facultad)
 facultades = [crear_facultad_desde_archivo(nombre_facultad)]
 
-
-#facultades = [crear_facultad_desde_archivo("Facultad de Ingeniería")]
-
-#cuando creamos la facultad desde el archivo, se deberían crear los departamentos y cursos automáticamente
-
 while True:
+    print("\n")
     print("##########################################")
     print("#  Sistema de Información Universitaria  #")
     print("##########################################")
@@ -104,11 +98,9 @@ while True:
             estudiante = Estudiante(nombre, apellido, dni)
             facultad.agregar_estudiante(estudiante)
             print(f"{estudiante} inscripto en {facultad}.\n")
-            print("\n")
             print("Estudiantes inscriptos en la facultad:")
             for est in facultad.listar_estudiantes():
                 print(est)
-            print("\n")
         
     elif opcion == "2":
         # lógica para contratar profesor
@@ -152,7 +144,7 @@ while True:
 
             print("\nSeleccione el director del departamento entre los profesores existentes:")
             if not facultad.listar_profesores():
-                print("No hay profesores disponibles para asignar como director.")
+                print("No hay profesores disponibles para asignar como director. Por favor, contrate uno primero.")
                 continue
             for i, prof in enumerate(facultad.listar_profesores()):
                 print(f"{i + 1} - {prof}")
@@ -172,7 +164,6 @@ while True:
         print("Departamentos en la facultad:")
         for depto in facultad.listar_departamentos():
             print(depto)
-        print("\n")
         
     elif opcion == "4":
         print("Seleccione la facultad:")
@@ -186,7 +177,7 @@ while True:
 
         #1ero se valida si hay departamentos
         if not facultad.listar_departamentos():
-            print("La facultad aún no tiene departamentos.")
+            print("La facultad aún no tiene departamentos. Por favor cree uno primero.")
             continue
 
         print("Seleccione el departamento donde se creará el curso:")
@@ -204,7 +195,7 @@ while True:
 
         #se verifica que haya profesores disponibles
         if not facultad.listar_profesores():
-            print("No hay profesores en esta facultad para asignar como titular.")
+            print("No hay profesores en esta facultad para asignar como titular. Por favor, contrate uno primero.")
             continue
 
         print("Seleccione el profesor titular:")
