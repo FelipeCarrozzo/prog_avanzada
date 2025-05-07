@@ -1,23 +1,20 @@
-# 🐍Nombre del proyecto (darle un nombre significativo) 
+# 🐍Cinta Transportadora de alimentos
 
-Breve descripción del proyecto:
-
-Ejemplo: “Esta es una aplicación web construida con el framework [Flask](https://flask.palletsprojects.com/). Permite [describir funcionalidades principales].
+Este es un proyecto implementado con el framework [Flask](https://flask.palletsprojects.com/). Aquí se implementa una cinta transportadora de alimentos, la cual agrega al cajón la cantidad que el usuario desee. Esta cinta tiene la capacidad de pesar el cajón de alimentos una vez que 
+fueron agregados. También se calcula la actividad acuosa promedio de los alimentos, para advertir al usuario si son aptos para el consumo o no. 
 
 ---
 ## 🏗Arquitectura General
 
-Explica brevemente cómo está organizado el código (funciones y/o clases)
+El proyecto está construido con una arquitectura orientada a objetos y utiliza Flask como servidor web para coordinar la interacción entre los distintos módulos. El archivo server.py funciona como punto de entrada y orquestador del sistema, exponiendo endpoints que integran los componentes principales: el Detector, la Cinta, el CalculadorBromatologico y el Cajon. Cada uno de estos está encapsulado en su propia clase, representando entidades del dominio. La clase Cinta cumple el rol de procesar los alimentos detectados y derivarlos a los cajones correspondientes según su clasificación. Los alimentos (Kiwi, Manzana, Papa, Zanahoria) están modelados como clases especializadas, heredando de una base común, lo que permite aplicar polimorfismo. Esta estructura modular y orientada a objetos favorece la mantenibilidad y facilita futuras extensiones del sistema.
 
-El diagrama de relaciones entre clases está disponible en la carpeta [docs](./docs) del proyecto.
+El diagrama de relaciones UML está disponible en la carpeta [docs](./docs) del proyecto.
 
 ---
 ## 📑Dependencias
 
 1. **Python 3.x**
 2. **Flask** (`pip install flask`)
-3. **SQLalchemy** (`pip install sqlalchemy`)
-4. listar dependencias principales
 5. Dependencias listadas en requierements.txt
 
 ---
@@ -35,9 +32,7 @@ El diagrama de relaciones entre clases está disponible en la carpeta [docs](./d
 
 ## 💻Uso de la aplicación
 
-Explica la funcionalidad de tu aplicación:  
-- Cómo se navega por las rutas o URLs.
-- Si requiere autenticación, describe el flujo de login o registro.
+Para usar la aplicación, se debe ejecutar el archivo [server.py]. 
 
 **Ejemplo**:
 - **Ruta principal** (`/`): muestra la página de inicio.
@@ -47,9 +42,5 @@ Explica la funcionalidad de tu aplicación:
 
 ## 🙎‍♀️🙎‍♂️Autores
 
-- Apellido y Nombre del primer integrante
-- Apellido y Nombre del primer integrante
-
----
-
-> **Consejo**: Mantén el README **actualizado** conforme evoluciona el proyecto, y elimina (o añade) secciones según necesites. Esta plantilla es sólo un punto de partida general.
+- Caporizzo Agustina
+- Carrozzo Felipe
