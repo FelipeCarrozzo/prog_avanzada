@@ -34,14 +34,12 @@ class CalculadorBromatologico:
         for alimento in cajon:
             if isinstance(alimento, clase):
                 resultado_aw = alimento.calcular_aw()
-                # resultado_aw = (resultado_aw, 2)
                 resultados_aw.append(resultado_aw)
                 contador += 1
     
         if contador == 0:
             return 0
         self.promedio = sum(resultados_aw) / contador
-        # resultado = self.verificador_aw(promedio)
         return self.promedio
     
 
