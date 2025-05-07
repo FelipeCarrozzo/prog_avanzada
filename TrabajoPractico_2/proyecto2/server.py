@@ -70,8 +70,6 @@ def index():
             revisar = True
             break
 
-    print("Valores de aw promedio:", calculos_aw_promedio)
-
     #renderizo la plantilla pasandole los valores calculados 
     return render_template('index.html', aw_kiwi=calculos_aw_promedio["aw_kiwi"], 
                         aw_manzana=calculos_aw_promedio["aw_manzana"],

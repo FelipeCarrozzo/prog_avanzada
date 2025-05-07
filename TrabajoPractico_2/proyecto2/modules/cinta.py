@@ -29,7 +29,6 @@ class Cinta:
         crear_alimento = self.detector.detectar_alimento()
         tipo_alimento = crear_alimento['alimento']
         peso_alimento = crear_alimento['peso']
-        print("Salida: ", crear_alimento)
 
         if tipo_alimento == "undefined":
             self.alimento = None
