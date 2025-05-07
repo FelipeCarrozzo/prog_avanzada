@@ -1,4 +1,4 @@
-from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria, Alimentos
+from modules.alimentos import Alimentos
 
 class Cajon:
     """
