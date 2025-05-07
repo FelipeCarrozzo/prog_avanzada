@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="obTsN0vRY-RDkQVVeV62" name="Page-1">
-        <mxGraphModel dx="2343" dy="2182" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1434" dy="1409" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -25,22 +25,22 @@
                 <mxCell id="131" value="+ agregar_estudiante(p_estudiante: Estudiante)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="125" vertex="1">
                     <mxGeometry y="138" width="360" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="132" value="+ listar_estudiantes() -&amp;gt; list[str]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="125" vertex="1">
+                <mxCell id="132" value="+ listar_estudiantes()&amp;nbsp;→ list[str]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="125" vertex="1">
                     <mxGeometry y="164" width="360" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="133" value="+ contratar_profesor (p_profesor: Profesor)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="125" vertex="1">
                     <mxGeometry y="190" width="360" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="134" value="+ listar_profesores() -&amp;gt; list[str]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="125" vertex="1">
+                <mxCell id="134" value="+ listar_profesores()&amp;nbsp;→ list[str]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="125" vertex="1">
                     <mxGeometry y="220" width="360" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="135" value="+ agregar_departamento(p_departamento: Departamento)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="125" vertex="1">
                     <mxGeometry y="250" width="360" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="136" value="+ listar_departamentos() -&amp;gt; list[str]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="125" vertex="1">
+                <mxCell id="136" value="+ listar_departamentos()&amp;nbsp;→ list[str]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="125" vertex="1">
                     <mxGeometry y="280" width="360" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="137" value="+ obtener_cursos_con_departamento() -&amp;gt; list[tuple]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="125" vertex="1">
+                <mxCell id="137" value="+ obtener_cursos_con_departamento()&amp;nbsp;→ list[tuple]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="125" vertex="1">
                     <mxGeometry y="310" width="360" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="138" value="+ __str__()&amp;nbsp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="125" vertex="1">
@@ -67,13 +67,13 @@
                 <mxCell id="145" value="+ agregar_profesor(p_profesor: Profesor)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="139" vertex="1">
                     <mxGeometry y="138" width="250" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="146" value="+ listar_profesores() -&amp;gt; list[str]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="139" vertex="1">
+                <mxCell id="146" value="+ listar_profesores()&amp;nbsp;→ list[str]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="139" vertex="1">
                     <mxGeometry y="164" width="250" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="147" value="+ agregar_curso(p_curso: Curso)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="139" vertex="1">
                     <mxGeometry y="190" width="250" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="148" value="+ listar_cursos() -&amp;gt; list[str]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="139" vertex="1">
+                <mxCell id="148" value="+ listar_cursos()&amp;nbsp;→ list[str]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="139" vertex="1">
                     <mxGeometry y="220" width="250" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="149" value="+ __str__" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="139" vertex="1">
@@ -97,7 +97,7 @@
                 <mxCell id="155" value="+ inscribir_curso(p_curso: Curso)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="150" vertex="1">
                     <mxGeometry y="112" width="230" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="156" value="+ listar_cursos() -&amp;gt; list[Curso]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="150" vertex="1">
+                <mxCell id="156" value="+ listar_cursos()&amp;nbsp;→ list[Curso]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="150" vertex="1">
                     <mxGeometry y="138" width="230" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="157" value="Curso" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
