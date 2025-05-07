@@ -1,5 +1,4 @@
 from modules.cajon import Cajon
-from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria
 
 class CalculadorBromatologico:
     """
@@ -7,14 +6,12 @@ class CalculadorBromatologico:
     el promedio según cada alimento, por tipo de alimento y del total
     del conjunto de alimentos.
     """
-    def __init__(self, clase=None, cajon=None):
+    def __init__(self):
         """
         Inicializa la clase CalculadorBromatologico.
         Se le puede pasar un tipo de alimento y un cajón.
         """
-        self.clase = clase
-        self.cajon = cajon
-        self.promedio = None
+        self.__promedio = None
 
     def calcular_aw(self, clase, cajon: Cajon):
         """
@@ -39,8 +36,8 @@ class CalculadorBromatologico:
     
         if contador == 0:
             return 0
-        self.promedio = sum(resultados_aw) / contador
-        return self.promedio
+        self.__promedio = sum(resultados_aw) / contador
+        return self.__promedio
     
 
     def __round__(self, ndigits=None):

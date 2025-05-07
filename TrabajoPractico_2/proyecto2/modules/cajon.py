@@ -9,10 +9,10 @@ class Cajon:
         """ 
         Inicializa el cajón y una lista vacía.
         """
-        self._elementos = []
+        self.__elementos = []
 
     def __len__(self):
-        return len(self._elementos)
+        return len(self.__elementos)
 
     def __iter__(self):
         self._index = 0
@@ -23,8 +23,8 @@ class Cajon:
         Devuelve el siguiente alimento en el cajón.
         Si no hay más alimentos, se lanza una excepción StopIteration.
         """
-        if self._index < len(self._elementos):
-                    result = self._elementos[self._index]
+        if self._index < len(self.__elementos):
+                    result = self.__elementos[self._index]
                     self._index += 1
                     return result
         else:
@@ -37,10 +37,7 @@ class Cajon:
         """
         if not isinstance(alimento, Alimentos):
             raise TypeError("Solo se pueden agregar objetos de tipo Alimento")
-        self._elementos.append(alimento)
-
-    def mostrar_contenido_cajon(self):
-        return self._elementos
+        self.__elementos.append(alimento)
     
     def calcular_peso(self):
         """
@@ -48,8 +45,8 @@ class Cajon:
         """
         peso_total = 0
         contador = 0
-        for alimento in self._elementos:
-            peso_total += alimento._peso_alimento
+        for alimento in self.__elementos:
+            peso_total += alimento.peso_alimento
             contador += 1
         if contador == 0:
             return 0

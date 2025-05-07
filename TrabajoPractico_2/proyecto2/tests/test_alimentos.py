@@ -6,25 +6,25 @@ class TestAlimentos(unittest.TestCase):
     # Test para verificar que un Kiwi se crea correctamente con el peso y nombre adecuados
     def test_creacion_valida_kiwi(self):
         kiwi = Kiwi(0.2)
-        self.assertEqual(kiwi.peso_del_alimento, 0.2)
+        self.assertEqual(kiwi.peso_alimento, 0.2)
         self.assertEqual(kiwi.nombre, "kiwi")  
 
     # Test para verificar que una Manzana se crea correctamente con el peso y nombre adecuados
     def test_creacion_valida_manzana(self):
         manzana = Manzana(0.4)
-        self.assertEqual(manzana.peso_del_alimento, 0.4) 
+        self.assertEqual(manzana.peso_alimento, 0.4) 
         self.assertEqual(manzana.nombre, "manzana")  
 
     # Test para verificar que una Papa se crea correctamente con el peso y nombre adecuados
     def test_creacion_valida_papa(self):
         papa = Papa(0.3)
-        self.assertEqual(papa.peso_del_alimento, 0.3)  
+        self.assertEqual(papa.peso_alimento, 0.3)  
         self.assertEqual(papa.nombre, "papa")  
 
     # Test para verificar que una Zanahoria se crea correctamente con el peso y nombre adecuados
     def test_creacion_valida_zanahoria(self):
         zanahoria = Zanahoria(0.5)
-        self.assertEqual(zanahoria.peso_del_alimento, 0.5)  
+        self.assertEqual(zanahoria.peso_alimento, 0.5)  
         self.assertEqual(zanahoria.nombre, "zanahoria")  
 
     # Test para verificar que se lance un ValueError si el peso está fuera del rango permitido

@@ -1,5 +1,5 @@
-from modules.detector import DetectorAlimento
 from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria
+from modules.detector import DetectorAlimento
 
 class Cinta:
     """
@@ -23,18 +23,18 @@ class Cinta:
         peso_alimento = crear_alimento['peso']
 
         if tipo_alimento == "undefined":
-            self.alimento = None
+            alimento = None
 
         elif tipo_alimento == "kiwi":
-            self.alimento = Kiwi(peso_alimento)
+            alimento = Kiwi(peso_alimento)
 
         elif tipo_alimento == "manzana":
-            self.alimento = Manzana(peso_alimento)
+            alimento = Manzana(peso_alimento)
 
         elif tipo_alimento == "papa":
-            self.alimento = Papa(peso_alimento)
+            alimento = Papa(peso_alimento)
 
         elif tipo_alimento == "zanahoria":
-            self.alimento = Zanahoria(peso_alimento)
+            alimento = Zanahoria(peso_alimento)
 
-        return self.alimento
+        return alimento

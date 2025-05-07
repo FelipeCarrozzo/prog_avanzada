@@ -15,7 +15,7 @@ class TestCajon(unittest.TestCase):
         Luego se comprueba que el alimento efectivamente está dentro del contenido del cajón.
         """
         self.cajon.agregar_alimento(self.kiwi)
-        self.assertIn(self.kiwi, self.cajon.mostrar_contenido_cajon())
+        self.assertIn(self.kiwi, self.cajon.listar_alimentos())
 
     def test_tipo_incorrecto(self):
         """
