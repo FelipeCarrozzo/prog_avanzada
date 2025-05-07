@@ -4,13 +4,11 @@ from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria
 class Cinta:
     """
     Clase que representa la cinta transportadora de la planta de alimentos.
-    Toma el alimento aleatorio del detector y calcula su aw. Luego lo coloca 
+    Toma el alimento aleatorio del detector. Luego lo coloca 
     en el cajon correspondiente.
     """
     def __init__(self, p_detector):
-        """
-        Inicializa la cinta con un detector.
-        """
+        """Inicializa la cinta con un detector."""
         self.__detector = p_detector
 
     def clasificar_alimentos(self):
