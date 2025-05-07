@@ -35,4 +35,4 @@ class Departamento:
         return [str(curso) for curso in self.__cursos]
     
     def __str__(self):
-        return f"Departamento: {self.__nombre}, Director: {self.__director}"
+        return f"{self.__nombre}, Director: {self.__director}"

@@ -13,7 +13,7 @@ class Alimentos(ABC):
         if 0.05<=peso_alimento <= 0.6:
             self._peso_alimento = peso_alimento
         else:
-            raise ValueError ("el peso no se encuentra dentro de los parámetros.")
+            raise ValueError ("El peso no se encuentra dentro de los límites establecidos (0.05kg - 0.6kg)")
 
     @property
     def peso_del_alimento(self):

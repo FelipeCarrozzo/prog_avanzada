@@ -1,4 +1,4 @@
-# 🐍Nombre del proyecto (darle un nombre significativo) 
+# 🐍Sistema de Información Universitaria
 
 Breve descripción del proyecto:
 

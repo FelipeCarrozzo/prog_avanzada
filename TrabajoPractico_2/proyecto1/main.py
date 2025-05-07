@@ -84,11 +84,13 @@ while True:
     
     if opcion == "1":
         # lógica para inscribir alumno
-            #cómo hacer con la facultad?
             print("Seleccione la facultad:")
             for i, facultad in enumerate(facultades):
                 print(f"{i + 1} - {facultad.nombre}")
             facultad_index = int(input("Opción: ")) - 1
+            if facultad_index < 0 or facultad_index >= len(facultades):
+                print("Opción no válida.")
+                continue
             facultad = facultades[facultad_index]
 
             nombre = input("Nombre del estudiante: ")
