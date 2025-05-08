@@ -13,6 +13,27 @@ path_personas = os.path.join(base_dir,'..', 'data', 'personas.txt')
 path_sistema = os.path.join(base_dir,'..', 'data', 'sistema.txt')
 
 def cargar_facultad_desde_personas_txt(nombre_facultad):
+    
+    """
+    Crea una instancia de Facultad a partir de un archivo de texto con datos de personas.
+
+    El archivo `personas.txt` debe contener líneas con el siguiente formato:
+    - ESTUDIANTE,Nombre,Apellido,DNI
+    - PROFESOR,Nombre,Apellido,DNI
+
+    Se agregan hasta 4 estudiantes y 4 profesores a la facultad creada.
+
+    Parámetros:
+    ----------
+    nombre_facultad : str
+        Nombre de la facultad a crear.
+
+    Retorna:
+    -------
+    Facultad
+        Instancia de la facultad con los estudiantes y profesores cargados.
+    """
+        
     facultad = Facultad(nombre_facultad)
     estudiantes_agregados = 0
     profesores_agregados = 0
@@ -36,6 +57,24 @@ def cargar_facultad_desde_personas_txt(nombre_facultad):
     return facultad
 
 def guardar_sistema_txt(facultades):
+    """
+    Guarda en un archivo de texto plano (`sistema.txt`) toda la información del sistema:
+    facultades, profesores, estudiantes, departamentos, cursos e inscripciones.
+
+    Cada entidad se guarda con una línea prefijada indicando su tipo:
+    - FACULTAD
+    - PROFESOR
+    - ESTUDIANTE
+    - DEPARTAMENTO
+    - CURSO
+    - INSCRIPCION
+
+    Parámetros:
+    ----------
+    facultades : list[Facultad]
+        Lista de facultades a guardar.
+    """
+        
     with open(path_sistema, "w", encoding="utf-8") as f:
         for facultad in facultades:
             f.write(f"FACULTAD,{facultad.nombre}\n")
@@ -54,6 +93,18 @@ def guardar_sistema_txt(facultades):
 
 
 def cargar_sistema_txt():
+    """
+    Carga la estructura completa de universidades desde un archivo `sistema.txt`,
+    reconstruyendo todas las relaciones entre facultades, departamentos, cursos,
+    profesores y estudiantes.
+
+    El archivo debe haber sido generado previamente por la función `guardar_sistema_txt()`.
+
+    Retorna:
+    -------
+    list[Facultad]
+        Lista de facultades reconstruidas desde el archivo.
+    """
 
     facultades = []
     profesores_global = {}
