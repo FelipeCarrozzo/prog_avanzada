@@ -38,17 +38,3 @@ class Cajon:
         if not isinstance(p_alimento, Alimentos):
             raise TypeError("Solo se pueden agregar objetos de tipo Alimento")
         self.__elementos.append(p_alimento)
-    
-    def calcular_peso(self):
-        """
-        Método que calcula el peso total de los alimentos existentes en un cajón.
-        """
-        peso_total = 0
-        contador = 0
-        for alimento in self.__elementos:
-            peso_total += alimento.peso_alimento
-            contador += 1
-        if contador == 0:
-            return 0
-        return peso_total
-

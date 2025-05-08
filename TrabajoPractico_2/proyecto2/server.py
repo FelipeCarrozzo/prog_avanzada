@@ -62,7 +62,7 @@ def index():
     }
 
     #calculo peso del cajon con la funcion de la clase Cajon
-    peso_total = round(cajon.calcular_peso(),2)
+    peso_total = round(calculador.calcular_peso(cajon),2)
 
     #verifico que el valor de aw promedio no sea mayor a 1 o menor a 0
     for valor in calculos_aw_promedio.values():
