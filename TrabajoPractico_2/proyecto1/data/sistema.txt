@@ -9,6 +9,7 @@ INSCRIPCION,Carlos,Sosa,34567890,INF101
 INSCRIPCION,Ana,Martínez,45678901,INF101
 CURSO,INF102,Estructuras de Datos,María,Gómez,23456789,Sistemas
 INSCRIPCION,Ana,Martínez,45678901,INF102
+CURSO,InfoBas1,Informática Básica,María,Gómez,23456789,Sistemas
 DEPARTAMENTO,Electrónica,María,Gómez,23456789
 CURSO,ELC101,Circuitos Eléctricos I,María,Gómez,23456789,Electrónica
 CURSO,ELC102,Electrónica Digital I,Juan,Pérez,12345678,Electrónica

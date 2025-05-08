@@ -9,7 +9,7 @@ Este es un proyecto en Python que simula un sistema de gestión universitaria. P
 El sistema está compuesto por las siguientes entidades principales implementadas como clases:
 
 - `Persona` (abstracta): clase base para `Estudiante` y `Profesor`.
-- `Estudiante`: representa a un alumno con nombre, apellido y DNI.
+- `Estudiante`: representa a un estudiante con nombre, apellido y DNI.
 - `Profesor`: representa a un docente con sus datos personales.
 - `Curso`: incluye nombre y un profesor responsable.
 - `Departamento`: agrupa cursos bajo la coordinación de un profesor.
@@ -50,7 +50,7 @@ Al ejecutar el archivo `main.py`, el usuario interactúa con el sistema a travé
 Sistema de Información Universitaria
 ##########################################
 Elige una opción
-1 - Inscribir alumno
+1 - Inscribir estudiante
 2 - Contratar profesor
 3 - Crear departamento nuevo
 4 - Crear curso nuevo
@@ -59,7 +59,7 @@ Elige una opción
 
 ### Funcionalidades principales:
 
-- **Inscribir alumno**: permite ingresar los datos de un nuevo estudiante y asignarlo a una facultad.
+- **Inscribir estudiante**: permite ingresar los datos de un nuevo estudiante y asignarlo a una facultad.
 - **Contratar profesor**: registra un nuevo profesor en la facultad seleccionada.
 - **Crear departamento nuevo**: se asigna un director entre los profesores existentes.
 - **Crear curso nuevo**: dentro de un departamento existente, con profesor titular.

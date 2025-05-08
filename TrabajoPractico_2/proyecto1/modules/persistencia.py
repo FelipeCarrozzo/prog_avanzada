@@ -91,7 +91,6 @@ def guardar_sistema_txt(facultades):
                     for estudiante in curso.estudiantes:
                         f.write(f"INSCRIPCION,{estudiante.nombre},{estudiante.apellido},{estudiante.dni},{curso.codigo}\n")
 
-
 def cargar_sistema_txt():
     """
     Carga la estructura completa de universidades desde un archivo `sistema.txt`,
@@ -139,20 +138,21 @@ def cargar_sistema_txt():
                 director = profesores_global[dni]
                 depto = Departamento(nombre_depto, director)
                 facultad_actual.agregar_departamento(depto)
+                director.asociar_departamento(depto)
                 departamentos[nombre_depto] = depto
 
             elif tipo == "CURSO":
                 codigo, nombre_curso = partes[1], partes[2]
                 nombre_prof, apellido_prof, dni_prof = partes[3], partes[4], partes[5]
-                nombre_depto = partes[6]  # Nuevo parámetro
+                nombre_depto = partes[6]
                 profesor = profesores_global[dni_prof]
                 curso = Curso(nombre_curso, codigo, profesor)
-                
-                # Buscamos el departamento por nombre
+
                 departamento = next((d for d in facultad_actual.departamentos if d.nombre == nombre_depto), None)
                 if departamento:
                     departamento.agregar_curso(curso)
                     cursos_global[codigo] = curso
+                    profesor.asociar_curso(curso)
 
             elif tipo == "INSCRIPCION":
                 nombre, apellido, dni, codigo = partes[1], partes[2], partes[3], partes[4]
