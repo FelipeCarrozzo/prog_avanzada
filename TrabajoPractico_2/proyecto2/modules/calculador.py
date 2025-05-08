@@ -47,7 +47,7 @@ class CalculadorBromatologico:
         peso_total = 0
         contador = 0
         for alimento in p_cajon:
-            peso_total += alimento.peso_alimento
+            peso_total += alimento.peso
             contador += 1
         if contador == 0:
             return 0
