@@ -8,7 +8,7 @@ class Departamento:
     una lista de profesores asociados y una lista de cursos.
     """
 
-    def __init__(self, nombre: str, director: Profesor):
+    def __init__(self, p_nombre: str, director: Profesor):
         """
         Inicializa un departamento con su nombre y director.
 
@@ -18,7 +18,7 @@ class Departamento:
         """
         if not isinstance(director, Profesor):
             raise TypeError("El director debe ser una instancia de la clase Profesor.")
-        self.__nombre = nombre
+        self.__nombre = p_nombre
         self.__director = director
         self.__profesores = [director]  # El director es automáticamente parte del departamento
         self.__cursos = []

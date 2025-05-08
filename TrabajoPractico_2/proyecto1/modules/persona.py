@@ -7,7 +7,7 @@ class Persona(ABC):
     Clase base abstracta que representa una persona con nombre, apellido y DNI.
     """
 
-    def __init__(self, nombre: str, apellido: str, dni: str):
+    def __init__(self, p_nombre: str, p_apellido: str, p_dni: str):
         """
         Inicializa una nueva persona.
 
@@ -16,9 +16,9 @@ class Persona(ABC):
             apellido (str): Apellido de la persona.
             dni (str): Documento Nacional de Identidad.
         """
-        self.__nombre = nombre
-        self.__apellido = apellido
-        self.__dni = dni
+        self.__nombre = p_nombre
+        self.__apellido = p_apellido
+        self.__dni = p_dni
 
     @property
     def nombre(self):
