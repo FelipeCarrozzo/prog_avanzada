@@ -1,5 +1,5 @@
 from modules.cajon import Cajon
-from modules.alimentos import Alimentos, Fruta, Verdura, Kiwi, Manzana, Papa, Zanahoria
+from modules.alimentos import Alimentos
 
 class CalculadorBromatologico:
     """
@@ -40,6 +40,18 @@ class CalculadorBromatologico:
         self.__promedio = sum(resultados_aw) / contador
         return self.__promedio
     
+    def calcular_peso(self, p_cajon: Cajon):
+        """
+        Método que calcula el peso total de los alimentos existentes en un cajón.
+        """
+        peso_total = 0
+        contador = 0
+        for alimento in p_cajon:
+            peso_total += alimento.peso_alimento
+            contador += 1
+        if contador == 0:
+            return 0
+        return peso_total
 
     def __round__(self, ndigits=None):
         resultado = self.calcular_aw()
