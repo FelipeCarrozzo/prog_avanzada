@@ -24,8 +24,6 @@ class Curso:
     def inscribir_estudiante(self, p_estudiante):
         if p_estudiante not in self.__estudiantes:
             self.__estudiantes.append(p_estudiante)
-        else:
-            raise ValueError("El estudiante ya está inscrito en el curso.")
 
     def __str__(self):
         return f"Curso: {self.__nombre}, Código: {self.__codigo}, Titular: {self.__titular}"

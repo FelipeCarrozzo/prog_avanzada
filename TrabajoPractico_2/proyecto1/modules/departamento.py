@@ -1,7 +1,9 @@
+from modules.persona import Profesor
+
 class Departamento:
-    def __init__(self, nombre, director):
+    def __init__(self, nombre, director: Profesor):
         self.__nombre = nombre
-        self.__director = director  #Profesor
+        self.__director = director  
         self.__profesores = [director]  # al menos contiene al director
         self.__cursos = []
 
@@ -29,7 +31,8 @@ class Departamento:
         return [str(profesor) for profesor in self.__profesores]
     
     def agregar_curso(self, p_curso):
-        self.__cursos.append(p_curso)
+        if p_curso not in self.__cursos:
+            self.__cursos.append(p_curso) 
 
     def listar_cursos(self):
         return [str(curso) for curso in self.__cursos]

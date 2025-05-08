@@ -1,0 +1,25 @@
+FACULTAD,Facultad de Ingeniería
+PROFESOR,Juan,Pérez,12345678
+PROFESOR,María,Gómez,23456789
+ESTUDIANTE,Carlos,Sosa,34567890
+ESTUDIANTE,Ana,Martínez,45678901
+DEPARTAMENTO,Sistemas,Juan,Pérez,12345678
+CURSO,INF101,Programación I,Juan,Pérez,12345678,Sistemas
+INSCRIPCION,Carlos,Sosa,34567890,INF101
+INSCRIPCION,Ana,Martínez,45678901,INF101
+CURSO,INF102,Estructuras de Datos,María,Gómez,23456789,Sistemas
+INSCRIPCION,Ana,Martínez,45678901,INF102
+DEPARTAMENTO,Electrónica,María,Gómez,23456789
+CURSO,ELC101,Circuitos Eléctricos I,María,Gómez,23456789,Electrónica
+CURSO,ELC102,Electrónica Digital I,Juan,Pérez,12345678,Electrónica
+FACULTAD,Facultad de Ciencias Económicas
+PROFESOR,Alicia,Fernández,98765432
+PROFESOR,Luis,Morales,87654321
+ESTUDIANTE,Marcela,Díaz,76543210
+ESTUDIANTE,Federico,López,65432109
+DEPARTAMENTO,Sistemas,Juan,Pérez,12345678
+CURSO,INF101,Programación I,Juan,Pérez,12345678,Sistemas
+CURSO,INF102,Estructuras de Datos,María,Gómez,23456789,Sistemas
+DEPARTAMENTO,Electrónica,María,Gómez,23456789
+CURSO,ELC101,Circuitos Eléctricos I,María,Gómez,23456789,Electrónica
+CURSO,ELC102,Electrónica Digital I,Juan,Pérez,12345678,Electrónica
