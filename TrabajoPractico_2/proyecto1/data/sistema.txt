@@ -24,3 +24,17 @@ CURSO,INF102,Estructuras de Datos,María,Gómez,23456789,Sistemas
 DEPARTAMENTO,Electrónica,María,Gómez,23456789
 CURSO,ELC101,Circuitos Eléctricos I,María,Gómez,23456789,Electrónica
 CURSO,ELC102,Electrónica Digital I,Juan,Pérez,12345678,Electrónica
+FACULTAD,Facultad de Derecho
+PROFESOR,Juan,Pérez,12345678
+PROFESOR,María,Gómez,87654321
+PROFESOR,Ana,López,11223344
+PROFESOR,Luis,Martínez,44332211
+PROFESOR,Matias,Ale,25465873
+ESTUDIANTE,Pedro,García,22334455
+ESTUDIANTE,Laura,Fernández,33445566
+ESTUDIANTE,Carlos,Ramírez,44556677
+ESTUDIANTE,Sofía,Morales,55667788
+ESTUDIANTE,Matias,Sosa,35654789
+DEPARTAMENTO,Legales,Matias,Ale,25465873
+CURSO,LEG256,Contratos I,Matias,Ale,25465873,Legales
+INSCRIPCION,Matias,Sosa,35654789,LEG256
