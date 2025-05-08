@@ -75,7 +75,7 @@ def guardar_sistema_txt(facultades):
         Lista de facultades a guardar.
     """
         
-    with open(path_sistema, "a", encoding="utf-8") as f:
+    with open(path_sistema, "w", encoding="utf-8") as f:
         for facultad in facultades:
             f.write(f"FACULTAD,{facultad.nombre}\n")
             for profesor in facultad.profesores:
