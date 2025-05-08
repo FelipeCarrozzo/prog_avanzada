@@ -66,7 +66,7 @@ Elige una opción
 - **Inscribir estudiante a un curso**: seleccionando estudiante y curso disponibles.
 - **Salir**: finaliza la ejecución del sistema.
 
-El sistema inicializa automáticamente una facultad leyendo hasta 4 estudiantes y 4 profesores desde el archivo `data/personas.txt`.
+El sistema puede iniciar, según la elección del ususario, desde el archivo `data/sistema.txt` con un sistema almacenado, o inicializa una nueva facultad leyendo hasta 4 estudiantes y 4 profesores desde el archivo `data/personas.txt`.
 
 ---
 
