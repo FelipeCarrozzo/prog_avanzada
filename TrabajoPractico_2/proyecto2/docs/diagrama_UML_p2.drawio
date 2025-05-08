@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="wHaPtrlemiOSuc4_M_N2" name="Página-1">
-        <mxGraphModel dx="1818" dy="731" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1616" dy="650" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -71,7 +71,7 @@
                 <mxCell id="89" value="+ calcular_aw(clase: Alimentos, p_cajon: Cajon)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=14;" parent="82" vertex="1">
                     <mxGeometry y="112" width="310" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="172" value="+ calcular_peso(p_cajon: Cajon)&amp;nbsp;→ float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="82">
+                <mxCell id="172" value="+ calcular_peso(p_cajon: Cajon)&amp;nbsp;→ float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=14;" parent="82" vertex="1">
                     <mxGeometry y="138" width="310" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="91" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.778;entryY=1.08;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=block;endFill=0;fontSize=14;" parent="1" source="92" target="140" edge="1">
@@ -196,7 +196,7 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="131" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=none;startFill=0;endArrow=diamondThin;startSize=4;endFill=0;endSize=16;entryX=-0.001;entryY=0.063;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=14;exitX=0.999;exitY=0.129;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="106" target="120" edge="1">
+                <mxCell id="131" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=none;startFill=0;endArrow=diamondThin;startSize=4;endFill=1;endSize=16;entryX=-0.001;entryY=0.063;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=14;exitX=0.999;exitY=0.129;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="106" target="120" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="810" y="130" as="sourcePoint"/>
                         <mxPoint x="1040" y="240" as="targetPoint"/>
