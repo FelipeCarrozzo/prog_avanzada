@@ -103,7 +103,8 @@ class Profesor(Persona):
 
     def __init__(self, nombre: str, apellido: str, dni: str):
         super().__init__(nombre, apellido, dni)
-        self.__departamentos = [] 
+        self.__departamentos_asignados = [] 
+        self.__departamento_director = None
         self.__cursos = []
 
     @property

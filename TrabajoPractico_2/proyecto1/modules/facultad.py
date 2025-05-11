@@ -6,17 +6,22 @@ class Facultad:
     Representa una facultad dentro de una universidad, con estudiantes, profesores y departamentos asociados.
     """
 
-    def __init__(self, p_nombre: str):
+    def __init__(self, p_nombre: str, p_nombre_departamento: str, p_director):
         """
         Inicializa una nueva instancia de la clase Facultad.
 
         Args:
-            nombre (str): El nombre de la facultad.
+            p_nombre (str): El nombre de la facultad.
+            p_nombre_departamento (str): El nombre del departamento.
+            p_director: El director del departamento.
         """
         self.__nombre = p_nombre
         self.__departamentos = []
         self.__estudiantes = []
         self.__profesores = []
+
+        self.contratar_profesor(p_director)
+        self.crear_departamento(p_nombre_departamento, p_director)
 
     @property
     def nombre(self):
@@ -101,24 +106,30 @@ class Facultad:
             list[str]: Lista de strings representando a cada profesor.
         """
         return [str(profesor) for profesor in self.__profesores]
-
-    def agregar_departamento(self, p_departamento: Departamento):
+    
+    def crear_departamento(self, p_nombre: str, p_director):
         """
-        Agrega un departamento a la facultad, si aún no está registrado.
+        Crea un nuevo departamento en la facultad.
 
         Args:
-            p_departamento (Departamento): El departamento a agregar.
+            p_nombre (str): Nombre del departamento.
+            p_director (Profesor): Profesor que será el director del departamento.
 
         Raises:
-            TypeError: Si el argumento no es una instancia de Departamento.
-            ValueError: Si el departamento ya existe en la facultad.
+            TypeError: Si el director no es una instancia de Profesor.
         """
-        if not isinstance(p_departamento, Departamento):
-            raise TypeError("El departamento debe ser una instancia de la clase Departamento.")
-        if p_departamento not in self.__departamentos:
-            self.__departamentos.append(p_departamento)
-        else:
+        from modules.persona import Profesor
+        if not isinstance(p_director, Profesor):
+            raise TypeError("El director debe ser una instancia de la clase Profesor.")
+        
+        if p_nombre in [depto.nombre for depto in self.__departamentos]:
             raise ValueError("El departamento ya está registrado en la facultad.")
+        
+        nuevo_departamento = Departamento(p_nombre, p_director) #contención
+        
+        p_director.asociar_departamento(nuevo_departamento)
+        self.__departamentos.append(nuevo_departamento)
+        return nuevo_departamento
 
     def listar_departamentos(self):
         """

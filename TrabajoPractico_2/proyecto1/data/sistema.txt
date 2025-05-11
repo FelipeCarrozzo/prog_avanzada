@@ -1,40 +1,17 @@
-FACULTAD,Facultad de Ingeniería
+FACULTAD,Facultad de Ingeniería,Sistemas,Juan,Pérez,12345678
 PROFESOR,Juan,Pérez,12345678
 PROFESOR,María,Gómez,23456789
 ESTUDIANTE,Carlos,Sosa,34567890
 ESTUDIANTE,Ana,Martínez,45678901
 DEPARTAMENTO,Sistemas,Juan,Pérez,12345678
-CURSO,INF101,Programación I,Juan,Pérez,12345678,Sistemas
-INSCRIPCION,Carlos,Sosa,34567890,INF101
-INSCRIPCION,Ana,Martínez,45678901,INF101
-CURSO,INF102,Estructuras de Datos,María,Gómez,23456789,Sistemas
-INSCRIPCION,Ana,Martínez,45678901,INF102
-CURSO,InfoBas1,Informática Básica,María,Gómez,23456789,Sistemas
 DEPARTAMENTO,Electrónica,María,Gómez,23456789
 CURSO,ELC101,Circuitos Eléctricos I,María,Gómez,23456789,Electrónica
-CURSO,ELC102,Electrónica Digital I,Juan,Pérez,12345678,Electrónica
-FACULTAD,Facultad de Ciencias Económicas
-PROFESOR,Alicia,Fernández,98765432
-PROFESOR,Luis,Morales,87654321
-ESTUDIANTE,Marcela,Díaz,76543210
-ESTUDIANTE,Federico,López,65432109
-DEPARTAMENTO,Sistemas,Juan,Pérez,12345678
-CURSO,INF101,Programación I,Juan,Pérez,12345678,Sistemas
-CURSO,INF102,Estructuras de Datos,María,Gómez,23456789,Sistemas
-DEPARTAMENTO,Electrónica,María,Gómez,23456789
-CURSO,ELC101,Circuitos Eléctricos I,María,Gómez,23456789,Electrónica
-CURSO,ELC102,Electrónica Digital I,Juan,Pérez,12345678,Electrónica
-FACULTAD,Facultad de Derecho
-PROFESOR,Juan,Pérez,12345678
-PROFESOR,María,Gómez,87654321
+INSCRIPCION,Ana,Martínez,45678901,ELC101
+FACULTAD,Facultad de Derecho,Legales,Ana,López,11223344
 PROFESOR,Ana,López,11223344
 PROFESOR,Luis,Martínez,44332211
-PROFESOR,Matias,Ale,25465873
-ESTUDIANTE,Pedro,García,22334455
 ESTUDIANTE,Laura,Fernández,33445566
-ESTUDIANTE,Carlos,Ramírez,44556677
-ESTUDIANTE,Sofía,Morales,55667788
-ESTUDIANTE,Matias,Sosa,35654789
-DEPARTAMENTO,Legales,Matias,Ale,25465873
-CURSO,LEG256,Contratos I,Matias,Ale,25465873,Legales
-INSCRIPCION,Matias,Sosa,35654789,LEG256
+DEPARTAMENTO,Legales,Ana,López,11223344
+DEPARTAMENTO,Público,Luis,Martínez,44332211
+CURSO,LEG200,Derecho Constitucional,Luis,Martínez,44332211,Público
+INSCRIPCION,Laura,Fernández,33445566,LEG200

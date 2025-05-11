@@ -1,6 +1,6 @@
 # persistencia.py
 # Este módulo se encarga de la persistencia de datos, es decir, guardar y cargar la información del sistema en archivos.
-# modules/persistencia_txt.py
+
 import os
 from modules.facultad import Facultad
 from modules.persona import Estudiante, Profesor
@@ -12,7 +12,7 @@ base_dir = os.path.dirname(__file__)
 path_personas = os.path.join(base_dir,'..', 'data', 'personas.txt')
 path_sistema = os.path.join(base_dir,'..', 'data', 'sistema.txt')
 
-def cargar_facultad_desde_personas_txt(nombre_facultad):
+def cargar_facultad_desde_personas_txt(nombre_facultad, nombre_departamento, director):
     
     """
     Crea una instancia de Facultad a partir de un archivo de texto con datos de personas.
@@ -34,7 +34,7 @@ def cargar_facultad_desde_personas_txt(nombre_facultad):
         Instancia de la facultad con los estudiantes y profesores cargados.
     """
         
-    facultad = Facultad(nombre_facultad)
+    facultad = Facultad(nombre_facultad, nombre_departamento, director)
     estudiantes_agregados = 0
     profesores_agregados = 0
 
@@ -62,42 +62,46 @@ def guardar_sistema_txt(facultades):
     facultades, profesores, estudiantes, departamentos, cursos e inscripciones.
 
     Cada entidad se guarda con una línea prefijada indicando su tipo:
-    - FACULTAD
+    - FACULTAD,nombre,nombre_depto,nom_director,ape_director,dni_director
     - PROFESOR
     - ESTUDIANTE
     - DEPARTAMENTO
     - CURSO
     - INSCRIPCION
-
-    Parámetros:
-    ----------
-    facultades : list[Facultad]
-        Lista de facultades a guardar.
     """
-        
     with open(path_sistema, "w", encoding="utf-8") as f:
         for facultad in facultades:
-            f.write(f"FACULTAD,{facultad.nombre}\n")
+            # Obtener el primer departamento
+            if facultad.departamentos:
+                primer_depto = facultad.departamentos[0]
+                director = primer_depto.director
+                f.write(f"FACULTAD,{facultad.nombre},{primer_depto.nombre},{director.nombre},{director.apellido},{director.dni}\n")
+            else:
+                raise ValueError(f"La facultad {facultad.nombre} no tiene departamentos asignados.")
+
             for profesor in facultad.profesores:
                 f.write(f"PROFESOR,{profesor.nombre},{profesor.apellido},{profesor.dni}\n")
+
             for estudiante in facultad.estudiantes:
                 f.write(f"ESTUDIANTE,{estudiante.nombre},{estudiante.apellido},{estudiante.dni}\n")
+
             for depto in facultad.departamentos:
                 director = depto.director
                 f.write(f"DEPARTAMENTO,{depto.nombre},{director.nombre},{director.apellido},{director.dni}\n")
+
                 for curso in depto.cursos:
                     prof = curso.titular
                     f.write(f"CURSO,{curso.codigo},{curso.nombre},{prof.nombre},{prof.apellido},{prof.dni},{depto.nombre}\n")
+
                     for estudiante in curso.estudiantes:
                         f.write(f"INSCRIPCION,{estudiante.nombre},{estudiante.apellido},{estudiante.dni},{curso.codigo}\n")
+
 
 def cargar_sistema_txt():
     """
     Carga la estructura completa de universidades desde un archivo `sistema.txt`,
     reconstruyendo todas las relaciones entre facultades, departamentos, cursos,
     profesores y estudiantes.
-
-    El archivo debe haber sido generado previamente por la función `guardar_sistema_txt()`.
 
     Retorna:
     -------
@@ -109,8 +113,8 @@ def cargar_sistema_txt():
     profesores_global = {}
     estudiantes_global = {}
     cursos_global = {}
-    facultad_actual = None
     departamentos = {}
+    facultad_actual = None
 
     with open(path_sistema, 'r', encoding='utf-8') as f:
         for linea in f:
@@ -118,14 +122,22 @@ def cargar_sistema_txt():
             tipo = partes[0]
 
             if tipo == "FACULTAD":
-                facultad_actual = Facultad(partes[1])
+                nombre_facultad = partes[1]
+                nombre_depto = partes[2]
+                nombre_dir, apellido_dir, dni_dir = partes[3], partes[4], partes[5]
+
+                director = Profesor(nombre_dir, apellido_dir, dni_dir)
+                profesores_global[dni_dir] = director
+
+                facultad_actual = Facultad(nombre_facultad, nombre_depto, director)
                 facultades.append(facultad_actual)
 
             elif tipo == "PROFESOR":
                 nombre, apellido, dni = partes[1], partes[2], partes[3]
-                prof = Profesor(nombre, apellido, dni)
-                profesores_global[dni] = prof
-                facultad_actual.contratar_profesor(prof)
+                if dni not in profesores_global:
+                    prof = Profesor(nombre, apellido, dni)
+                    profesores_global[dni] = prof
+                    facultad_actual.contratar_profesor(prof)
 
             elif tipo == "ESTUDIANTE":
                 nombre, apellido, dni = partes[1], partes[2], partes[3]
@@ -134,21 +146,20 @@ def cargar_sistema_txt():
                 facultad_actual.agregar_estudiante(est)
 
             elif tipo == "DEPARTAMENTO":
-                nombre_depto, nombre, apellido, dni = partes[1], partes[2], partes[3], partes[4]
-                director = profesores_global[dni]
-                depto = Departamento(nombre_depto, director)
-                facultad_actual.agregar_departamento(depto)
-                director.asociar_departamento(depto)
+                nombre_depto, nombre_dir, apellido_dir, dni_dir = partes[1], partes[2], partes[3], partes[4]
+                director = profesores_global[dni_dir]
+                depto = facultad_actual.crear_departamento(nombre_depto, director)
                 departamentos[nombre_depto] = depto
 
             elif tipo == "CURSO":
                 codigo, nombre_curso = partes[1], partes[2]
                 nombre_prof, apellido_prof, dni_prof = partes[3], partes[4], partes[5]
                 nombre_depto = partes[6]
+
                 profesor = profesores_global[dni_prof]
                 curso = Curso(nombre_curso, codigo, profesor)
 
-                departamento = next((d for d in facultad_actual.departamentos if d.nombre == nombre_depto), None)
+                departamento = departamentos.get(nombre_depto)
                 if departamento:
                     departamento.agregar_curso(curso)
                     cursos_global[codigo] = curso
@@ -156,9 +167,9 @@ def cargar_sistema_txt():
 
             elif tipo == "INSCRIPCION":
                 nombre, apellido, dni, codigo = partes[1], partes[2], partes[3], partes[4]
-                estudiante = estudiantes_global[dni]
+                estudiante = estudiantes_global.get(dni)
                 curso = cursos_global.get(codigo)
-                if curso:
+                if curso and estudiante:
                     curso.inscribir_estudiante(estudiante)
                     estudiante.inscribir_curso(curso)
 
