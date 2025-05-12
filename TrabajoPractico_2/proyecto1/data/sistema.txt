@@ -5,13 +5,16 @@ ESTUDIANTE,Carlos,Sosa,34567890
 ESTUDIANTE,Ana,Martínez,45678901
 DEPARTAMENTO,Sistemas,Juan,Pérez,12345678
 DEPARTAMENTO,Electrónica,María,Gómez,23456789
-CURSO,ELC101,Circuitos Eléctricos I,María,Gómez,23456789,Electrónica
-INSCRIPCION,Ana,Martínez,45678901,ELC101
-FACULTAD,Facultad de Derecho,Legales,Ana,López,11223344
-PROFESOR,Ana,López,11223344
-PROFESOR,Luis,Martínez,44332211
-ESTUDIANTE,Laura,Fernández,33445566
-DEPARTAMENTO,Legales,Ana,López,11223344
-DEPARTAMENTO,Público,Luis,Martínez,44332211
-CURSO,LEG200,Derecho Constitucional,Luis,Martínez,44332211,Público
-INSCRIPCION,Laura,Fernández,33445566,LEG200
+CURSO,Circuitos Eléctricos I,María,Gómez,23456789,Electrónica
+INSCRIPCION,Ana,Martínez,45678901,Circuitos Eléctricos I
+FACULTAD,Facultad de Ciencias Económicas,Contabilidad,Alicia,Ruiz,56789012
+PROFESOR,Alicia,Ruiz,56789012
+PROFESOR,Roberto,Díaz,67890123
+ESTUDIANTE,Sofía,López,78901234
+ESTUDIANTE,Federico,Luna,89012345
+DEPARTAMENTO,Contabilidad,Alicia,Ruiz,56789012
+DEPARTAMENTO,Finanzas,Roberto,Díaz,67890123
+CURSO,Contabilidad Básica,Alicia,Ruiz,56789012,Contabilidad
+CURSO,Finanzas Corporativas,Roberto,Díaz,67890123,Finanzas
+INSCRIPCION,Sofía,López,78901234,Contabilidad Básica
+INSCRIPCION,Federico,Luna,89012345,Finanzas Corporativas
