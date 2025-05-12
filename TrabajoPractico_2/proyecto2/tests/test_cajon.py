@@ -1,5 +1,5 @@
 import unittest
-from TrabajoPractico_2.proyecto2.modules.alimento import Kiwi, Papa
+from modules.alimento import Kiwi, Papa
 from modules.cajon import Cajon
 
 class TestCajon(unittest.TestCase):
@@ -15,7 +15,8 @@ class TestCajon(unittest.TestCase):
         Luego se comprueba que el alimento efectivamente está dentro del contenido del cajón.
         """
         self.cajon.agregar_alimento(self.kiwi)
-        self.assertIn(self.kiwi, self.cajon.listar_alimentos())
+        self.assertEqual(len(self.cajon), 1)
+        self.assertIn(self.kiwi, list(self.cajon))
 
     def test_tipo_incorrecto(self):
         """
@@ -25,15 +26,6 @@ class TestCajon(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.cajon.agregar_alimento("no es un alimento")
 
-    def test_calcular_peso(self):
-        """
-        Agrega dos alimentos al cajón y verifica que el método 'calcular_peso'
-        devuelve la suma correcta del peso de ambos alimentos.
-        """
-        self.cajon.agregar_alimento(self.kiwi)
-        self.cajon.agregar_alimento(self.papa)
-        peso = self.cajon.calcular_peso()
-        self.assertAlmostEqual(peso, 0.5)
 
     def test_iterador(self):
         """

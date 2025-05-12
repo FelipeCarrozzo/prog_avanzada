@@ -1,6 +1,6 @@
 import unittest
 from modules.cajon import Cajon
-from TrabajoPractico_2.proyecto2.modules.alimento import Kiwi, Manzana, Papa, Zanahoria, Fruta, Verdura, Alimento
+from modules.alimento import Kiwi, Manzana, Papa, Zanahoria, Fruta, Verdura, Alimento
 from modules.calculador import CalculadorBromatologico
 
 class TestCalculadorBromatologico(unittest.TestCase):
@@ -106,7 +106,7 @@ class TestCalculadorBromatologico(unittest.TestCase):
         cajón coincida con el valor esperado, calculado como el promedio
         de los aw individuales de todos los alimentos en el cajón.
         """
-        aw = self.calculador.calcular_aw(Alimentos, self.cajon)
+        aw = self.calculador.calcular_aw(Alimento, self.cajon)
         total_aw = sum([a.calcular_aw() for a in self.cajon])
         expected = total_aw / len(self.cajon)
         self.assertAlmostEqual(aw, expected, places=4)
@@ -117,9 +117,19 @@ class TestCalculadorBromatologico(unittest.TestCase):
         una clase de alimento que no está presente en el cajón (en este caso,
         una clase ficticia), el valor devuelto sea 0.
         """
-        class Ficticio(Alimentos): pass
+        class Ficticio(Alimento): pass
         aw = self.calculador.calcular_aw(Ficticio, self.cajon)
         self.assertEqual(aw, 0)
+    
+    def test_calcular_peso_total(self):
+        """
+        Verifica que el cálculo del peso total de los alimentos en el cajón
+        sea correcto, sumando los pesos individuales.
+        """
+        peso = self.calculador.calcular_peso(self.cajon)
+        expected = sum([a.peso for a in self.cajon])
+        self.assertAlmostEqual(peso, expected, places=4)
+
 
 if __name__ == "__main__":
     unittest.main()

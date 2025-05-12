@@ -125,7 +125,7 @@ class Facultad:
         if p_nombre in [depto.nombre for depto in self.__departamentos]:
             raise ValueError("El departamento ya está registrado en la facultad.")
         
-        nuevo_departamento = Departamento(p_nombre, p_director) #contención
+        nuevo_departamento = Departamento(p_nombre, p_director) #composición
         
         self.__departamentos.append(nuevo_departamento)
         return nuevo_departamento
