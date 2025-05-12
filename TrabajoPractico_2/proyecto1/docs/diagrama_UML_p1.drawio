@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="obTsN0vRY-RDkQVVeV62" name="Page-1">
-        <mxGraphModel dx="1735" dy="1521" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1558" dy="1543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -118,7 +118,7 @@
                 <mxCell id="161" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;lt;&amp;lt;get&amp;gt;&amp;gt;&amp;nbsp;&lt;/span&gt;- estudiantes: list [Estudiante]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="157" vertex="1">
                     <mxGeometry y="78" width="320" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="232" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;lt;&amp;lt;get&amp;gt;&amp;gt;&amp;nbsp;&lt;/span&gt;- profesores: list [Profesor]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="157">
+                <mxCell id="232" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;lt;&amp;lt;get&amp;gt;&amp;gt;&amp;nbsp;&lt;/span&gt;- profesores: list [Profesor]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="157" vertex="1">
                     <mxGeometry y="104" width="320" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="162" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="157" vertex="1">
@@ -139,7 +139,7 @@
                 <mxCell id="166" value="&amp;lt;&amp;lt;get&amp;gt;&amp;gt; - departamentos_asignados: list [Departamento]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
                     <mxGeometry y="26" width="370" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="256" value="&amp;lt;&amp;lt;get&amp;gt;&amp;gt; - departamentos_director: Departamento" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="165">
+                <mxCell id="256" value="&amp;lt;&amp;lt;get&amp;gt;&amp;gt; - departamentos_director: Departamento" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
                     <mxGeometry y="52" width="370" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="219" value="&amp;lt;&amp;lt;get&amp;gt;&amp;gt; - cursos: list [Curso]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
@@ -151,7 +151,7 @@
                 <mxCell id="168" value="+ asignar_departamento(p_depto: Departamento)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
                     <mxGeometry y="112" width="370" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="231" value="+ asignar_como_director(p_depto: Departamento)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="165">
+                <mxCell id="231" value="+ asignar_como_director(p_depto: Departamento)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
                     <mxGeometry y="138" width="370" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="225" value="+ asociar_curso(p_curso: Curso)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
@@ -184,24 +184,24 @@
                         <mxPoint x="270" y="460" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="177" value="" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0.853;entryY=0.976;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" parent="1" target="230" edge="1" source="165">
+                <mxCell id="177" value="" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0.853;entryY=0.976;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" parent="1" source="165" target="230" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
                         <mxPoint x="540" y="700" as="sourcePoint"/>
                         <mxPoint x="330" y="431" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="180" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;entryX=0.998;entryY=0.067;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" edge="1" target="128" source="142">
+                <mxCell id="180" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;entryX=0.998;entryY=0.067;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="142" target="128" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
                         <mxPoint x="380" y="80" as="sourcePoint"/>
                         <mxPoint x="210" y="50" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="252" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1...*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="180">
+                <mxCell id="252" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1..*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="180" connectable="0" vertex="1">
                     <mxGeometry x="-0.8287" y="-1" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="253" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="180">
+                <mxCell id="253" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="180" connectable="0" vertex="1">
                     <mxGeometry x="0.7517" y="-1" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
@@ -209,28 +209,28 @@
                 <mxCell id="183" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" source="158" target="154" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="249" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="183">
+                <mxCell id="249" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="183" connectable="0" vertex="1">
                     <mxGeometry x="-0.9545" y="1" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="251" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="183">
+                <mxCell id="251" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="183" connectable="0" vertex="1">
                     <mxGeometry x="0.9641" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="184" style="edgeStyle=none;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;exitX=0.119;exitY=1.009;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1" source="164">
+                <mxCell id="184" style="edgeStyle=none;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;exitX=0.119;exitY=1.009;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="164" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="757.52" y="544" as="sourcePoint"/>
                         <mxPoint x="757.5" y="704" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="241" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1...*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="184">
+                <mxCell id="241" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1..*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="184" connectable="0" vertex="1">
                     <mxGeometry x="0.8205" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="242" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="184">
+                <mxCell id="242" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="184" connectable="0" vertex="1">
                     <mxGeometry x="-0.8108" y="1" relative="1" as="geometry">
                         <mxPoint x="-1" as="offset"/>
                     </mxGeometry>
@@ -241,12 +241,12 @@
                         <mxPoint x="530" y="270" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="246" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="185">
+                <mxCell id="246" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="185" connectable="0" vertex="1">
                     <mxGeometry x="0.5133" y="1" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="255" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1...*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="185">
+                <mxCell id="255" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1..*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="185" connectable="0" vertex="1">
                     <mxGeometry x="-0.6239" y="-1" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
@@ -257,12 +257,12 @@
                         <mxPoint x="320" y="470" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="237" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1...*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="187">
+                <mxCell id="237" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1..*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="187" connectable="0" vertex="1">
                     <mxGeometry x="0.4607" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="238" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="187">
+                <mxCell id="238" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="187" connectable="0" vertex="1">
                     <mxGeometry x="-0.7985" y="2" relative="1" as="geometry">
                         <mxPoint x="1" as="offset"/>
                     </mxGeometry>
@@ -273,12 +273,12 @@
                         <mxPoint x="400" y="470" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="234" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1...*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="188">
+                <mxCell id="234" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1..*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="188" connectable="0" vertex="1">
                     <mxGeometry x="-0.8918" y="1" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="236" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1...*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="188">
+                <mxCell id="236" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1..*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="188" connectable="0" vertex="1">
                     <mxGeometry x="0.8472" y="1" relative="1" as="geometry">
                         <mxPoint y="-4" as="offset"/>
                     </mxGeometry>
@@ -289,12 +289,12 @@
                         <mxPoint x="594.25" y="261.5899999999999" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="239" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1...*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="193">
+                <mxCell id="239" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1..*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="193" connectable="0" vertex="1">
                     <mxGeometry x="-0.8915" y="-1" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="247" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1...*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="193">
+                <mxCell id="247" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1..*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="193" connectable="0" vertex="1">
                     <mxGeometry x="0.9335" y="-1" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
@@ -305,12 +305,12 @@
                         <mxPoint x="640.25" y="299.5899999999999" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="240" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="194">
+                <mxCell id="240" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="194" connectable="0" vertex="1">
                     <mxGeometry x="-0.9032" y="-1" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="248" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="194">
+                <mxCell id="248" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="194" connectable="0" vertex="1">
                     <mxGeometry x="0.9226" y="-1" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
@@ -321,18 +321,18 @@
                 <mxCell id="197" value="&lt;font face=&quot;Verdana&quot; style=&quot;font-size: 13px;&quot;&gt;director de&amp;nbsp;&lt;/font&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontFamily=Helvetica;direction=west;flipH=0;flipV=0;textDirection=vertical-lr;" parent="1" vertex="1">
                     <mxGeometry x="640" y="320" width="30" height="91" as="geometry"/>
                 </mxCell>
-                <mxCell id="202" style="edgeStyle=none;html=1;endArrow=none;endFill=0;exitX=0.29;exitY=1.032;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1" source="164">
+                <mxCell id="202" style="edgeStyle=none;html=1;endArrow=none;endFill=0;exitX=0.29;exitY=1.032;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="164" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="792" y="540" as="sourcePoint"/>
                         <mxPoint x="813" y="700" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="243" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="202">
+                <mxCell id="243" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="202" connectable="0" vertex="1">
                     <mxGeometry x="-0.8451" relative="1" as="geometry">
                         <mxPoint y="3" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="244" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="202">
+                <mxCell id="244" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="202" connectable="0" vertex="1">
                     <mxGeometry x="0.7449" y="-1" relative="1" as="geometry">
                         <mxPoint y="7" as="offset"/>
                     </mxGeometry>
