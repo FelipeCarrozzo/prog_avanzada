@@ -2,8 +2,7 @@ from abc import ABC, abstractmethod
 import math 
 import numpy as np 
 
-
-class Alimentos(ABC):
+class Alimento(ABC):
     """
     Clase abstracta que representa un alimento.
     Contiene un atributo de peso y un método abstracto para calcular la actividad acuosa
@@ -23,10 +22,10 @@ class Alimentos(ABC):
     def calcular_aw(self):
         pass 
 
-class Fruta(Alimentos, ABC):
+class Fruta(Alimento, ABC):
     """
     Clase abstracta que representa una fruta.
-    Hereda de la clase Alimentos y contiene un método abstracto para calcular la actividad acuosa (aw).
+    Hereda de la clase Alimento y contiene un método abstracto para calcular la actividad acuosa (aw).
     """
     def __init__(self, p_peso):
         super().__init__(p_peso)
@@ -35,10 +34,10 @@ class Fruta(Alimentos, ABC):
     def calcular_aw(self):
         pass
 
-class Verdura(Alimentos, ABC):
+class Verdura(Alimento, ABC):
     """
     Clase abstracta que representa una verdura.
-    Hereda de la clase Alimentos y contiene un método abstracto para calcular la actividad acuosa (aw).
+    Hereda de la clase Alimento y contiene un método abstracto para calcular la actividad acuosa (aw).
     """
     def __init__(self, p_peso):
         super().__init__(p_peso)
@@ -50,7 +49,7 @@ class Verdura(Alimentos, ABC):
 class Kiwi(Fruta):
     def __init__(self, p_peso):
         """
-        Clase que hereda sus atributos de Fruta que a la vez hereda sus atributos de Alimentos 
+        Clase que hereda sus atributos de Fruta que a la vez hereda sus atributos de Alimento 
         """
         super().__init__(p_peso)
 
@@ -99,7 +98,7 @@ class Manzana(Fruta):
 class Papa(Verdura):
     def __init__(self, p_peso):
         """
-        Clase que hereda sus atributos de Verdura que a la vez hereda sus atributos de Alimentos 
+        Clase que hereda sus atributos de Verdura que a la vez hereda sus atributos de Alimento 
         """
         super().__init__(p_peso)
     
@@ -123,7 +122,7 @@ class Papa(Verdura):
 class Zanahoria(Verdura):
     def __init__(self, p_peso):
         """-
-        Clase que hereda sus atributos de Verdura que a la vez hereda sus atributos de Alimentos 
+        Clase que hereda sus atributos de Verdura que a la vez hereda sus atributos de Alimento 
         """
         super().__init__(p_peso)
  

@@ -4,7 +4,7 @@ from modules.cinta import Cinta
 from modules.detector import DetectorAlimento
 from modules.cajon import Cajon
 from modules.calculador import CalculadorBromatologico
-from modules.alimentos import Alimentos, Verdura, Fruta, Kiwi, Manzana, Papa, Zanahoria
+from modules.alimento import Alimento, Verdura, Fruta, Kiwi, Manzana, Papa, Zanahoria
 
 # Página de inicio
 @app.route('/', methods=['GET', 'POST'])
@@ -58,7 +58,7 @@ def index():
     "aw_zanahoria": round(calculador.calcular_aw(Zanahoria,cajon),2),
     "aw_frutas": round(calculador.calcular_aw(Fruta,cajon),2),
     "aw_verduras": round(calculador.calcular_aw(Verdura,cajon),2),
-    "aw_total": round(calculador.calcular_aw(Alimentos,cajon),2)
+    "aw_total": round(calculador.calcular_aw(Alimento,cajon),2)
     }
 
     #calculo peso del cajon con la funcion de la clase Cajon

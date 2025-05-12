@@ -1,4 +1,4 @@
-from modules.alimentos import Alimentos
+from modules.alimento import Alimento
 
 class Cajon:
     """
@@ -30,11 +30,11 @@ class Cajon:
         else:
             raise StopIteration
     
-    def agregar_alimento(self, p_alimento: Alimentos):
+    def agregar_alimento(self, p_alimento: Alimento):
         """
         Método que agrega un alimento al cajón reemplazando los valores None.
         Verifica que el alimento sea del tipo correcto y que el cajón no esté lleno.
         """
-        if not isinstance(p_alimento, Alimentos):
+        if not isinstance(p_alimento, Alimento):
             raise TypeError("Solo se pueden agregar objetos de tipo Alimento")
         self.__elementos.append(p_alimento)

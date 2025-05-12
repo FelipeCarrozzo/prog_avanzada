@@ -1,5 +1,5 @@
 from modules.cajon import Cajon
-from modules.alimentos import Alimentos
+from modules.alimento import Alimento
 
 class CalculadorBromatologico:
     """
@@ -14,7 +14,7 @@ class CalculadorBromatologico:
         """
         self.__promedio = None
 
-    def calcular_aw(self, clase: Alimentos, p_cajon: Cajon):
+    def calcular_aw(self, clase: Alimento, p_cajon: Cajon):
         """
         Método que calcula el promedio de la actividad acuosa de los alimentos.
         Se verifica que no sea mayor a 1 o menor a 0. 

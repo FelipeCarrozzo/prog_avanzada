@@ -1,5 +1,5 @@
 import unittest
-from modules.alimentos import Kiwi, Papa
+from TrabajoPractico_2.proyecto2.modules.alimento import Kiwi, Papa
 from modules.cajon import Cajon
 
 class TestCajon(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 from modules.cajon import Cajon
-from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria, Fruta, Verdura, Alimentos
+from TrabajoPractico_2.proyecto2.modules.alimento import Kiwi, Manzana, Papa, Zanahoria, Fruta, Verdura, Alimento
 from modules.calculador import CalculadorBromatologico
 
 class TestCalculadorBromatologico(unittest.TestCase):

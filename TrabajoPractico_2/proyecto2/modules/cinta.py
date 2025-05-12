@@ -1,4 +1,4 @@
-from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria
+from modules.alimento import Kiwi, Manzana, Papa, Zanahoria
 from modules.detector import DetectorAlimento
 
 class Cinta:
@@ -9,7 +9,7 @@ class Cinta:
     """
     def __init__(self, p_detector):
         """Inicializa la cinta con un detector."""
-        self.__detector = p_detector
+        self.__detector = p_detector #agregación
 
     def clasificar_alimentos(self):
         """

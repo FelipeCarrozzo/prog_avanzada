@@ -1,5 +1,5 @@
 import unittest
-from modules.alimentos import Kiwi, Manzana, Papa, Zanahoria
+from TrabajoPractico_2.proyecto2.modules.alimento import Kiwi, Manzana, Papa, Zanahoria
 
 class TestAlimentos(unittest.TestCase):
 
