@@ -2,7 +2,7 @@ from modules.facultad import Facultad
 from modules.departamento import Departamento
 from modules.persona import Estudiante, Profesor
 from modules.curso import Curso
-from modules.persistencia import cargar_facultad_desde_personas_txt, cargar_sistema_txt, guardar_sistema_txt
+from modules.persistencia import cargar_facultad_desde_personas_txt, cargar_sistema_txt, guardar_sistema_txt, cargar_estudiantes_y_profesores
 
 facultades = []
 
@@ -14,38 +14,39 @@ if opcion == 's':
     print("Universidad cargada correctamente.")
 
 elif opcion == 'n':  
-
-    estudiantes = []
-    profesores = []
-    
-    #cargar_estudiantes_y_profesores(estudiantes, profesores)
-
+    estudiantes, profesores = cargar_estudiantes_y_profesores()
     nombre_facultad = input("Ingrese el nombre de la facultad: ")
     nombre_departamento = input("Ingrese el nombre del primer departamento: ")
 
-    print("Elija el director dle dpto (opcion 0 para profesor nuevo):")
-    for i, profesor in enumerate(profesores):
-        print(f"{i + 1} - {profesor}")
+    print("Elija el director del departamento (0 para profesor nuevo):")
+    for i, prof in enumerate(profesores):
+        print(f"{i + 1} - {prof}")
 
     opcion_director = int(input("Opción: ")) - 1
-    if opcion_director == 0:
+    if opcion_director == -1:
         nombre = input("Nombre del nuevo profesor: ")
-        apellido = input("Apellido del nuevo profesor: ")
-        dni = input("DNI del nuevo profesor: ")
+        apellido = input("Apellido: ")
+        dni = input("DNI: ")
         director = Profesor(nombre, apellido, dni)
         profesores.append(director)
-    
     else:
         if opcion_director < 0 or opcion_director >= len(profesores):
             print("Opción no válida.")
             exit()
         director = profesores[opcion_director]
 
-    facultades = [Facultad(nombre_facultad, nombre_departamento, director)]
-    #facultades = [cargar_facultad_desde_personas_txt(nombre_facultad, nombre_departamento,nombre_director, apellido_director, dni_director)]
+    facultad = Facultad(nombre_facultad, nombre_departamento, director)
 
-    if facultades:
-        print("Facultad creada correctamente. Estudiantes y profesores cargados.")
+    # agregar estudiantes y profesores a la facultad
+    for est in estudiantes:
+        facultad.agregar_estudiante(est)
+    for prof in profesores:
+        if prof != director:
+            facultad.contratar_profesor(prof)
+
+    facultades = [facultad]
+
+    print("Facultad creada correctamente. Estudiantes y profesores cargados.")
 else:
     print("Opción no válida")
     exit()

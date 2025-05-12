@@ -12,6 +12,31 @@ base_dir = os.path.dirname(__file__)
 path_personas = os.path.join(base_dir,'..', 'data', 'personas.txt')
 path_sistema = os.path.join(base_dir,'..', 'data', 'sistema.txt')
 
+
+
+def cargar_estudiantes_y_profesores():
+    estudiantes = []
+    profesores = []
+    estudiantes_agregados = 0
+    profesores_agregados = 0
+
+    with open(path_personas, 'r', encoding='utf-8') as f:
+        for linea in f:
+            datos = linea.strip().split(',')
+            if datos[0] == 'ESTUDIANTE' and estudiantes_agregados < 4:
+                estudiante = Estudiante(datos[1], datos[2], datos[3])
+                estudiantes.append(estudiante)
+                estudiantes_agregados += 1
+            elif datos[0] == 'PROFESOR' and profesores_agregados < 4:
+                profesor = Profesor(datos[1], datos[2], datos[3])
+                profesores.append(profesor)
+                profesores_agregados += 1
+            if estudiantes_agregados == 4 and profesores_agregados == 4:
+                break
+
+    return estudiantes, profesores
+
+
 def cargar_facultad_desde_personas_txt(nombre_facultad, nombre_departamento,
                                         nombre_director, apellido_director, dni_director):
     """
