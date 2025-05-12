@@ -148,9 +148,10 @@ def cargar_sistema_txt():
 
             elif tipo == "DEPARTAMENTO":
                 nombre_depto, nombre_dir, apellido_dir, dni_dir = partes[1], partes[2], partes[3], partes[4]
-                director = profesores_global[dni_dir]
-                depto = facultad_actual.crear_departamento(nombre_depto, director)
-                departamentos[nombre_depto] = depto
+                if not any(depto.nombre == nombre_depto for depto in facultad_actual.departamentos):
+                    director = profesores_global[dni_dir]
+                    depto = facultad_actual.crear_departamento(nombre_depto, director)
+                    departamentos[nombre_depto] = depto
 
             elif tipo == "CURSO":
                 nombre_curso = partes[1]

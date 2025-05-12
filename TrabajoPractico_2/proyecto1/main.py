@@ -13,17 +13,36 @@ if opcion == 's':
     facultades = cargar_sistema_txt()
     print("Universidad cargada correctamente.")
 
-elif opcion == 'n':    
+elif opcion == 'n':  
+
+    estudiantes = []
+    profesores = []
+    
+    #cargar_estudiantes_y_profesores(estudiantes, profesores)
+
     nombre_facultad = input("Ingrese el nombre de la facultad: ")
     nombre_departamento = input("Ingrese el nombre del primer departamento: ")
-    print("Ingrese los datos del director:")
-    nombre_director = input("Nombre: ")
-    apellido_director = input("Apellido: ")
-    dni_director = input("DNI: ")
 
-    facultades = [cargar_facultad_desde_personas_txt(
-    nombre_facultad, nombre_departamento,
-    nombre_director, apellido_director, dni_director)]
+    print("Elija el director dle dpto (opcion 0 para profesor nuevo):")
+    for i, profesor in enumerate(profesores):
+        print(f"{i + 1} - {profesor}")
+
+    opcion_director = int(input("Opción: ")) - 1
+    if opcion_director == 0:
+        nombre = input("Nombre del nuevo profesor: ")
+        apellido = input("Apellido del nuevo profesor: ")
+        dni = input("DNI del nuevo profesor: ")
+        director = Profesor(nombre, apellido, dni)
+        profesores.append(director)
+    
+    else:
+        if opcion_director < 0 or opcion_director >= len(profesores):
+            print("Opción no válida.")
+            exit()
+        director = profesores[opcion_director]
+
+    facultades = [Facultad(nombre_facultad, nombre_departamento, director)]
+    #facultades = [cargar_facultad_desde_personas_txt(nombre_facultad, nombre_departamento,nombre_director, apellido_director, dni_director)]
 
     if facultades:
         print("Facultad creada correctamente. Estudiantes y profesores cargados.")
@@ -67,9 +86,9 @@ while True:
 
         print(f"{estudiante} inscripto/a en {facultad}.\n")
         
-        # print("Estudiantes en la facultad en orden alfabético:")
-        # for est in sorted(facultad.listar_estudiantes()):
-        #     print(est)
+        print("Estudiantes en la facultad en orden alfabético:")
+        for est in sorted(facultad.listar_estudiantes()):
+            print(est)
         
     elif opcion == "2":
         # lógica para contratar profesor
@@ -91,9 +110,9 @@ while True:
         facultad.contratar_profesor(profesor)
         print(f"\nProfesor/a {profesor} contratado/a en {facultad}.\n")
 
-        # print("Profesores en la facultad en ordes alfabético:")
-        # for prof in sorted(facultad.listar_profesores()):
-        #     print(prof)
+        print("Profesores en la facultad en ordes alfabético:")
+        for prof in sorted(facultad.listar_profesores()):
+            print(prof)
 
     elif opcion == "3":
         # lógica para crear departamento nuevo
