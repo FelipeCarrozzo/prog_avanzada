@@ -127,7 +127,6 @@ class Facultad:
         
         nuevo_departamento = Departamento(p_nombre, p_director) #contención
         
-        p_director.asociar_departamento(nuevo_departamento)
         self.__departamentos.append(nuevo_departamento)
         return nuevo_departamento
 

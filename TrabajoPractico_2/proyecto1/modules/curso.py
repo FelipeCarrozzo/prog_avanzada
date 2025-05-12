@@ -1,16 +1,15 @@
 
 class Curso:
     """
-    Representa un curso universitario con un nombre, un código, un profesor titular y una lista de estudiantes inscritos.
+    Representa un curso universitario con un nombre, un profesor titular, una lista de estudiantes inscritos y una lista de profesores que lo dictan.
     """
 
-    def __init__(self, p_nombre: str, codigo: str, titular):
+    def __init__(self, p_nombre: str, titular):
         """
         Inicializa una nueva instancia de la clase Curso.
 
         Args:
             nombre (str): Nombre del curso.
-            codigo (str): Código identificador del curso.
             titular (Profesor): Profesor titular del curso.
 
         Raises:
@@ -20,9 +19,9 @@ class Curso:
         if not isinstance(titular, Profesor):
             raise TypeError("El titular debe ser una instancia de la clase Profesor.")
         self.__nombre = p_nombre
-        self.__codigo = codigo
         self.__titular = titular  
         self.__estudiantes = []
+        self.__profesores = [titular]
 
     @property
     def nombre(self):
@@ -30,14 +29,7 @@ class Curso:
         str: Nombre del curso.
         """
         return self.__nombre
-
-    @property
-    def codigo(self):
-        """
-        str: Código del curso.
-        """
-        return self.__codigo
-
+    
     @property
     def titular(self):
         """
@@ -51,6 +43,13 @@ class Curso:
         list[Estudiante]: Lista de estudiantes inscritos en el curso.
         """
         return self.__estudiantes
+    
+    @property
+    def profesores(self):
+        """
+        list[Profesor]: Lista de profesores que dictan el curso.
+        """
+        return self.__profesores
 
     def inscribir_estudiante(self, p_estudiante):
         """
@@ -68,6 +67,7 @@ class Curso:
             raise TypeError("El estudiante debe ser una instancia de la clase Estudiante.")
         if p_estudiante not in self.__estudiantes:
             self.__estudiantes.append(p_estudiante)
+            p_estudiante.inscribir_curso(self)
         else:
             raise ValueError("El estudiante ya está inscrito en el curso.")
 
@@ -78,4 +78,4 @@ class Curso:
         Returns:
             str: Información del curso incluyendo nombre, código y titular.
         """
-        return f"Curso: {self.__nombre}, Código: {self.__codigo}, Titular: {self.__titular}"
+        return f"Curso: {self.__nombre}, Titular: {self.__titular}"

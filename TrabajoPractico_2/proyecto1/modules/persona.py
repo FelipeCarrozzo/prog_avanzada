@@ -108,22 +108,35 @@ class Profesor(Persona):
         self.__cursos = []
 
     @property
-    def departamentos(self):
-        """Devuelve la lista de departamentos en los que el profesor es director."""
-        return self.__departamentos
+    def departamentos_asignados(self):
+        return self.__departamentos_asignados
+
+    @property
+    def departamento_director(self):
+        return self.__departamento_director
     
     @property
     def cursos(self):
         """Devuelve la lista de cursos en los que el profesor es titular."""
         return self.__cursos
 
-    def asociar_departamento(self, p_depto):
-        """Asocia un nuevo departamento al profesor, si aún no lo está."""
+    def asignar_departamento(self, p_depto):
+        """Asigna un departamento al profesor, si aún no lo está."""
         from modules.departamento import Departamento
         if not isinstance(p_depto, Departamento):
-            raise TypeError("El departamento debe ser una instancia de la clase Departamento.")
-        if p_depto not in self.__departamentos:
-            self.__departamentos.append(p_depto)
+            raise TypeError("Debe ser una instancia de Departamento.")
+        if p_depto not in self.__departamentos_asignados:
+            self.__departamentos_asignados.append(p_depto)
+
+    def asignar_como_director(self, p_depto):
+        """Asigna al profesor como director de un departamento, si aún no lo es y no es director de otro."""
+        from modules.departamento import Departamento
+        if not isinstance(p_depto, Departamento):
+            raise TypeError("Debe ser una instancia de Departamento.")
+        if self.__departamento_director is not None:
+            raise ValueError("El profesor ya es director de otro departamento.")
+        self.__departamento_director = p_depto
+        self.asignar_departamento(p_depto)  
     
     def asociar_curso(self, p_curso):
         """Asocia un nuevo curso al profesor, si aún no lo está."""

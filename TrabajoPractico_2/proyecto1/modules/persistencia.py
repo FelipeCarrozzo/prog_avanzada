@@ -12,8 +12,8 @@ base_dir = os.path.dirname(__file__)
 path_personas = os.path.join(base_dir,'..', 'data', 'personas.txt')
 path_sistema = os.path.join(base_dir,'..', 'data', 'sistema.txt')
 
-def cargar_facultad_desde_personas_txt(nombre_facultad, nombre_departamento, director):
-    
+def cargar_facultad_desde_personas_txt(nombre_facultad, nombre_departamento,
+                                        nombre_director, apellido_director, dni_director):
     """
     Crea una instancia de Facultad a partir de un archivo de texto con datos de personas.
 
@@ -33,8 +33,9 @@ def cargar_facultad_desde_personas_txt(nombre_facultad, nombre_departamento, dir
     Facultad
         Instancia de la facultad con los estudiantes y profesores cargados.
     """
-        
+    director = Profesor(nombre_director, apellido_director, dni_director)
     facultad = Facultad(nombre_facultad, nombre_departamento, director)
+
     estudiantes_agregados = 0
     profesores_agregados = 0
 
@@ -91,10 +92,10 @@ def guardar_sistema_txt(facultades):
 
                 for curso in depto.cursos:
                     prof = curso.titular
-                    f.write(f"CURSO,{curso.codigo},{curso.nombre},{prof.nombre},{prof.apellido},{prof.dni},{depto.nombre}\n")
+                    f.write(f"CURSO,{curso.nombre},{prof.nombre},{prof.apellido},{prof.dni},{depto.nombre}\n")
 
                     for estudiante in curso.estudiantes:
-                        f.write(f"INSCRIPCION,{estudiante.nombre},{estudiante.apellido},{estudiante.dni},{curso.codigo}\n")
+                        f.write(f"INSCRIPCION,{estudiante.nombre},{estudiante.apellido},{estudiante.dni},{curso.nombre}\n")
 
 
 def cargar_sistema_txt():
@@ -152,23 +153,23 @@ def cargar_sistema_txt():
                 departamentos[nombre_depto] = depto
 
             elif tipo == "CURSO":
-                codigo, nombre_curso = partes[1], partes[2]
-                nombre_prof, apellido_prof, dni_prof = partes[3], partes[4], partes[5]
-                nombre_depto = partes[6]
+                nombre_curso = partes[1]
+                nombre_prof, apellido_prof, dni_prof = partes[2], partes[3], partes[4]
+                nombre_depto = partes[5]
 
                 profesor = profesores_global[dni_prof]
-                curso = Curso(nombre_curso, codigo, profesor)
+                curso = Curso(nombre_curso, profesor)
 
                 departamento = departamentos.get(nombre_depto)
                 if departamento:
                     departamento.agregar_curso(curso)
-                    cursos_global[codigo] = curso
+                    cursos_global[nombre_curso] = curso
                     profesor.asociar_curso(curso)
 
             elif tipo == "INSCRIPCION":
-                nombre, apellido, dni, codigo = partes[1], partes[2], partes[3], partes[4]
+                nombre, apellido, dni, nombre_curso = partes[1], partes[2], partes[3], partes[4]
                 estudiante = estudiantes_global.get(dni)
-                curso = cursos_global.get(codigo)
+                curso = cursos_global.get(nombre_curso)
                 if curso and estudiante:
                     curso.inscribir_estudiante(estudiante)
                     estudiante.inscribir_curso(curso)

@@ -23,6 +23,9 @@ class Departamento:
         self.__profesores = [director]  # El director es automáticamente parte del departamento
         self.__cursos = []
 
+        director.asignar_como_director(self)
+        self.agregar_profesor(director)
+
     @property
     def nombre(self):
         """Devuelve el nombre del departamento."""
@@ -54,6 +57,7 @@ class Departamento:
             raise TypeError("El profesor debe ser una instancia de la clase Profesor.")
         if p_profesor not in self.__profesores:
             self.__profesores.append(p_profesor)
+            p_profesor.asignar_departamento(self)
 
     def listar_profesores(self):
         """Devuelve una lista de los profesores como cadenas de texto."""
@@ -70,6 +74,8 @@ class Departamento:
             raise TypeError("El curso debe ser una instancia de la clase Curso.")
         if p_curso not in self.__cursos:
             self.__cursos.append(p_curso)
+        else:
+            raise ValueError("El curso ya está registrado en el departamento.")
 
     def listar_cursos(self):
         """Devuelve una lista de los cursos como cadenas de texto."""
@@ -77,4 +83,4 @@ class Departamento:
 
     def __str__(self):
         """Devuelve una representación en texto del departamento."""
-        return f"{self.__nombre}, Director: {self.__director}"
+        return f"Departamento: {self.__nombre}, Director: {self.__director}"
