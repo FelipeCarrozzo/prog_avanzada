@@ -67,6 +67,10 @@ while True:
 
         print(f"{estudiante} inscripto/a en {facultad}.\n")
         
+        # print("Estudiantes en la facultad en orden alfabético:")
+        # for est in sorted(facultad.listar_estudiantes()):
+        #     print(est)
+        
     elif opcion == "2":
         # lógica para contratar profesor
         print("Ingrese los datos del profesor:")
@@ -86,6 +90,10 @@ while True:
 
         facultad.contratar_profesor(profesor)
         print(f"\nProfesor/a {profesor} contratado/a en {facultad}.\n")
+
+        # print("Profesores en la facultad en ordes alfabético:")
+        # for prof in sorted(facultad.listar_profesores()):
+        #     print(prof)
 
     elif opcion == "3":
         # lógica para crear departamento nuevo
@@ -180,7 +188,7 @@ while True:
         nuevo_curso = Curso(nombre_curso, profesor)
         departamento.agregar_curso(nuevo_curso)
 
-        print(f"\nCurso '{nombre_curso}' creado correctamente en el departamento {departamento.nombre}, con \n{profesor} como profesor/a titular.\  n")
+        print(f"\nCurso '{nombre_curso}' creado correctamente en el departamento {departamento.nombre}, con {profesor} como profesor/a titular.\n")
 
         print(f"Cursos actuales en el departamento: {departamento.nombre}")
         for curso_str in departamento.listar_cursos():

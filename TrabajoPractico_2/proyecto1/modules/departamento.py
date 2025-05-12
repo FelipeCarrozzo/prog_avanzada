@@ -24,7 +24,6 @@ class Departamento:
         self.__cursos = []
 
         director.asignar_como_director(self)
-        self.agregar_profesor(director)
 
     @property
     def nombre(self):
