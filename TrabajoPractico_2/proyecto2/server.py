@@ -30,7 +30,7 @@ def index():
     }
 
     peso_total = 0.0
-    revisar = False 
+    revisar = False
 
     #verifico si el formulario fue enviado por el usuario
     if request.method == 'POST':

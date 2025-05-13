@@ -43,6 +43,10 @@ class CalculadorBromatologico:
     def calcular_peso(self, p_cajon: Cajon):
         """
         Método que calcula el peso total de los alimentos existentes en un cajón.
+        Args:
+        - p_cajon: El cajón que contiene los alimentos.
+        Returns:
+        - El peso total de los alimentos en el cajón.
         """
         peso_total = 0
         contador = 0
@@ -54,5 +58,12 @@ class CalculadorBromatologico:
         return peso_total
 
     def __round__(self, ndigits=None):
+        """
+        Método que redondea el resultado de la actividad acuosa.
+        Args:
+        - ndigits: Número de decimales a los que se desea redondear.
+        Returns:
+        - El resultado redondeado a la cantidad de decimales especificada.
+        """
         resultado = self.calcular_aw()
         return round (resultado, ndigits) if ndigits is not None else round(resultado)

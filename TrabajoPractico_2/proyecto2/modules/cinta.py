@@ -14,7 +14,10 @@ class Cinta:
     def clasificar_alimentos(self):
         """
         Método que genera un alimento aleatorio y su peso (detectar_alimento()).
-        Luego crea una instancia del alimento correspondiente(calcular_aw()).
+        Luego, dependiendo del tipo de alimento, lo clasifica en la cinta y genera
+        una instancia del alimento correspondiente.
+        Args:
+        - self: La instancia de la clase Cinta.
         Return:
         - El alimento creado o None si no se detectó un alimento válido.
         """
