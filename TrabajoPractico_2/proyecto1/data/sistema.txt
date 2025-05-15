@@ -1,12 +1,18 @@
 FACULTAD,Facultad de Ingeniería,Sistemas,Juan,Pérez,12345678
 PROFESOR,Juan,Pérez,12345678
 PROFESOR,María,Gómez,23456789
+PROFESOR,Jordan,Diaz,2233445
 ESTUDIANTE,Carlos,Sosa,34567890
 ESTUDIANTE,Ana,Martínez,45678901
+ESTUDIANTE,Agustina,Caporizzo,39570255
 DEPARTAMENTO,Sistemas,Juan,Pérez,12345678
 DEPARTAMENTO,Electrónica,María,Gómez,23456789
 CURSO,Circuitos Eléctricos I,María,Gómez,23456789,Electrónica
 INSCRIPCION,Ana,Martínez,45678901,Circuitos Eléctricos I
+INSCRIPCION,Agustina,Caporizzo,39570255,Circuitos Eléctricos I
+DEPARTAMENTO,Panadería,Jordan,Diaz,2233445
+CURSO,Masa madre,Jordan,Diaz,2233445,Panadería
+INSCRIPCION,Agustina,Caporizzo,39570255,Masa madre
 FACULTAD,Facultad de Ciencias Económicas,Contabilidad,Alicia,Ruiz,56789012
 PROFESOR,Alicia,Ruiz,56789012
 PROFESOR,Roberto,Díaz,67890123
