@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="wHaPtrlemiOSuc4_M_N2" name="Página-1">
-        <mxGraphModel dx="1209" dy="585" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="2075" dy="975" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -23,7 +23,7 @@
                     <mxGeometry y="94" width="270" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="74" value="DetectorAlimento" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontSize=14;" parent="1" vertex="1">
-                    <mxGeometry x="460" y="170" width="190" height="164" as="geometry"/>
+                    <mxGeometry x="475" y="180" width="190" height="164" as="geometry"/>
                 </mxCell>
                 <mxCell id="169" value="- lista_alimentos: list" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="74" vertex="1">
                     <mxGeometry y="26" width="190" height="26" as="geometry"/>
@@ -171,14 +171,18 @@
                 <mxCell id="126" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.722;entryY=1.005;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=block;endFill=0;fontSize=14;endSize=10;" parent="1" source="99" target="119" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="128" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;entryX=0.001;entryY=0.078;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;startSize=6;endSize=18;entryPerimeter=0;html=1;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=middle;fontSize=14;exitX=1;exitY=0.093;exitDx=0;exitDy=0;exitPerimeter=0;edgeStyle=orthogonalEdgeStyle;" parent="1" source="66" target="74" edge="1">
+                <mxCell id="128" value="" style="rounded=0;orthogonalLoop=1;jettySize=auto;entryX=0.001;entryY=0.078;entryDx=0;entryDy=0;endArrow=none;endFill=0;startSize=18;endSize=6;entryPerimeter=0;html=1;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=middle;fontSize=14;exitX=1;exitY=0.093;exitDx=0;exitDy=0;exitPerimeter=0;edgeStyle=orthogonalEdgeStyle;startArrow=diamondThin;startFill=0;" parent="1" source="66" target="74" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="810" y="130" as="sourcePoint"/>
+                        <Array as="points">
+                            <mxPoint x="450" y="453"/>
+                            <mxPoint x="450" y="193"/>
+                        </Array>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="148" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" parent="128" vertex="1" connectable="0">
                     <mxGeometry x="-0.8645" y="-1" relative="1" as="geometry">
-                        <mxPoint as="offset"/>
+                        <mxPoint x="11" as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="150" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" parent="128" vertex="1" connectable="0">

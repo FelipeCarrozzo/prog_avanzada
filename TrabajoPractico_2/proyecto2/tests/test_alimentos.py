@@ -12,7 +12,8 @@ class TestAlimentos(unittest.TestCase):
     # Test para verificar que una Manzana se crea correctamente con el peso y nombre adecuados
     def test_creacion_valida_manzana(self):
         manzana = Manzana(0.4)
-        self.assertEqual(manzana.peso, 0.4) 
+        peso = manzana.peso
+        self.assertEqual(peso, 0.4) 
         self.assertEqual(manzana.nombre, "manzana")  
 
     # Test para verificar que una Papa se crea correctamente con el peso y nombre adecuados
