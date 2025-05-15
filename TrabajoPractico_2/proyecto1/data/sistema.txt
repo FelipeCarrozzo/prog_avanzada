@@ -14,7 +14,5 @@ ESTUDIANTE,Sofía,López,78901234
 ESTUDIANTE,Federico,Luna,89012345
 DEPARTAMENTO,Contabilidad,Alicia,Ruiz,56789012
 DEPARTAMENTO,Finanzas,Roberto,Díaz,67890123
-CURSO,Contabilidad Básica,Alicia,Ruiz,56789012,Contabilidad
 CURSO,Finanzas Corporativas,Roberto,Díaz,67890123,Finanzas
-INSCRIPCION,Sofía,López,78901234,Contabilidad Básica
 INSCRIPCION,Federico,Luna,89012345,Finanzas Corporativas

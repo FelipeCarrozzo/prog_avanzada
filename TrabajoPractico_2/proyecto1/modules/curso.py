@@ -1,7 +1,11 @@
 
 class Curso:
     """
-    Representa un curso universitario con un nombre, un profesor titular, una lista de estudiantes inscritos y una lista de profesores que lo dictan.
+    Representa un curso universitario.
+
+    Un curso está definido por su nombre, un profesor titular, una lista de estudiantes que lo cursan,
+    y una lista de profesores asignados. La clase permite inscribir estudiantes y consultar
+    los detalles del curso.
     """
 
     def __init__(self, p_nombre: str, titular):
@@ -21,7 +25,10 @@ class Curso:
         self.__nombre = p_nombre
         self.__titular = titular  
         self.__estudiantes = []
-        self.__profesores = [titular]
+        self.__profesores = []
+
+        titular.asignar_como_titular(self) 
+        self.__profesores.append(titular)
 
     @property
     def nombre(self):

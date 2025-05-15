@@ -4,7 +4,6 @@
 import os
 from modules.facultad import Facultad
 from modules.persona import Estudiante, Profesor
-from modules.facultad import Facultad
 from modules.departamento import Departamento
 from modules.curso import Curso
 
@@ -15,6 +14,14 @@ path_sistema = os.path.join(base_dir,'..', 'data', 'sistema.txt')
 
 
 def cargar_estudiantes_y_profesores():
+    """
+    Carga los estudiantes y profesores desde el archivo `personas.txt`.
+    Retorna:
+    -------
+    tuple
+        list[Estudiante], list[Profesor]
+        Lista de estudiantes y lista de profesores.
+    """
     estudiantes = []
     profesores = []
     estudiantes_agregados = 0
@@ -37,51 +44,6 @@ def cargar_estudiantes_y_profesores():
     return estudiantes, profesores
 
 
-def cargar_facultad_desde_personas_txt(nombre_facultad, nombre_departamento,
-                                        nombre_director, apellido_director, dni_director):
-    """
-    Crea una instancia de Facultad a partir de un archivo de texto con datos de personas.
-
-    El archivo `personas.txt` debe contener líneas con el siguiente formato:
-    - ESTUDIANTE,Nombre,Apellido,DNI
-    - PROFESOR,Nombre,Apellido,DNI
-
-    Se agregan hasta 4 estudiantes y 4 profesores a la facultad creada.
-
-    Parámetros:
-    ----------
-    nombre_facultad : str
-        Nombre de la facultad a crear.
-
-    Retorna:
-    -------
-    Facultad
-        Instancia de la facultad con los estudiantes y profesores cargados.
-    """
-    director = Profesor(nombre_director, apellido_director, dni_director)
-    facultad = Facultad(nombre_facultad, nombre_departamento, director)
-
-    estudiantes_agregados = 0
-    profesores_agregados = 0
-
-    with open(path_personas, 'r', encoding='utf-8') as f:
-        for linea in f:
-            datos = linea.strip().split(',')
-            if datos[0] == 'ESTUDIANTE' and estudiantes_agregados < 4:
-                nombre, apellido, dni = datos[1], datos[2], datos[3]
-                estudiante = Estudiante(nombre, apellido, dni)
-                facultad.agregar_estudiante(estudiante)
-                estudiantes_agregados += 1
-            elif datos[0] == 'PROFESOR' and profesores_agregados < 4:
-                nombre, apellido, dni = datos[1], datos[2], datos[3]
-                profesor = Profesor(nombre, apellido, dni)
-                facultad.contratar_profesor(profesor)
-                profesores_agregados += 1
-            if estudiantes_agregados == 4 and profesores_agregados == 4:
-                break
-
-    return facultad
-
 def guardar_sistema_txt(facultades):
     """
     Guarda en un archivo de texto plano (`sistema.txt`) toda la información del sistema:
@@ -89,11 +51,11 @@ def guardar_sistema_txt(facultades):
 
     Cada entidad se guarda con una línea prefijada indicando su tipo:
     - FACULTAD,nombre,nombre_depto,nom_director,ape_director,dni_director
-    - PROFESOR
-    - ESTUDIANTE
-    - DEPARTAMENTO
-    - CURSO
-    - INSCRIPCION
+    - PROFESOR,nombre,apellido,dni
+    - ESTUDIANTE,nombre,apellido,dni
+    - DEPARTAMENTO,nombre,nom_director,ape_director,dni_director
+    - CURSO,nombre,nom_profesor,ape_profesor,dni_profesor,nombre_depto
+    - INSCRIPCION,nombre_estudiante,apellido_estudiante,dni_estudiante,nombre_curso
     """
     with open(path_sistema, "w", encoding="utf-8") as f:
         for facultad in facultades:

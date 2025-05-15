@@ -2,18 +2,21 @@ from modules.facultad import Facultad
 from modules.departamento import Departamento
 from modules.persona import Estudiante, Profesor
 from modules.curso import Curso
-from modules.persistencia import cargar_facultad_desde_personas_txt, cargar_sistema_txt, guardar_sistema_txt, cargar_estudiantes_y_profesores
+from modules.persistencia import cargar_sistema_txt, guardar_sistema_txt, cargar_estudiantes_y_profesores
 
 facultades = []
 
 print("Bienvenido al Sistema de Información Universitaria.")
-opcion = input("¿Desea cargar una universidad guardada anteriormente? (s/n): ").lower()
+opcion = input("¿Desea cargar facultades guardadas?  (s/n): ").lower()
 
 if opcion == 's':
+    # lógica para cargar facultades guardadas
     facultades = cargar_sistema_txt()
-    print("Universidad cargada correctamente.")
+    print("Facultades cargadas correctamente.")
 
-elif opcion == 'n':  
+elif opcion == 'n':
+    # lógica para crear una nueva facultad  
+    print("Comenzando con una nueva facultad...")
     estudiantes, profesores = cargar_estudiantes_y_profesores()
     nombre_facultad = input("Ingrese el nombre de la facultad: ")
     nombre_departamento = input("Ingrese el nombre del primer departamento: ")
@@ -22,18 +25,18 @@ elif opcion == 'n':
     for i, prof in enumerate(profesores):
         print(f"{i + 1} - {prof}")
 
-    opcion_director = int(input("Opción: ")) - 1
-    if opcion_director == -1:
+    opcion_director = int(input("Opción: "))
+    if opcion_director == 0:
         nombre = input("Nombre del nuevo profesor: ")
         apellido = input("Apellido: ")
         dni = input("DNI: ")
         director = Profesor(nombre, apellido, dni)
         profesores.append(director)
+    elif opcion_director < 1 or opcion_director > len(profesores):
+        print("Opción no válida.")
+        exit()
     else:
-        if opcion_director < 0 or opcion_director >= len(profesores):
-            print("Opción no válida.")
-            exit()
-        director = profesores[opcion_director]
+        director = profesores[opcion_director-1]
 
     facultad = Facultad(nombre_facultad, nombre_departamento, director)
 
@@ -111,7 +114,7 @@ while True:
         facultad.contratar_profesor(profesor)
         print(f"\nProfesor/a {profesor} contratado/a en {facultad}.\n")
 
-        print("Profesores en la facultad en ordes alfabético:")
+        print("Profesores en la facultad en orden alfabético:")
         for prof in sorted(facultad.listar_profesores()):
             print(prof)
 
@@ -131,7 +134,7 @@ while True:
         #se verifica si el departamento ya existe
         for depto in facultad.departamentos:
             if depto.nombre == nombre_nuevo_departamento:
-                print(f"El departamento {nombre_nuevo_departamento} ya existe en la facultad {facultad}.")
+                print(f"El departamento {nombre_nuevo_departamento} ya existe en la {facultad}.")
                 break
         else:
             # Si no existe, se crea el nuevo departamento y se asocia un profesor a él
@@ -155,7 +158,7 @@ while True:
 
             facultad.crear_departamento(nombre_nuevo_departamento, profesor)
             
-            print(f"Departamento {nombre_nuevo_departamento} creado en la facultad {facultad}.\n")
+            print(f"Departamento {nombre_nuevo_departamento} creado en la {facultad}.\n")
             print(f"\nProfesor/a {profesor} asociado/a como director/a al departamento {nombre_nuevo_departamento}.\n")
 
         print("Departamentos en la facultad:")
@@ -203,6 +206,11 @@ while True:
             print("Opción no válida.")
             continue
         profesor = facultad.profesores[prof_index]
+
+        #se verifica que el profesor no esté asignado a otro curso
+        if profesor.curso_titular is not None:
+            print(f"El/la profesor/a {profesor} ya es titular del curso {profesor.curso_titular.nombre}.")
+            continue
 
         #crear el curso y agregarlo al departamento
         nuevo_curso = Curso(nombre_curso, profesor)

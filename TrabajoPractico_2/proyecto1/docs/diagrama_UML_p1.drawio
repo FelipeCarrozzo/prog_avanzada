@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="obTsN0vRY-RDkQVVeV62" name="Page-1">
-        <mxGraphModel dx="1558" dy="1543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1759" dy="1443" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -134,7 +134,7 @@
                     <mxGeometry y="190" width="320" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="165" value="Profesor" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="540" y="704" width="370" height="190" as="geometry"/>
+                    <mxGeometry x="540" y="704" width="370" height="216" as="geometry"/>
                 </mxCell>
                 <mxCell id="166" value="&amp;lt;&amp;lt;get&amp;gt;&amp;gt; - departamentos_asignados: list [Departamento]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
                     <mxGeometry y="26" width="370" height="26" as="geometry"/>
@@ -142,20 +142,23 @@
                 <mxCell id="256" value="&amp;lt;&amp;lt;get&amp;gt;&amp;gt; - departamentos_director: Departamento" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
                     <mxGeometry y="52" width="370" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="219" value="&amp;lt;&amp;lt;get&amp;gt;&amp;gt; - cursos: list [Curso]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
+                <mxCell id="219" value="&amp;lt;&amp;lt;get&amp;gt;&amp;gt; - cursos_dictados: list [Curso]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
                     <mxGeometry y="78" width="370" height="26" as="geometry"/>
                 </mxCell>
+                <mxCell id="257" value="&amp;lt;&amp;lt;get&amp;gt;&amp;gt; - curso_titular: None/Curso" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="165">
+                    <mxGeometry y="104" width="370" height="26" as="geometry"/>
+                </mxCell>
                 <mxCell id="167" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="165" vertex="1">
-                    <mxGeometry y="104" width="370" height="8" as="geometry"/>
+                    <mxGeometry y="130" width="370" height="8" as="geometry"/>
                 </mxCell>
                 <mxCell id="168" value="+ asignar_departamento(p_depto: Departamento)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
-                    <mxGeometry y="112" width="370" height="26" as="geometry"/>
-                </mxCell>
-                <mxCell id="231" value="+ asignar_como_director(p_depto: Departamento)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
                     <mxGeometry y="138" width="370" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="225" value="+ asociar_curso(p_curso: Curso)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
+                <mxCell id="231" value="+ asignar_como_director(p_depto: Departamento)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
                     <mxGeometry y="164" width="370" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="225" value="+ asociar_curso(p_curso: Curso)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="165" vertex="1">
+                    <mxGeometry y="190" width="370" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="169" value="&lt;i&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Persona&lt;/font&gt;&lt;/i&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="216" y="279.5" width="280" height="172" as="geometry"/>
@@ -230,7 +233,7 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="242" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="184" connectable="0" vertex="1">
+                <mxCell id="242" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1..*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="184" connectable="0" vertex="1">
                     <mxGeometry x="-0.8108" y="1" relative="1" as="geometry">
                         <mxPoint x="-1" as="offset"/>
                     </mxGeometry>
@@ -327,7 +330,7 @@
                         <mxPoint x="813" y="700" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="243" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="202" connectable="0" vertex="1">
+                <mxCell id="243" value="&lt;span style=&quot;color: rgb(63, 63, 63); font-family: Verdana; font-size: 13px; text-align: left; text-wrap-mode: wrap; background-color: rgb(251, 251, 251);&quot;&gt;0..1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="202" connectable="0" vertex="1">
                     <mxGeometry x="-0.8451" relative="1" as="geometry">
                         <mxPoint y="3" as="offset"/>
                     </mxGeometry>
