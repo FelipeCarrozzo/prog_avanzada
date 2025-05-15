@@ -14,7 +14,7 @@ class CalculadorBromatologico:
         """
         self.__promedio = None
 
-    def calcular_aw(self, clase: Alimento, p_cajon: Cajon):
+    def calcular_aw(self, p_clase: Alimento, p_cajon: Cajon):
         """
         Método que calcula el promedio de la actividad acuosa de los alimentos.
         Se verifica que no sea mayor a 1 o menor a 0. 
@@ -30,7 +30,7 @@ class CalculadorBromatologico:
         contador = 0
 
         for alimento in p_cajon:
-            if isinstance(alimento, clase):
+            if isinstance(alimento, p_clase):
                 resultado_aw = alimento.calcular_aw()
                 resultados_aw.append(resultado_aw)
                 contador += 1
