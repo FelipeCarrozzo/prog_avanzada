@@ -50,7 +50,7 @@ class Departamento:
     @property
     def cursos(self):
         """list[Curso]: Lista de cursos que dicta el departamento."""
-        return self.__cursos
+        return self.__cursos #hacer copia profunda si es necesario
 
     def agregar_profesor(self, p_profesor: Profesor):
         """
