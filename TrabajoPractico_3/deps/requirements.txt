@@ -1,0 +1,10 @@
+Flask
+Flask-Login
+Flask-WTF
+nltk
+numpy
+scikit-learn
+scipy
+SQLAlchemy
+Werkzeug
+WTForms
