@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro</title>
+</head>
+<body>
+    <h2>Registrarse</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <p>{{ form.username.label }}<br>{{ form.username() }}</p>
+        <p>{{ form.email.label }}<br>{{ form.email() }}</p>
+        <p>{{ form.password.label }}<br>{{ form.password() }}</p>
+        <p>{{ form.confirm_password.label }}<br>{{ form.confirm_password() }}</p>
+        <p>{{ form.submit() }}</p>
+
+        {% for field, errors in form.errors.items() %}
+            {% for error in errors %}
+                <p style="color:red;">Error en {{ field }}: {{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+    </form>
+</body>
+</html>

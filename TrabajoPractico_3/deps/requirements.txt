@@ -8,3 +8,4 @@ scipy
 SQLAlchemy
 Werkzeug
 WTForms
+email-validator
