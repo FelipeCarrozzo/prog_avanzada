@@ -3,11 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicación Flask</title>
+    <title>Gestioná tus reclamos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Bienvenido a mi Aplicación Flask</h1>
-    <p>Esta es la página de inicio.</p>
+    <div class="header">
+        <img src="{{ url_for('static', filename='logoFiuner.png') }}" alt="Logo de la Facultad De Ingeniería UNER" class="logo"  width="150" height="50">
+        <div class="separator"></div>
+        <h1>Gestor de reclamos</h1>
+    </div>
+
+    <p class="login-title"> Iniciar sesión</p>
+    <form method="post">
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" name="username" required>
+        <br></br>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+        <br></br>
+        <input type="submit" value="Iniciar sesión">
+    </form>
+    <p>¿No tenés cuenta? Registrate aquí</p>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
 </body>
 </html>
