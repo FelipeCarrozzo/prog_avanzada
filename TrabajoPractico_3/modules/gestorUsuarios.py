@@ -1,12 +1,12 @@
 #dependencias
-from usuario import Usuario
-from repositorioAbstractoBD import RepositorioAbstractoBD
+from modules.usuario import Usuario
+from modules.repositorioAbstractoBD import RepositorioAbstractoBD
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class GestorUsuarios:
     def __init__(self, repo: RepositorioAbstractoBD):
         self.__repo = repo 
-    def registrarUsuario(self, nombre, email, password):
+    def registrarUsuario(self, nombre, apellido, nombreUsuario, email, password, rol, claustro, departamento: None):
         """
         Registra un nuevo usuario en el sistema.
         args: nombre, email, password
@@ -20,17 +20,18 @@ class GestorUsuarios:
                                                  salt_length=8
                                                 )
         #genero la intancia de usuario
-        usuario = Usuario(None, nombre, email, passEncriptada)
+        usuario = Usuario(None, nombre, apellido, nombreUsuario, email, passEncriptada, rol, claustro, departamento)
         self.__repo.guardarRegistro(usuario)
 
     def loguearUsuario(self, email, password):
         #busco el mail ingresado por el usuario
         usuario = self.__repo.obtenerRegistroFiltro("email", email)
+
         if not usuario:
             raise ValueError("El usuario no está registrado.")
         elif not check_password_hash(usuario.password, password):
             raise ValueError("Contraseña incorrecta.")
         return usuario.to_dict()
-
-    def listarUsuarios(self) -> list:
-        return self.usuarios
+    
+    def cargarUsuario(self, id_usuario):
+        return self.__repo.obtenerRegistroFiltro("id", id_usuario).to_dict()

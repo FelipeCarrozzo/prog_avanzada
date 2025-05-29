@@ -47,6 +47,10 @@ class Usuario:
     def rol(self):
         return self.__rol
     
+    @property
+    def departamento(self):
+        return self.__departamento
+    
     def to_dict(self):
         """
         Serializa el usuario en un diccionario.

@@ -1,5 +1,6 @@
 Flask
 Flask-Login
+flask_session
 Flask-WTF
 nltk
 numpy
