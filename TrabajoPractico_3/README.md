@@ -1,8 +1,8 @@
-# 🐍Nombre del proyecto (darle un nombre significativo) 
+# 🐍Gestor de reclamos para la Facultad De Ingeniería 
 
 Breve descripción del proyecto:
 
-Ejemplo: “Esta es una aplicación web construida con el framework [Flask](https://flask.palletsprojects.com/). Permite [describir funcionalidades principales].
+Ejemplo: “Esta es una aplicación web construida con el framework [Flask](https://flask.palletsprojects.com/). Permite a los estudiantes, docentes y PAyS de la facultad generar reclamos sobre posibles faltantes, fallas o desperfectos que existan en las áreas comunes del edificio. Los usuarios pueden hacer un seguimiento del estado de su reclamo. 
 
 ---
 ## 🏗Arquitectura General
