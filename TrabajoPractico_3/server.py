@@ -1,7 +1,7 @@
-from flask_wtf import FlaskForm
-from flask import Flask, request, render_template, flash, redirect, url_for, session
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Length
+# from flask_wtf import FlaskForm
+from flask import render_template, flash, redirect, url_for
+# from wtforms import StringField, PasswordField, SubmitField
+# from wtforms.validators import DataRequired, Length
 from modules.config import app
 from modules.gestorUsuarios import GestorUsuarios
 from modules.formularios import RegistroForm

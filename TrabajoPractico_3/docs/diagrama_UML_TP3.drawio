@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="1ZTH_i83KneQO5rUIlxD" name="UML">
-        <mxGraphModel dx="2599" dy="1484" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="5449" dy="2777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -359,32 +359,6 @@
                 <mxCell id="236" value="registrarUsuario debe chequear&amp;nbsp;&lt;div&gt;que no exista ese usuario&lt;/div&gt;&lt;div&gt;NO olvidarse de checkear datos de entrada validos&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="10.000000000000007" y="658" width="300" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="FKitiWgQfBLCDOPJjMPu-241" value="RepositorioConcretoBD" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
-                    <mxGeometry x="2310" y="840" width="320" height="190" as="geometry">
-                        <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="FKitiWgQfBLCDOPJjMPu-242" value="-session" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="FKitiWgQfBLCDOPJjMPu-241" vertex="1">
-                    <mxGeometry y="26" width="320" height="26" as="geometry"/>
-                </mxCell>
-                <mxCell id="FKitiWgQfBLCDOPJjMPu-243" value="" style="line;html=1;strokeWidth=1;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="FKitiWgQfBLCDOPJjMPu-241" vertex="1">
-                    <mxGeometry y="52" width="320" height="8" as="geometry"/>
-                </mxCell>
-                <mxCell id="FKitiWgQfBLCDOPJjMPu-244" value="+actualizar_atributo(id_fila,atributo,nuevo_valor)" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="FKitiWgQfBLCDOPJjMPu-241" vertex="1">
-                    <mxGeometry y="60" width="320" height="26" as="geometry"/>
-                </mxCell>
-                <mxCell id="FKitiWgQfBLCDOPJjMPu-245" value="+obtener_registro_por_filtro(atributo,valor)" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="FKitiWgQfBLCDOPJjMPu-241" vertex="1">
-                    <mxGeometry y="86" width="320" height="26" as="geometry"/>
-                </mxCell>
-                <mxCell id="FKitiWgQfBLCDOPJjMPu-246" value="+obtener_todos_los_registros(): list" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="FKitiWgQfBLCDOPJjMPu-241" vertex="1">
-                    <mxGeometry y="112" width="320" height="26" as="geometry"/>
-                </mxCell>
-                <mxCell id="FKitiWgQfBLCDOPJjMPu-247" value="+guardar_registro()" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="FKitiWgQfBLCDOPJjMPu-241" vertex="1">
-                    <mxGeometry y="138" width="320" height="26" as="geometry"/>
-                </mxCell>
-                <mxCell id="FKitiWgQfBLCDOPJjMPu-248" value="+obtener_registros_por_filtro(atributo,valor)" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="FKitiWgQfBLCDOPJjMPu-241" vertex="1">
-                    <mxGeometry y="164" width="320" height="26" as="geometry"/>
-                </mxCell>
                 <mxCell id="269" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=14;" parent="1" source="238" target="323" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="477" y="-122.99999999999977" as="targetPoint"/>
@@ -616,11 +590,11 @@
                 <mxCell id="365" value="Botón ANALITICAS&amp;nbsp;&lt;div&gt;en el dashboard del jefe depto&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="700" y="821" width="180" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="368" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=1;endSize=16;" parent="1" source="334" target="353" edge="1">
+                <mxCell id="368" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=1;endSize=16;strokeColor=#FF0000;" parent="1" source="334" target="353" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="340" y="839"/>
-                            <mxPoint x="340" y="913"/>
+                            <mxPoint x="340" y="910"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -652,6 +626,9 @@
                             <mxPoint x="780" y="360"/>
                         </Array>
                     </mxGeometry>
+                </mxCell>
+                <mxCell id="412" value="generador USA un&amp;nbsp;&lt;div&gt;montMediana&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="350" y="800" width="130" height="40" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
