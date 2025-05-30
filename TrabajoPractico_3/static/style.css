@@ -91,15 +91,25 @@ p {
     text-align: center;
 }
 
-.error {
+/* .error {
     color: #e74c3c;
     font-weight: bold;
     margin-top: 15px;
-}
+} */
 
 .separator {
     width: 1px;
     height: 50px;
     background-color: #bbb;
     margin: 0 20px;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+.success {
+    color: green;
+    font-weight: bold;
 }

@@ -1,34 +1,42 @@
 #dependencias
-from flask import Flask, render_template, redirect, url_for
-from flask_wtf import FlaskForm
+from flask import Flask
 from flask_session import Session
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Length
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_login import LoginManager
 # from flask_bootstrap import Bootstrap
 import datetime
 
+from modules.usuario import Usuario
 
+# Crear instancia de Flask y definir la configuración
 app = Flask("server")
 app.config['SECRET_KEY'] = "d87h3dxodj09j30"
+
+#conexión a la base de datos
 URL_BD = 'sqlite:///data/base_datos.db'
 
+"""Crear el motor de conexión a la BD. 'crear_engine' devuelve
+   una clase sesión de SQLAlchemy"""
 def crear_engine():
     engine = create_engine(URL_BD)
     Session = sessionmaker(bind=engine)
     return Session
 
-app.config.from_object(__name__)
-app.config["SESSION_TYPE"] = "filesystem"
-app.config["SESSION_FILE_DIR"] = "./flask_session_cache"
-app.config["SESSION_PERMANENT"] = False
-app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(minutes=5)
-Session(app)
+app.config["SESSION_TYPE"] = "filesystem" #guarda las sesiones en el sistema de archivos
+app.config["SESSION_FILE_DIR"] = "./flask_session_cache" #carpeta donde se almacenan las sesione
+app.config["SESSION_PERMANENT"] = False #False = la sesión termina cuando se cierra el navegador
+app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(minutes=5) #true = expira en 5 minutos
 
-# Flask Login
-login_manager = LoginManager()
-login_manager.init_app(app)
-# Bootstrap
-# Bootstrap(app)
+Session(app) #aplicar la configuración a la app
+
+login_manager = LoginManager() #para manejar el login
+login_manager.init_app(app) #conecta la app al flask-login
+login_manager.login_view = "login" # para redirigir a la vista de login si no está autenticado
+
+
+"""Cargar el usuario actual mediante id para Flask-Login 
+   Devuelve una instancia del usuario"""
+@login_manager.user_loader
+def load_user(user_id):
+    return Usuario.obtener_por_id(int(user_id))

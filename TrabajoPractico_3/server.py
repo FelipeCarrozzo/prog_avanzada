@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired, Length
 from modules.config import app
 from modules.gestorUsuarios import GestorUsuarios
 from modules.formularios import RegistroForm
+from modules.factoriaRepositorios import crearRepositorio
 
 # app = Flask(__name__)
 # app.config['SECRET_KEY'] = SECRET_KEY
@@ -14,23 +15,27 @@ from modules.formularios import RegistroForm
 # repoReclamo, repoUsuario = crear_repositorio()
 # gestor_libros = GestorDeLibros(repo_libro)
 # gestor_usuarios = GestorDeUsuarios(repo_usuario)
-gestorUsuarios = GestorUsuarios()
+repoUsuario = crearRepositorio()
+gestorUsuarios = GestorUsuarios(repoUsuario)
 # gestor_login = GestorDeLogin(gestor_usuarios, login_manager, admin_list)
 
-@app.route("/register", methods= ["GET", "POST"])
+@app.route("/registro", methods= ["GET", "POST"])
 def register():
     form_registro = RegistroForm()
     if form_registro.validate_on_submit():
         try:
             gestorUsuarios.registrarUsuario(form_registro.nombre.data, 
-                                                    form_registro.email.data, 
+                                                    form_registro.apellido.data, 
+                                                    form_registro.email.data,
+                                                    form_registro.nombreUsuario.data,
+                                                    form_registro.claustro.data,
                                                     form_registro.password.data)
         except ValueError as e:
             flash(str(e))    
         else:
             flash("Usuario registrado con éxito")
-            return redirect(url_for("login"))               
-    return render_template('register.html', form=form_registro)
+            return redirect(url_for("register"))               
+    return render_template('registro.html', form=form_registro)
 
 
 

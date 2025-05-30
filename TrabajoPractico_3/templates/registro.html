@@ -7,14 +7,32 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>Registrarse</h2>
+    <div class="header">
+        <img src="{{ url_for('static', filename='logoFiuner.png') }}" alt="Logo de la Facultad De Ingeniería UNER" class="logo" width="150" height="50">
+        <div class="separator"></div>
+        <h1>Gestor de reclamos | Registrate</h1>
+    </div>
+
+    <!-- Sección para mensajes flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="mensajes-flash">
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
     <form method="POST">
         {{ form.hidden_tag() }}
-
-        <p>{{ form.username.label }}<br>{{ form.username() }}</p>
+        <p>{{ form.nombre.label }}<br>{{ form.nombre() }}</p>
+        <p>{{ form.apellido.label }}<br>{{ form.apellido() }}</p>
         <p>{{ form.email.label }}<br>{{ form.email() }}</p>
+        <p>{{ form.nombreUsuario.label }}<br>{{ form.nombreUsuario() }}</p>
+        <p>{{ form.claustro.label }}<br>{{ form.claustro() }}</p>
         <p>{{ form.password.label }}<br>{{ form.password() }}</p>
-        <p>{{ form.confirm_password.label }}<br>{{ form.confirm_password() }}</p>
+        <p>{{ form.confirmacion.label }}<br>{{ form.confirmacion() }}</p>
         <p>{{ form.submit() }}</p>
 
         {% for field, errors in form.errors.items() %}

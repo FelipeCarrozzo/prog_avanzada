@@ -11,11 +11,9 @@ class ModeloUsuario(Base):
     id = Column(Integer(), primary_key=True)
     nombre = Column(String(50), nullable=False)
     apellido = Column(String(50), nullable=False)
+    email = Column(String(100), nullable=False, unique=True)
+    nombreUsuario = Column(String(20), nullable=False, unique=True)
     claustro = Column(String(20), nullable=False)
-    rol = Column(String(20), nullable=False)
-    nombreUsuario = Column(String(20), nullable=False, unique = True)
-    email = Column(String(100), nullable=False, unique = True)
-    password = Column (String (20))
-    departamento = Column(String(20))
-
-
+    password = Column(String(20))
+    rol = Column(String(20), nullable=True, default=None)
+    departamento = Column(String(20), nullable=True, default=None)
