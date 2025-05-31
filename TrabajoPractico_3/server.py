@@ -4,7 +4,7 @@ from flask import render_template, flash, redirect, url_for
 # from wtforms.validators import DataRequired, Length
 from modules.config import app
 from modules.gestorUsuarios import GestorUsuarios
-from modules.formularios import RegistroForm
+from modules.formularios import RegistroForm, LoginForm
 from modules.factoriaRepositorios import crearRepositorio
 
 # app = Flask(__name__)
@@ -41,19 +41,18 @@ def register():
 
 
 # Página de inicio
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#         form = LoginForm()
-#         if form.validate_on_submit():
-#             # Procesamiento del login
-#             username = form.username.data
-#             password = form.password.data
-#             print(f'Usuario: {username}, Contraseña: {password}')
-#             return redirect(url_for('dashboard'))
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Procesamiento del login
+        username = form.username.data
+        password = form.password.data
+        print(f'Usuario: {username}, Contraseña: {password}')
+        return redirect(url_for('dashboard'))
 
-#     return render_template('login.html', form=form)
+    return render_template('login.html', form = form)
 
-#pagina de registro
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

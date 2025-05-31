@@ -23,8 +23,7 @@
         <br></br>
         <input type="submit" value="Iniciar sesión">
     </form>
-    <p>¿No tenés cuenta? Registrate aquí</p>
-
+    <a href="{{ url_for('register') }}" class="btn-registro">¿No tenés cuenta? Registrate aquí</a>
     {% if error %}
         <p class="error">{{ error }}</p>
     {% endif %}

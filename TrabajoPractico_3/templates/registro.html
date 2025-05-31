@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestioná tus reclamos</title>
+    <title>Gestioná tus reclamos|Registrate</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -30,7 +30,7 @@
         <p>{{ form.apellido.label }}<br>{{ form.apellido() }}</p>
         <p>{{ form.email.label }}<br>{{ form.email() }}</p>
         <p>{{ form.nombreUsuario.label }}<br>{{ form.nombreUsuario() }}</p>
-        <p>{{ form.claustro.label }}<br>{{ form.claustro() }}</p>
+        <p>{{ form.claustro.label }}<br>{{ form.claustro(class_="input-estilo") }}</p>
         <p>{{ form.password.label }}<br>{{ form.password() }}</p>
         <p>{{ form.confirmacion.label }}<br>{{ form.confirmacion() }}</p>
         <p>{{ form.submit() }}</p>
