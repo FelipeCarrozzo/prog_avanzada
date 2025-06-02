@@ -4,6 +4,14 @@ class MonticuloBinario:
         self.__tamanioActual = 0
         self.__tipo = pTipo #"min" o "max"
 
+    def devolverListaValores(self):
+        return self.__listaValores.copy()
+
+    @property
+    def tamanioActual(self):
+        return self.__tamanioActual
+    
+
     def infiltrarArriba(self,i):
         '''
         Mueve el elemento en la posición i hacia arriba en el montículo
@@ -31,7 +39,7 @@ class MonticuloBinario:
         ''' 
         if self.__tipo == "min":
             while (i * 2) <= self.__tamanioActual:
-                hm = self.hijoMin(i)
+                hm = self.hijoMinOMax(i)
                 if self.__listaValores[i] > self.__listaValores[hm]:
                     tmp = self.__listaValores[i]
                     self.__listaValores[i] = self.__listaValores[hm]
@@ -39,7 +47,7 @@ class MonticuloBinario:
                 i = hm
         elif self.__tipo == "max":
             while (i * 2) <= self.__tamanioActual:
-                hm = self.hijoMax(i)
+                hm = self.hijoMinOMax(i)
                 if self.__listaValores[i] < self.__listaValores[hm]:
                     tmp = self.__listaValores[i]
                     self.__listaValores[i] = self.__listaValores[hm]
@@ -58,10 +66,17 @@ class MonticuloBinario:
         if i * 2 + 1 > self.__tamanioActual:
             return i * 2
         else:
-            if self.__listaValores[i*2] < self.__listaValores[i*2+1]:
-                return i * 2
+            if self.__tipo == 'min':
+                if self.__listaValores[i * 2] < self.__listaValores[i * 2 + 1]:
+                    return i * 2
+                else:
+                    return i * 2 + 1
             else:
-                return i * 2 + 1
+                if self.__listaValores[i * 2] > self.__listaValores[i * 2 + 1]:
+                    return i * 2
+                else:
+                    return i * 2 + 1
+            
 
     def eliminarMinOMax(self):
         '''
@@ -69,15 +84,13 @@ class MonticuloBinario:
         '''
         if self.__tamanioActual == 0:
             raise ValueError("El montículo está vacío.")
-        valorSacado = self.__listaValores[1]
+        raiz = self.__listaValores[1]
         self.__listaValores[1] = self.__listaValores[self.__tamanioActual]
         self.__tamanioActual = self.__tamanioActual - 1
         self.__listaValores.pop()
         self.infiltrarAbajo(1)
-        return valorSacado
+        return raiz
 
-    def devolverListaValores(self):
-        return self.__listaValores.copy()
 
 
 class MonticuloMediana:
@@ -89,17 +102,26 @@ class MonticuloMediana:
         #si el valor es el primero, se agrega directamente al montículo mínimo
         #valor > obtenerMediana() -> se agrega al montículo mínimo
         #valor < obtenerMediana() -> se agrega al montículo máximo
-        if self.__monticuloMin.tamanioActual == 0 or valor < self.__monticuloMin.devolverListaValores()[1]: #si el valor es menor a la raiz
+        # if self.__monticuloMax.tamanioActual == 0 or valor <= self.__monticuloMax.devolverListaValores()[1]:
+        #     self.__monticuloMax.insertar(valor)
+        # else:
+        #     self.__monticuloMin.insertar(valor)
+        if self.__monticuloMin.tamanioActual == 0 and self.__monticuloMax.tamanioActual == 0:
             self.__monticuloMin.insertar(valor)
         else:
-            self.__monticuloMax.insertar(valor)
+            mediana_actual = self.obtenerMediana()
+            if valor > mediana_actual:
+                self.__monticuloMin.insertar(valor)
+            else:
+                self.__monticuloMax.insertar(valor)
+
 
         # Balancear los montículos
         if self.__monticuloMin.tamanioActual > self.__monticuloMax.tamanioActual + 1:
-            valorSacado = self.__monticuloMin.eliminarMinO
+            valorSacado = self.__monticuloMin.eliminarMinOMax()
             self.__monticuloMax.insertar(valorSacado)
         elif self.__monticuloMax.tamanioActual > self.__monticuloMin.tamanioActual:
-            valorSacado = self.__monticuloMax.eliminarMin()
+            valorSacado = self.__monticuloMax.eliminarMinOMax()
             self.__monticuloMin.insertar(valorSacado)
     
     def obtenerMediana(self) -> float:
@@ -107,11 +129,11 @@ class MonticuloMediana:
             raise ValueError("No hay valores para calcular la mediana.")
         
         if self.__monticuloMin.tamanioActual > self.__monticuloMax.tamanioActual:
-            return self.__monticuloMin.listaMonticulo[1]
+            return self.__monticuloMin.devolverListaValores()[1]
         elif self.__monticuloMin.tamanioActual < self.__monticuloMax.tamanioActual:
-            return self.__monticuloMax.listaMonticulo[1]
+            return self.__monticuloMax.devolverListaValores()[1]
         else:
-            return (self.__monticuloMin.listaMonticulo[1] + self.__monticuloMax.listaMonticulo[1]) / 2
+            return (self.__monticuloMin.devolverListaValores()[1] + self.__monticuloMax.devolverListaValores()[1]) / 2
 
 #operaciones:
 #inicializar()
