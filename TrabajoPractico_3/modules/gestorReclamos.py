@@ -36,11 +36,10 @@ class GestorReclamos:
             self.clasificarReclamo(descripcion)
 
             #busca reclamos similares
-            # self.buscarReclamoSimilar(reclamo)
+            self.buscarReclamoSimilar(reclamo)
 
             #guarda el reclamo en el repositorio y también en la lista de reclamos
-            # self.guardarReclamo(reclamo.to_dict())
-            self.__reclamos.append(reclamo.to_dict())  # lista de diccionarios
+            self.guardarReclamo(reclamo.to_dict())
 
         return reclamo
 
