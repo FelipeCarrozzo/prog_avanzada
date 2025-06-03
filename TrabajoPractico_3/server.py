@@ -8,13 +8,10 @@ from modules.gestorLogin import GestorDeLogin
 from modules.formularios import RegistroForm, LoginForm
 from modules.factoriaRepositorios import crearRepositorio
 
-# app = Flask(__name__)
-# app.config['SECRET_KEY'] = SECRET_KEY
-# app.config.from_object('config') 
+
 
 adminList = [1]
 # repoReclamo, repoUsuario = crear_repositorio()
-# gestor_libros = GestorDeLibros(repo_libro)
 # gestor_usuarios = GestorDeUsuarios(repo_usuario)
 repoUsuario = crearRepositorio()
 gestorUsuarios = GestorUsuarios(repoUsuario)
@@ -24,7 +21,6 @@ gestor_login = GestorDeLogin(gestorUsuarios, login_manager, adminList)
 @app.route('/')
 def inicio():
     return render_template('inicio.html')
-
 
 @app.route("/register", methods= ["GET", "POST"])
 def register():
@@ -45,33 +41,6 @@ def register():
     return render_template('registro.html', form=form_registro)
 
 
-# Página de login: principal
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     """"
-#     inicio de sesión de usuarios (finales y administradores).
-#     Se crea instancia de LoginForm y se valida.
-#     Se autentica al usuario con el gestor de usuarios.
-#     Si la autenticación es exitosa, se inicia sesión con el gestor de login
-#     y se redirige a la página de inicio, pasando el nombre de usuario a la sesión.
-#     """
-#     print("Entrando a la página de login")
-#     formLogin = LoginForm()
-#     if formLogin.validate_on_submit():
-#         print("Formulario de login válido")
-#         try:
-#             usuario = gestorUsuarios.autenticarUsuario(formLogin.username.data, formLogin.password.data) 
-#             print(f"Usuario autenticado: {usuario}")
-#             if not usuario:
-#                 raise ValueError("El usuario no está registrado o la contraseña es incorrecta.")
-#             else:
-#                 gestor_login.loginUsuario(usuario)
-#                 session['username'] = gestor_login.nombreUsuarioActual
-#                 return redirect(url_for('inicio'))
-#         except ValueError as e:
-#                 flash(str("Error: el usuario no está registrado o la contraseña es incorrecta."))
-#     return render_template('login.html', form=formLogin)
-
 @app.route("/login", methods= ["GET", "POST"])
 def login():
     form_login = LoginForm()
@@ -84,7 +53,7 @@ def login():
         else:
             gestor_login.loginUsuario(usuario)
             session['username'] = gestor_login.nombreUsuarioActual
-            return redirect(url_for('inicio')) 
+            return redirect(url_for('inicio'))
 
     return render_template('login.html', form=form_login)
 
