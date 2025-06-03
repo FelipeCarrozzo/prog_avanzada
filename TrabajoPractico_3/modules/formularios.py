@@ -4,6 +4,15 @@ from wtforms import StringField, PasswordField, SelectField,ValidationError, Sub
 from wtforms.validators import DataRequired, Length
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
+# Diccionario de roles centralizado para toda la app
+ROLES = {
+    0: "secretarioTecnico",
+    1: "estudiante",
+    2: "docente",
+    3: "PAyS",
+    4: "jefeDeptoMaestranza",
+    5: "jefeDeptoInformatica"
+}
 
 class LoginForm(FlaskForm):
     """"Formulario de inicio de sesión."""
@@ -22,19 +31,19 @@ class RegistroForm(FlaskForm):
     apellido = StringField(label = "Apellido", validators = [DataRequired()])
     email = StringField(label = "Email", validators = [DataRequired(), Email()])
     nombreUsuario = StringField(label = "nombreUsuario", validators = [DataRequired()])
-    claustro = SelectField(label="Claustro", choices=[("", "Seleccionar..."),
-                                                      ("estudiante", "Estudiante"), 
-                                                      ("docente", "Docente"),
-                                                      ("no_docente", "No docente")], 
-                                                      validators=[DataRequired(message="Por favor seleccioná un claustro.")])
+    claustro = SelectField(label="Claustro", choices=[
+        ("", "Seleccionar..."),
+        (ROLES[1], "Estudiante"),
+        (ROLES[2], "Docente"),
+        (ROLES[3], "PAyS")
+    ], validators=[DataRequired(message="Por favor seleccioná un rol.")])
     password = PasswordField(label='Password', validators=[DataRequired(), Length(min=4), EqualTo('confirmacion', message='Las contraseñas deben coincidir')])
     confirmacion = PasswordField(label='Repetir contraseña', validators=[DataRequired()])
     submit = SubmitField('Registrarse')
 
     # Validación personalizada
-    def validate_claustro(self, field):
-        """Valida que el claustro seleccionado no esté vacío porque es una
+    def validarRol(self, field):
+        """Valida que el rol seleccionado no esté vacío porque es una
         casilla de selección"""
         if field.data == "":
-            raise ValidationError("Debes seleccionar un claustro válido.")
-        
+            raise ValidationError("Debes seleccionar un rol válido.")

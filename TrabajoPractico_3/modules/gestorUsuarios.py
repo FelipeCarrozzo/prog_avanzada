@@ -10,9 +10,9 @@ class GestorUsuarios:
     def __init__(self, repo: RepositorioAbstractoBD): #es el repositorio de usuarios
         self.__repo = repo
 
-    def registrarUsuario(self, nombre, apellido, email, nombreUsuario, claustro, password):
+    def registrarUsuario(self, nombre, apellido, email, nombreUsuario, rol, password):
         """ Registra un nuevo usuario en el sistema.
-            args: nombre, apellido, email, nombreUsuario, claustro, password
+            args: nombre, apellido, email, nombreUsuario, rol, password
         """
         #verifico si no está registrado
         if self.__repo.obtenerRegistroFiltro("email", email):
@@ -24,13 +24,13 @@ class GestorUsuarios:
                                                  salt_length=8
                                                 )
         #genero la intancia de usuario CON ROL Y DEPARTAMENTO = None
-        usuario = Usuario(None, nombre, apellido, email, nombreUsuario, claustro,
-                          passEncriptada, rol=None, departamento=None)
+        usuario = Usuario(None, nombre, apellido, email, nombreUsuario,
+                          passEncriptada, rol, departamento=None)
         self.__repo.guardarRegistro(usuario)
 
     """POSIBLE SOLUCIÓN PARA REGISTRAR ADMINS"""
     # sólo accesible para admins
-    # def crearAdmin(self, nombre, apellido, email, usuario, claustro, password, rol, departamento):
+    # def registrarAdmin(self, nombre, apellido, email, usuario, claustro, password, rol, departamento):
     #     admin = Usuario(
     #         nombre=nombre,
     #         apellido=apellido,

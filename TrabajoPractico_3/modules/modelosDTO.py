@@ -27,7 +27,7 @@ class ModeloReclamo(Base):
     departamento = Column(String(20), nullable=False)
     usuarioCreador = Column(Integer, ForeignKey('Usuarios.id'), nullable=False)
     numeroAdheridos = Column(Integer, nullable=False, default=0)
-    usuariosAdheridos = relationship('ModeloUsuario', secondary='reclamos_usuarios')
+    # usuariosAdheridos = relationship('ModeloUsuario', secondary='reclamos_usuarios')
     descripcion = Column(Text, nullable=False)
     imagen = Column(String(255), nullable=True)
     numeroAdheridos = Column(Integer, nullable=False, default=0)

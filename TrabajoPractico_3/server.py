@@ -8,8 +8,6 @@ from modules.gestorLogin import GestorDeLogin
 from modules.formularios import RegistroForm, LoginForm
 from modules.factoriaRepositorios import crearRepositorio
 
-
-
 adminList = [1]
 # repoReclamo, repoUsuario = crear_repositorio()
 # gestor_usuarios = GestorDeUsuarios(repo_usuario)

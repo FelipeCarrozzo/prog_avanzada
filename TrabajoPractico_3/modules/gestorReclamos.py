@@ -20,21 +20,21 @@ class GestorReclamos:
         """Devuelve la lista de departamentos."""
         return self.__departamentos
 
-    def crearReclamo(self, idReclamo, fechaYHora, estado, tiempoResolucion, departamento,
-                    usuarioCreador, numeroAdheridos, usuariosAdheridos, descripcion, imagen):
+    def crearReclamo(self, idReclamo, fechaYHora, estado, tiempoResolucion,
+                    usuarioCreador, numeroAdheridos, usuariosAdheridos, descripcion, imagen): #saco el depto y lo agrego despues de la clasif
         
         # Verifica si el reclamo ya existe
         if self.__repo.obtenerRegistroFiltro("idReclamo", idReclamo):
             raise ValueError("El reclamo ya está registrado.")
 
         else:
+            #clasifica el reclamo y guarda ese resultado como valor de departamento
+            """puede ser que el tipo de dato no esté bien"""
+            departamentoClasif = self.clasificarReclamo(descripcion)
+
             #Crea una instancia de Reclamo
-            reclamo = Reclamo(idReclamo, fechaYHora, estado, tiempoResolucion, departamento,
+            reclamo = Reclamo(idReclamo, fechaYHora, estado, tiempoResolucion, departamentoClasif,
                             usuarioCreador, numeroAdheridos, usuariosAdheridos, descripcion, imagen)
-
-            #clasifica el reclamo
-            self.clasificarReclamo(descripcion)
-
             #busca reclamos similares
             self.buscarReclamoSimilar(reclamo)
 
