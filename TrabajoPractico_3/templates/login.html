@@ -1,31 +1,28 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestioná tus reclamos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="header">
-        <img src="{{ url_for('static', filename='logoFiuner.png') }}" alt="Logo de la Facultad De Ingeniería UNER" class="logo"  width="150" height="50">
-        <div class="separator"></div>
-        <h1>Gestor de reclamos</h1>
-    </div>
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
 
-    <p class="login-title"> Iniciar sesión</p>
-    <form method="post">
-        <label for="username">Usuario:</label>
-        <input type="text" id="username" name="username" required>
-        <br></br>
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required>
-        <br></br>
-        <input type="submit" value="Iniciar sesión">
-    </form>
-    <a href="{{ url_for('register') }}" class="btn-registro">¿No tenés cuenta? Registrate aquí</a>
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
-</body>
-</html>
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+	<div class="container mx-auto">
+		<h1>Login</h1>
+		<div style="color: red">  
+			{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					{% for message in messages %}
+						{{ message }}
+					{% endfor %}
+				{% endif %}
+			{% endwith %} 
+		</div>
+		<div class="row">
+			
+			<div class="col-lg-6">
+				{{ wtf.quick_form(form, novalidate=True) }}
+			</div>
+		</div>
+		
+	</div>
+{% endblock %}

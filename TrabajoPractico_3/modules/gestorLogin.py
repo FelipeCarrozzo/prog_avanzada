@@ -5,7 +5,8 @@ from flask import abort
 from functools import wraps
 
 class FlaskLoginUser(UserMixin):
-    """Clase que representa un usuario para Flask-Login.
+    """
+    Clase que representa un usuario para Flask-Login.
     Hereda de UserMixin para integrarse con Flask-Login.
     Atributos:
         id: ID del usuario.
@@ -13,6 +14,7 @@ class FlaskLoginUser(UserMixin):
         email: Email del usuario.
         password: Contraseña del usuario (encriptada).
     """
+
     def __init__(self, diccUsuario):
         self.id = diccUsuario["id"]
         self.nombre = diccUsuario["nombre"]
@@ -27,7 +29,7 @@ class GestorDeLogin:
         self.__adminList = adminList
 
     @property
-    def nombre_usuarioActual(self):
+    def nombreUsuarioActual(self):
         return current_user.nombre
 
     @property
@@ -43,7 +45,7 @@ class GestorDeLogin:
         diccUsuario = self.__gestorUsuarios.cargarUsuario(idUsuario)
         return FlaskLoginUser(diccUsuario)
 
-    def login_usuario(self, diccUsuario):
+    def loginUsuario(self, diccUsuario):
         """Inicia sesión para el usuario con los datos proporcionados."""
         user = FlaskLoginUser(diccUsuario)
         login_user(user)

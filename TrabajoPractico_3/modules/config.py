@@ -4,7 +4,7 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_login import LoginManager
-# from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap
 import datetime
 
 from modules.usuario import Usuario
@@ -40,3 +40,6 @@ login_manager.login_view = "login" # para redirigir a la vista de login si no es
 @login_manager.user_loader
 def load_user(user_id):
     return Usuario.obtener_por_id(int(user_id))
+
+# Bootstrap
+Bootstrap(app)

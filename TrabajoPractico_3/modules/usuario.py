@@ -3,7 +3,7 @@ class Usuario:
     def __init__(self, id, nombre, apellido, email, nombreUsuario, claustro,
                  password, rol=None, departamento=None):
         
-        self.__id = None #revisar
+        self.__id = id #revisar
         self.__nombre = nombre
         self.__apellido = apellido
         self.__email = email

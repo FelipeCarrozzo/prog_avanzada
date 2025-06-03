@@ -43,11 +43,11 @@ class GestorUsuarios:
     #     )
     #     self.repo.guardar(admin)
 
-    def loguearUsuario(self, email, password):
-        """ Loguea un usuario en el sistema.
+    def autenticarUsuario(self, nombreUsuario, password) -> dict:
+        """ Autentica un usuario con email y contraseña.
             args: email, password
         """
-        usuario = self.__repo.obtenerRegistroFiltro("email", email)
+        usuario = self.__repo.obtenerRegistroFiltro("nombreUsuario", nombreUsuario)
 
         if not usuario:
             raise ValueError("El usuario no está registrado.")
