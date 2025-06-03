@@ -1,11 +1,13 @@
 from modules.reclamo import Reclamo
 from modules.repositorioAbstractoBD import RepositorioAbstractoBD
+from modules.clasificadorReclamos import ClasificadorDeReclamos
 
 
 class GestorReclamos:
     def __init__(self, repo: RepositorioAbstractoBD):
         self.__repo = repo
         self.__reclamos = [] #lista de diccionarios
+        self.__clasificador = ClasificadorDeReclamos()
         self.__departamentos = []
 
     @property
@@ -20,31 +22,30 @@ class GestorReclamos:
 
     def crearReclamo(self, idReclamo, fechaYHora, estado, tiempoResolucion, departamento,
                     usuarioCreador, numeroAdheridos, usuariosAdheridos, descripcion, imagen):
-        """Crea un nuevo reclamo y lo guarda en el repositorio."""
-        reclamo = Reclamo(idReclamo, fechaYHora, estado, tiempoResolucion, departamento,
-                         usuarioCreador, numeroAdheridos, usuariosAdheridos, descripcion, imagen)
-
+        
         # Verifica si el reclamo ya existe
         if self.__repo.obtenerRegistroFiltro("idReclamo", idReclamo):
-            raise ValueError("El reclamo ya está registrado")
-        
+            raise ValueError("El reclamo ya está registrado.")
+
         else:
+            #Crea una instancia de Reclamo
+            reclamo = Reclamo(idReclamo, fechaYHora, estado, tiempoResolucion, departamento,
+                            usuarioCreador, numeroAdheridos, usuariosAdheridos, descripcion, imagen)
+
             #clasifica el reclamo
             self.clasificarReclamo(descripcion)
 
             #busca reclamos similares
-            self.buscarReclamoSimilar(reclamo)
+            # self.buscarReclamoSimilar(reclamo)
 
-            #guarda el reclamo en el repositorio
-            self.guardarReclamo(reclamo.to_dict())
-
-            #agregar a la lista de reclamos
-            # self.__reclamos.append(reclamo.to_dict())
+            #guarda el reclamo en el repositorio y también en la lista de reclamos
+            # self.guardarReclamo(reclamo.to_dict())
+            self.__reclamos.append(reclamo.to_dict())  # lista de diccionarios
 
         return reclamo
 
     def clasificarReclamo(self, descripcion: str):
-        pass
+        self.__clasificador.clasificar([descripcion])
 
     def buscarReclamoSimilar(self, reclamo):
         """Busca reclamos similares en el repositorio."""
