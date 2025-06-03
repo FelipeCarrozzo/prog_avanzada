@@ -1,7 +1,8 @@
 #dependencias
 from modules.repositorioAbstractoBD import RepositorioAbstractoBD
-from modules.modelosDTO import ModeloUsuario
+from modules.modelosDTO import ModeloUsuario, ModeloReclamo
 from modules.usuario import Usuario
+from modules.reclamo import Reclamo
 
 class RepositorioUsuariosBD(RepositorioAbstractoBD):
     """Repositorio de usuarios en la base de datos.
@@ -99,8 +100,79 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         )
 
 
-# class RepositorioReclamosBD(RepositorioAbstractoBD):
-#     pass
+class RepositorioReclamosBD(RepositorioAbstractoBD):
+    """Repositorio de reclamos en la base de datos."""
+    def __init__(self, session):
+        self.__tablaReclamo = ModeloReclamo()
+        self.__session = session
+        self.__tablaReclamo.metadata.create_all(self.__session.bind)
+    
+    def guardarRegistro(self, reclamo):
+        """Guarda un registro de un reclamo en la base de datos.
+        Args:
+            reclamo(Reclamo): reclamo a guardar en el registro. """
+        
+        # Verifica que el reclamo sea una instancia de la clase Reclamo
+        if not isinstance(reclamo, Reclamo):
+            raise ValueError("El parámetro no es una instancia de la clase Reclamo")
+        
+        modeloReclamo = self.__map_reclamo_a_modelo(reclamo)
+        self.__session.add(modeloReclamo)
+        self.__session.commit()
+        #tabla intermedia - para cuando IMPLEMENTEMOS EL RECLAMO
+        # usuario = self.__session.query(ModeloUsuario).filter_by(id=reclamo.idUsuario).first()
+        # usuario.reclamosSeguidos.apend(modeloReclamo)
+
+    def actualizarAtributo(self, id, atributo, valor):
+        """
+        Método abstracto para actualizar un atributo de un registro en la base de datos.
+
+        param id: Identificador del registro a actualizar.
+        param atributo: Nombre del atributo a actualizar.
+        param valor: Nuevo valor del atributo.
+        """
+        pass
+
+    def obtenerRegistroFiltro(self, filtro):
+        """
+        Método abstracto para obtener un registro de la base de datos basado en un filtro.
+
+        param filtro: Filtro para buscar el registro.
+        return: Registro que coincide con el filtro.
+        """
+        pass
+
+    def obtenerRegistrosFiltro(self, filtro):
+        """
+        Método abstracto para obtener múltiples registros de la base de datos basados en un filtro.
+
+        param filtro: Filtro para buscar los registros.
+        return: Lista de registros que coinciden con el filtro.
+        """
+        pass
+
+    def obtenerRegistrosTotales(self):
+        """
+        Método abstracto para obtener todos los registros de la base de datos.
+
+        return: Lista de todos los registros.
+        """
+        pass
+
+
+    #--------------------------------------------------------------------------
+    def __map_reclamo_a_modelo(self, reclamo: Reclamo):
+        return ModeloReclamo(
+            fechaYHora=reclamo.fechaYHora,
+            estado=reclamo.estado,
+            tiempoResolucion=reclamo.tiempoDeResolucion,
+            departamento=reclamo.departamento,
+            usuarioCreador=reclamo.idUsuarioCreador,  # id del usuario creador
+            numeroAdheridos=reclamo.numeroAdheridos,
+            usuariosAdheridos=reclamo.usuariosAdheridos,  # lista de usuarios adheridos
+            descripcion=reclamo.descripcion,
+            imagen=reclamo.imagen  # si se implementa imagen
+        )
 
 # class RepositorioDepartamentosBD(RepositorioAbstractoBD):
 #     pass

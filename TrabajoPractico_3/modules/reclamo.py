@@ -1,14 +1,15 @@
 #capa de dominio
 
 class Reclamo:
-    def __init__(self, idReclamo, pFechaYHora, pEstado, pTiempoResolucion, pDepartamento, pUsuarioCreador, pNumeroAdheridos, pDescripcion, pImagen):
-        self.__idReclamo= idReclamo
+    def __init__(self, idReclamo, pFechaYHora, pEstado, pTiempoResolucion, pDepartamento, 
+                 pUsuarioCreador, pNumeroAdheridos, pUsuariosAdheridos, pDescripcion, pImagen):
+        self.__idReclamo = idReclamo
         self.__fechaYHora = pFechaYHora
         self.__estado = pEstado
         self.__tiempoDeResolucion = pTiempoResolucion
         self.__departamento = pDepartamento
-        self.__usuarioCreador = pUsuarioCreador #id del usuario en lugar del objeto Usuario?
-        #self.__usuariosAdheridos = pUsuariosAdheridos: list[Usuario]
+        self.__idUsuarioCreador = pUsuarioCreador #id del usuario en lugar del objeto Usuario?
+        self.__usuariosAdheridos = pUsuariosAdheridos #list[Usuario]
         self.__numeroAdheridos = pNumeroAdheridos
         self.__descripcion = pDescripcion
         self.__imagen = pImagen
@@ -56,6 +57,16 @@ class Reclamo:
     @property
     def usuariosAdheridos(self):
         return self.__usuariosAdheridos
+    
+    @property
+    def numeroAdheridos(self):
+        return self.__numeroAdheridos
+    
+    # @numeroAdheridos.setter
+
+    @property
+    def imagen(self):
+        return self.__imagen
 
     @estado.setter
     def estado(self, value):
@@ -75,6 +86,6 @@ class Reclamo:
             "estado": self.estado,
             "tiempoDeResolucion": self.tiempoDeResolucion,
             "numeroAdheridos": self.numeroAdheridos,
-
+            "usuariosAdheridos": [usuario.to_dict() for usuario in self.usuariosAdheridos],
+            "imagen": self.imagen
         }
-    
