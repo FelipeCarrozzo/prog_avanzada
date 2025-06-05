@@ -1,8 +1,6 @@
 #capa de dominio
 class Usuario:
     def __init__(self, nombre, apellido, email, nombreUsuario, rol=None, password=None):
-
-        # self.__id = id #revisar
         self.__nombre = nombre
         self.__apellido = apellido
         self.__email = email
@@ -11,9 +9,9 @@ class Usuario:
         self.__password = password
 
 
-    @property
-    def id(self):
-        return self.__id
+    # @property
+    # def id(self):
+    #     return self.__id
     
     #setter id?
     
@@ -34,20 +32,8 @@ class Usuario:
         return self.__nombreUsuario
     
     @property
-    def claustro(self):
-        return self.__claustro
-    
-    @property
-    def password(self):
-        return self.__password
-    
-    @property
     def rol(self):
         return self.__rol
-    
-    @property
-    def departamento(self):
-        return self.__departamento
     
     def to_dict(self):
         """
@@ -56,13 +42,10 @@ class Usuario:
             dict: Representación del usuario como un diccionario.
         """
         return {
-            "id": self.id,
             "nombre": self.nombre,
             "apellido": self.apellido,
             "email": self.email,
             "nombreUsuario": self.nombreUsuario,
-            "password": self.password,
             "rol": self.rol,
-            "departamento": self.__departamento,
-            
+            "password": self.password
         }

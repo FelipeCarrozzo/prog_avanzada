@@ -4,83 +4,81 @@ class MonticuloBinario:
         self.__tamanioActual = 0
         self.__tipo = pTipo #"min" o "max"
 
-    def devolverListaValores(self):
-        return self.__listaValores.copy()
-
     @property
     def tamanioActual(self):
         return self.__tamanioActual
-    
 
-    def infiltrarArriba(self,i):
+    def devolverListaValores(self):
+        return self.__listaValores.copy()
+
+    def infiltrarArriba(self, valor):
         '''
         Mueve el elemento en la posición i hacia arriba en el montículo
         hasta que se cumpla la propiedad del montículo.
         '''
         if self.__tipo == "min":
-            while i // 2 > 0:
-                if self.__listaValores[i] < self.__listaValores[i // 2]:
-                    tmp = self.__listaValores[i // 2]
-                    self.__listaValores[i // 2] = self.__listaValores[i]
-                    self.__listaValores[i] = tmp
-                i = i // 2
+            while valor // 2 > 0:
+                if self.__listaValores[valor] < self.__listaValores[valor // 2]:
+                    tmp = self.__listaValores[valor // 2]
+                    self.__listaValores[valor // 2] = self.__listaValores[valor]
+                    self.__listaValores[valor] = tmp
+                valor = valor // 2
         elif self.__tipo == "max":
-           while i // 2 > 0:
-                if self.__listaValores[i] > self.__listaValores[i // 2]:
-                    tmp = self.__listaValores[i // 2]
-                    self.__listaValores[i // 2] = self.__listaValores[i]
-                    self.__listaValores[i] = tmp
-                i = i // 2
+           while valor // 2 > 0:
+                if self.__listaValores[valor] > self.__listaValores[valor // 2]:
+                    tmp = self.__listaValores[valor // 2]
+                    self.__listaValores[valor // 2] = self.__listaValores[valor]
+                    self.__listaValores[valor] = tmp
+                valor = valor // 2
 
-    def infiltrarAbajo(self,i):
+    def infiltrarAbajo(self, valor):
         '''
         Mueve el elemento en la posición i hacia abajo en el montículo
         hasta que se cumpla la propiedad del montículo.
         ''' 
         if self.__tipo == "min":
-            while (i * 2) <= self.__tamanioActual:
-                hm = self.hijoMinOMax(i)
-                if self.__listaValores[i] > self.__listaValores[hm]:
-                    tmp = self.__listaValores[i]
-                    self.__listaValores[i] = self.__listaValores[hm]
+            while (valor * 2) <= self.__tamanioActual:
+                hm = self.hijoMinOMax(valor)
+                if self.__listaValores[valor] > self.__listaValores[hm]:
+                    tmp = self.__listaValores[valor]
+                    self.__listaValores[valor] = self.__listaValores[hm]
                     self.__listaValores[hm] = tmp
-                i = hm
+                valor = hm
         elif self.__tipo == "max":
-            while (i * 2) <= self.__tamanioActual:
-                hm = self.hijoMinOMax(i)
-                if self.__listaValores[i] < self.__listaValores[hm]:
-                    tmp = self.__listaValores[i]
-                    self.__listaValores[i] = self.__listaValores[hm]
+            while (valor * 2) <= self.__tamanioActual:
+                hm = self.hijoMinOMax(valor)
+                if self.__listaValores[valor] < self.__listaValores[hm]:
+                    tmp = self.__listaValores[valor]
+                    self.__listaValores[valor] = self.__listaValores[hm]
                     self.__listaValores[hm] = tmp
-                i = hm
+                valor = hm
 
-    def insertar(self,elemento):
+    def insertar(self,valor):
         """Inserta un nuevo elemento en el montículo.
         args:
         k: El valor a insertar en el montículo.
         """
-        self.__listaValores.append(elemento)
+        self.__listaValores.append(valor)
         self.__tamanioActual = self.__tamanioActual + 1
         self.infiltrarArriba(self.__tamanioActual)
 
-    def hijoMinOMax(self,i):
+    def hijoMinOMax(self, valor):
         """
         Devuelve el índice del hijo mínimo o máximo de i.
         """
-        if i * 2 + 1 > self.__tamanioActual:
-            return i * 2
+        if valor * 2 + 1 > self.__tamanioActual:
+            return valor * 2
         else:
             if self.__tipo == 'min':
-                if self.__listaValores[i * 2] < self.__listaValores[i * 2 + 1]:
-                    return i * 2
+                if self.__listaValores[valor * 2] < self.__listaValores[valor * 2 + 1]:
+                    return valor * 2
                 else:
-                    return i * 2 + 1
+                    return valor * 2 + 1
             else:
-                if self.__listaValores[i * 2] > self.__listaValores[i * 2 + 1]:
-                    return i * 2
+                if self.__listaValores[valor * 2] > self.__listaValores[valor * 2 + 1]:
+                    return valor * 2
                 else:
-                    return i * 2 + 1
-            
+                    return valor * 2 + 1
 
     def eliminarMinOMax(self):
         '''

@@ -10,9 +10,9 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
     """
 
     def __init__(self, session):
-        self.__tabla_usuario = ModeloUsuario()
+        self.__tablaUsuario = ModeloUsuario()
         self.__session = session
-        self.__tabla_usuario.metadata.create_all(self.__session.bind)
+        self.__tablaUsuario.metadata.create_all(self.__session.bind)
     
     def guardarRegistro(self, usuario):
         """
@@ -33,13 +33,20 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
 
     def actualizarAtributo(self, id, atributo, valor):
         """
-        Método abstracto para actualizar un atributo de un registro en la base de datos.
-
-        param id: Identificador del registro a actualizar.
-        param atributo: Nombre del atributo a actualizar.
-        param valor: Nuevo valor del atributo.
+        Método para actualizar un atributo de un registro en 
+        la tabla Usuarios.
+        args:
+        id: Identificador del registro a actualizar.
+        atributo: Nombre del atributo a actualizar.
+        valor: Nuevo valor del atributo.
         """
-        pass
+        instancia = self._session.get(self.__tablaUsuario, id)
+
+        if not instancia:
+            raise ValueError(f"Error: Instancia con id {id} no existe.")
+        
+        setattr(instancia, atributo, valor)
+        self._session.commit()
 
     def obtenerRegistroFiltro(self, filtro, valor):
         """
@@ -54,14 +61,23 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         return self.__map_modelo_a_usuario(modeloUsuario) if modeloUsuario else None
 
 
-    def obtenerRegistrosFiltro(self, filtro):
+    def obtenerRegistrosFiltro(self, filtro, valor):
         """
-        Método abstracto para obtener múltiples registros de la base de datos basados en un filtro.
+        Método para obtener conjunto de registros de la 
+        base de datos basados en un filtro.
 
-        param filtro: Filtro para buscar los registros.
+        args:
+        filtro: Filtro para buscar los registros.
         return: Lista de registros que coinciden con el filtro.
         """
-        pass
+        if isinstance(valor, list) and len(valor) > 0:
+            valor = valor[0] 
+        modeloUsuario = self._session.query(ModeloUsuario).filter_by(**{filtro: valor}).all()
+
+        if modeloUsuario:
+            return [self.__map_modelo_a_usuario(usuario) for usuario in modeloUsuario]
+        #si no hay resultados: devuelve lista vacia
+        return [] 
 
     def obtenerRegistrosTotales(self):
         """
@@ -69,7 +85,8 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
 
         return: Lista de todos los registros.
         """
-        pass
+        modeloUsuario = self._session.query(ModeloUsuario).all()
+        return [self.__map_modelo_a_usuario(usuario) for usuario in modeloUsuario]
 
     def eliminarRegistro(self, idUsuario):
         """
@@ -97,14 +114,14 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
             password=usuario.password
         )
         
-    def __map_modelo_a_usuario(self, modelo_usuario: ModeloUsuario):
+    def __map_modelo_a_usuario(self, modeloUsuario: ModeloUsuario):
         return Usuario(
-            nombre=modelo_usuario.nombre,
-            apellido=modelo_usuario.apellido,
-            email=modelo_usuario.email,
-            nombreUsuario=modelo_usuario.nombreUsuario,
-            rol=modelo_usuario.rol,
-            password=modelo_usuario.password
+            nombre=modeloUsuario.nombre,
+            apellido=modeloUsuario.apellido,
+            email=modeloUsuario.email,
+            nombreUsuario=modeloUsuario.nombreUsuario,
+            rol=modeloUsuario.rol,
+            password=modeloUsuario.password
         )
 
 
@@ -118,7 +135,7 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
     def guardarRegistro(self, reclamo):
         """Guarda un registro de un reclamo en la base de datos.
         Args:
-            reclamo(Reclamo): reclamo a guardar en el registro. """
+        reclamo(Reclamo): reclamo a guardar en el registro. """
         
         # Verifica que el reclamo sea una instancia de la clase Reclamo
         if not isinstance(reclamo, Reclamo):
@@ -139,25 +156,39 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
         param atributo: Nombre del atributo a actualizar.
         param valor: Nuevo valor del atributo.
         """
-        pass
+        instancia = self._session.get(self.__tablaReclamo, id)
 
-    def obtenerRegistroFiltro(self, filtro):
+        if not instancia:
+            raise ValueError(f"Error: Instancia con id {id} no existe.")
+        
+        setattr(instancia, atributo, valor)
+        self._session.commit()
+
+    def obtenerRegistroFiltro(self, filtro, valor):
         """
         Método abstracto para obtener un registro de la base de datos basado en un filtro.
 
         param filtro: Filtro para buscar el registro.
         return: Registro que coincide con el filtro.
         """
-        pass
+        modeloReclamo = self.__session.query(ModeloReclamo).filter_by(**{filtro:valor}).first()
+        return self.__map_modelo_a_reclamo(modeloReclamo) if modeloReclamo else None
 
-    def obtenerRegistrosFiltro(self, filtro):
+    def obtenerRegistrosFiltro(self, filtro, valor):
         """
         Método abstracto para obtener múltiples registros de la base de datos basados en un filtro.
 
         param filtro: Filtro para buscar los registros.
         return: Lista de registros que coinciden con el filtro.
         """
-        pass
+        if isinstance(valor, list) and len(valor) > 0:
+            valor = valor[0] 
+        modeloReclamo = self._session.query(ModeloReclamo).filter_by(**{filtro: valor}).all()
+
+        if modeloReclamo:
+            return [self.__map_modelo_a_reclamo(reclamo) for reclamo in modeloReclamo]
+        #si no hay resultados: devuelve lista vacia
+        return [] 
 
     def obtenerRegistrosTotales(self):
         """
@@ -180,6 +211,19 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
             usuariosAdheridos=reclamo.usuariosAdheridos,  # lista de usuarios adheridos
             descripcion=reclamo.descripcion,
             imagen=reclamo.imagen  # si se implementa imagen
+        )
+    
+    def __map_modelo_a_reclamo(self, modeloReclamo: ModeloReclamo):
+        return Reclamo(
+            fechaYHora=modeloReclamo.fechaYHora,
+            estado=modeloReclamo.estado,
+            tiempoDeResolucion=modeloReclamo.tiempoResolucion,
+            departamento=modeloReclamo.departamento,
+            idUsuarioCreador=modeloReclamo.usuarioCreador,  # id del usuario creador
+            numeroAdheridos=modeloReclamo.numeroAdheridos,
+            usuariosAdheridos=modeloReclamo.usuariosAdheridos,  # lista de usuarios adheridos
+            descripcion=modeloReclamo.descripcion,
+            imagen=modeloReclamo.imagen  # si se implementa imagen
         )
 
 # class RepositorioDepartamentosBD(RepositorioAbstractoBD):
