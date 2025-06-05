@@ -24,24 +24,9 @@ class GestorUsuarios:
                                                  salt_length=8
                                                 )
         #genero la intancia de usuario CON ROL Y DEPARTAMENTO = None
-        usuario = Usuario(None, nombre, apellido, email, nombreUsuario,
+        usuario = Usuario(nombre, apellido, email, nombreUsuario,
                           rol, passEncriptada)
         self.__repo.guardarRegistro(usuario)
-
-    """POSIBLE SOLUCIÓN PARA REGISTRAR ADMINS"""
-    # sólo accesible para admins
-    # def registrarAdmin(self, nombre, apellido, email, usuario, claustro, password, rol, departamento):
-    #     admin = Usuario(
-    #         nombre=nombre,
-    #         apellido=apellido,
-    #         email=email,
-    #         username=usuario,
-    #         claustro=claustro,
-    #         password=hash(password),
-    #         rol=rol,
-    #         departamento=departamento
-    #     )
-    #     self.repo.guardar(admin)
 
     def autenticarUsuario(self, nombreUsuario, password) -> dict:
         """ Autentica un usuario con email y contraseña.
@@ -55,8 +40,8 @@ class GestorUsuarios:
             raise ValueError("Contraseña incorrecta.")
         return usuario.to_dict()
     
-    def cargarUsuario(self, id_usuario):
+    def cargarUsuario(self, idUsuario):
         """ Carga un usuario por su ID.
             args: id_usuario
         """
-        return self.__repo.obtenerRegistroFiltro("id", id_usuario).to_dict()
+        return self.__repo.obtenerRegistroFiltro("id", idUsuario).to_dict()

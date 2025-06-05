@@ -10,7 +10,6 @@ from modules.factoriaRepositorios import crearRepositorio
 
 adminList = [1]
 # repoReclamo, repoUsuario = crear_repositorio()
-# gestor_usuarios = GestorDeUsuarios(repo_usuario)
 repoUsuario = crearRepositorio()
 gestorUsuarios = GestorUsuarios(repoUsuario)
 gestor_login = GestorDeLogin(gestorUsuarios, login_manager, adminList)
@@ -18,8 +17,19 @@ gestor_login = GestorDeLogin(gestorUsuarios, login_manager, adminList)
 
 @app.route('/')
 def inicio():
-    """Ruta principal que renderiza la página de inicio."""
-    #Registro de usuarios administrativos
+    """
+    Ruta principal que renderiza la página de inicio.
+    Carga los datos de los usuarios administrativos desde un archivo y los registra en el sistema.
+    """
+    # Registro de usuarios administrativos
+    archivoDatos = "./data/datosAdmins.txt"
+    with open(archivoDatos, 'r') as file:
+        for line in file:
+            nombre, apellido, email, nombreUsuario, rol, password = line.strip().split(',')
+            try:
+                gestorUsuarios.registrarUsuario(nombre, apellido, email, nombreUsuario, rol, password)
+            except ValueError as e:
+                print(f"Error al registrar admin {nombreUsuario}: {e}")
     
 
     return render_template('inicio.html')
@@ -33,7 +43,7 @@ def register():
                                                     form_registro.apellido.data, 
                                                     form_registro.email.data,
                                                     form_registro.nombreUsuario.data,
-                                                    form_registro.rol.data,
+                                                    form_registro.rol,  # Asignamos el rol directamente
                                                     form_registro.password.data)
         except ValueError as e:
             flash(str(e))
