@@ -71,13 +71,13 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         """
         pass
 
-    def eliminarRegistro(self, id_usuario):
+    def eliminarRegistro(self, idUsuario):
         """
         Elimina un usuario de la base de datos por su id.
         Args:
-            id_usuario: id del usuario a eliminar.
+            idUsuario: id del usuario a eliminar.
         """
-        usuario = self.__session.query(ModeloUsuario).filter_by(id=id_usuario).first()
+        usuario = self.__session.query(ModeloUsuario).filter_by(id=idUsuario).first()
         if usuario:
             self.__session.delete(usuario)
             self.__session.commit()
