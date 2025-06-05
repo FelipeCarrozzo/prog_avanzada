@@ -42,6 +42,16 @@ h1 {
     text-align: center;
 }
 
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;   /* Centra horizontalmente */
+    align-items: center;       /* Centra verticalmente */
+    background-color: #f4f4f4;
+}
+
+
 .btn-registro {
     display: inline-block;
     padding: 10px 20px;
