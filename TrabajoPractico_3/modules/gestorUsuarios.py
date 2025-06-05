@@ -25,7 +25,7 @@ class GestorUsuarios:
                                                 )
         #genero la intancia de usuario CON ROL Y DEPARTAMENTO = None
         usuario = Usuario(None, nombre, apellido, email, nombreUsuario,
-                          passEncriptada, rol, departamento=None)
+                          rol, passEncriptada)
         self.__repo.guardarRegistro(usuario)
 
     """POSIBLE SOLUCIÓN PARA REGISTRAR ADMINS"""

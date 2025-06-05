@@ -30,14 +30,15 @@ class RegistroForm(FlaskForm):
     nombre = StringField(label = "Nombre",  validators = [DataRequired()])
     apellido = StringField(label = "Apellido", validators = [DataRequired()])
     email = StringField(label = "Email", validators = [DataRequired(), Email()])
-    nombreUsuario = StringField(label = "nombreUsuario", validators = [DataRequired()])
-    claustro = SelectField(label="Claustro", choices=[
+    nombreUsuario = StringField(label = "Nombre de usuario", validators = [DataRequired()])
+    # rol = StringField(label = "Rol", validators = [DataRequired()])
+    rol = SelectField(label="Rol", choices=[
         ("", "Seleccionar..."),
         (ROLES[1], "Estudiante"),
         (ROLES[2], "Docente"),
         (ROLES[3], "PAyS")
     ], validators=[DataRequired(message="Por favor seleccioná un rol.")])
-    password = PasswordField(label='Password', validators=[DataRequired(), Length(min=4), EqualTo('confirmacion', message='Las contraseñas deben coincidir')])
+    password = PasswordField(label='Contraseña', validators=[DataRequired(), Length(min=4), EqualTo('confirmacion', message='Las contraseñas deben coincidir')])
     confirmacion = PasswordField(label='Repetir contraseña', validators=[DataRequired()])
     submit = SubmitField('Registrarse')
 

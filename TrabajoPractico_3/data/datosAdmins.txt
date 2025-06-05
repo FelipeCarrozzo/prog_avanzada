@@ -1,0 +1,4 @@
+ nombre, apellido, email, nombreUsuario, rol, password
+ Juan, Perez, juanperez@uner.edu.ar, juanperez, 0, 12345678
+ Marcos, Dipalma, marquitos@uner.edu.ar, marcosdipalma, 4, 12345678
+ Luisa, Delfino, luisadelfino@uner.edu.ar, luisadelfino, 5, 12345678

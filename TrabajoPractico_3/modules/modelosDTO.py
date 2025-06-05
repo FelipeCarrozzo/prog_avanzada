@@ -13,10 +13,10 @@ class ModeloUsuario(Base):
     apellido = Column(String(50), nullable=False)
     email = Column(String(100), nullable=False, unique=True)
     nombreUsuario = Column(String(20), nullable=False, unique=True)
-    claustro = Column(String(20), nullable=False)
-    password = Column(String(20))
+    # claustro = Column(String(20), nullable=False)
     rol = Column(String(20), nullable=True, default=None)
-    departamento = Column(String(20), nullable=True, default=None)
+    password = Column(String(20))
+    # departamento = Column(String(20), nullable=True, default=None)
 
 class ModeloReclamo(Base):
     __tablename__ = 'Reclamos'

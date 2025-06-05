@@ -54,15 +54,19 @@ class MonticuloBinario:
                     self.__listaValores[hm] = tmp
                 i = hm
 
-    def insertar(self,k):
-        self.__listaValores.append(k)
+    def insertar(self,elemento):
+        """Inserta un nuevo elemento en el montículo.
+        args:
+        k: El valor a insertar en el montículo.
+        """
+        self.__listaValores.append(elemento)
         self.__tamanioActual = self.__tamanioActual + 1
         self.infiltrarArriba(self.__tamanioActual)
 
     def hijoMinOMax(self,i):
-        '''
+        """
         Devuelve el índice del hijo mínimo o máximo de i.
-        '''
+        """
         if i * 2 + 1 > self.__tamanioActual:
             return i * 2
         else:
@@ -101,7 +105,7 @@ class MonticuloMediana:
     def agregarValor(self, valor: int):
         #si el valor es el primero, se agrega directamente al montículo mínimo
         #valor > obtenerMediana() -> se agrega al montículo mínimo
-        #valor < obtenerMediana() -> se agrega al montículo máximo
+        #valor < obtenerMe diana() -> se agrega al montículo máximo
         # if self.__monticuloMax.tamanioActual == 0 or valor <= self.__monticuloMax.devolverListaValores()[1]:
         #     self.__monticuloMax.insertar(valor)
         # else:

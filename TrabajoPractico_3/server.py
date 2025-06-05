@@ -18,6 +18,10 @@ gestor_login = GestorDeLogin(gestorUsuarios, login_manager, adminList)
 
 @app.route('/')
 def inicio():
+    """Ruta principal que renderiza la página de inicio."""
+    #Registro de usuarios administrativos
+    
+
     return render_template('inicio.html')
 
 @app.route("/register", methods= ["GET", "POST"])
@@ -29,7 +33,7 @@ def register():
                                                     form_registro.apellido.data, 
                                                     form_registro.email.data,
                                                     form_registro.nombreUsuario.data,
-                                                    form_registro.claustro.data,
+                                                    form_registro.rol.data,
                                                     form_registro.password.data)
         except ValueError as e:
             flash(str(e))

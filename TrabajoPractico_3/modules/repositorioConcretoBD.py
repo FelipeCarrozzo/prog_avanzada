@@ -80,23 +80,18 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
             apellido=usuario.apellido,
             email=usuario.email,
             nombreUsuario=usuario.nombreUsuario,
-            claustro=usuario.claustro,
-            password=usuario.password,
             rol=usuario.rol,
-            departamento=usuario.departamento
+            password=usuario.password
         )
         
     def __map_modelo_a_usuario(self, modelo_usuario: ModeloUsuario):
         return Usuario(
-            id=modelo_usuario.id,
             nombre=modelo_usuario.nombre,
             apellido=modelo_usuario.apellido,
             email=modelo_usuario.email,
             nombreUsuario=modelo_usuario.nombreUsuario,
-            claustro=modelo_usuario.claustro,
-            password=modelo_usuario.password,  
             rol=modelo_usuario.rol,
-            departamento=modelo_usuario.departamento
+            password=modelo_usuario.password
         )
 
 
