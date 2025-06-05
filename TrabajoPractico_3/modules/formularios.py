@@ -5,14 +5,12 @@ from wtforms.validators import DataRequired, Length
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 # Diccionario de roles centralizado para toda la app
-ROLES = {
-    0: "secretarioTecnico",
-    1: "estudiante",
-    2: "docente",
-    3: "PAyS",
-    4: "jefeDeptoMaestranza",
-    5: "jefeDeptoInformatica"
-}
+# ROLES = {
+#     1: "estudiante",
+#     2: "docente",
+#     3: "PAyS",
+
+# }
 
 class LoginForm(FlaskForm):
     """"Formulario de inicio de sesión."""
@@ -32,12 +30,13 @@ class RegistroForm(FlaskForm):
     email = StringField(label = "Email", validators = [DataRequired(), Email()])
     nombreUsuario = StringField(label = "Nombre de usuario", validators = [DataRequired()])
     # rol = StringField(label = "Rol", validators = [DataRequired()])
-    rol = SelectField(label="Rol", choices=[
-        ("", "Seleccionar..."),
-        (ROLES[1], "Estudiante"),
-        (ROLES[2], "Docente"),
-        (ROLES[3], "PAyS")
-    ], validators=[DataRequired(message="Por favor seleccioná un rol.")])
+    # rol = SelectField(label="Rol", choices=[
+    #     ("", "Seleccionar..."),
+    #     (ROLES[1], "Estudiante"),
+    #     (ROLES[2], "Docente"),
+    #     (ROLES[3], "PAyS")
+    # ], validators=[DataRequired(message="Por favor seleccioná un rol.")])
+    rol = "UsuarioFinal"
     password = PasswordField(label='Contraseña', validators=[DataRequired(), Length(min=4), EqualTo('confirmacion', message='Las contraseñas deben coincidir')])
     confirmacion = PasswordField(label='Repetir contraseña', validators=[DataRequired()])
     submit = SubmitField('Registrarse')

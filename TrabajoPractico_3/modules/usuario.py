@@ -1,8 +1,8 @@
 #capa de dominio
 class Usuario:
-    def __init__(self, id, nombre, apellido, email, nombreUsuario, rol=None, password=None):
+    def __init__(self, nombre, apellido, email, nombreUsuario, rol=None, password=None):
 
-        self.__id = id #revisar
+        # self.__id = id #revisar
         self.__nombre = nombre
         self.__apellido = apellido
         self.__email = email
