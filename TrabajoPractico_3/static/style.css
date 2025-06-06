@@ -1,4 +1,6 @@
 /* style.css */
+
+/* === Header === */
 .header {
     display: flex;
     align-items: center;
@@ -10,24 +12,23 @@
     flex-wrap: wrap;
 }
 
+/* === Body === */
 body {
     font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
     background-color: #f5f7fa;
     color: #2c3e50;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
     min-height: 100vh;
 }
 
+/* === Logo === */
 .logo {
     width: 150px;
     height: auto;
 }
 
+/* === Títulos === */
 h1 {
     font-size: 1.8em;
     color: #2c3e50;
@@ -42,17 +43,9 @@ h1 {
     text-align: center;
 }
 
-body, html {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;   /* Centra horizontalmente */
-    align-items: center;       /* Centra verticalmente */
-    background-color: #f4f4f4;
-}
-
-
-.btn-registro {
+/* === Botón de registro === */
+.btn-registro,
+.links {
     display: inline-block;
     padding: 10px 20px;
     background-color: #005baa;
@@ -64,18 +57,22 @@ body, html {
     margin-top: 10px;
     transition: background 0.2s;
 }
-.btn-registro:hover {
+
+.btn-registro:hover,
+.links:hover {
     background-color: #0056b3;
 }
 
+/* === Formularios === */
+
 form {
-    background-color: #ffffff;
-    padding: 30px 40px;
-    margin-top: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    padding: 0;
+    margin-top: 0;
+    border-radius: 0;
+    box-shadow: none;
     width: 100%;
-    max-width: 400px;
+    max-width: none;
 }
 
 label {
@@ -109,7 +106,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #005baa;
+    background-color: #004a94;
 }
 
 .input-estilo {
@@ -120,33 +117,33 @@ input[type="submit"]:hover {
     font-size: 16px;
     box-sizing: border-box;
     margin-bottom: 10px;
-    /* Puedes agregar más estilos según tus inputs */
 }
 
-/* hacer un estilo para botones que redirijan a otra pagina */
-.links {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #005baa;
-    color: #fff !important;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 10px;
-    transition: background 0.2s;
+.grid-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 20px;
+    max-width: 600px; /* o el ancho que prefieras */
+    margin: 0 auto; /* centra el grid en la página */
 }
 
+.left-column p,
+.right-column p {
+    margin-bottom: 15px;
+}
+
+.submit-container {
+    max-width: 600px;
+    margin: 20px auto 0 auto; /* margen arriba, centrado horizontal */
+    text-align: center;
+}
+
+
+/* === Texto === */
 p {
     margin-top: 20px;
     text-align: center;
 }
-
-/* .error {
-    color: #e74c3c;
-    font-weight: bold;
-    margin-top: 15px;
-} */
 
 .separator {
     width: 1px;
@@ -155,6 +152,7 @@ p {
     margin: 0 20px;
 }
 
+/* === Mensajes === */
 .error {
     color: red;
     font-weight: bold;
@@ -163,4 +161,29 @@ p {
 .success {
     color: green;
     font-weight: bold;
+}
+
+/* Centrado completo para la pantalla de inicio */
+.container-inicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.intro {
+    max-width: 600px;
+    font-size: 1.1em;
+    margin: 20px 0;
+}
+
+.botones {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
 }

@@ -7,9 +7,21 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1></h1>
-    <p></p>
 
-    <a href = "{{ url_for('login') }}">Iniciar sesión</a>
-    <a href = "{{ url_for('register') }}">Registrarte</a>
+    <div class="container-inicio">
+        <div class="header">
+            <img src="{{ url_for('static', filename='logoFiuner.png') }}" alt="Logo de la Facultad De Ingeniería UNER" class="logo" width="150" height="50">
+            <div class="separator"></div>
+            <h1>Gestor de reclamos</h1>
+        </div>
+
+        <p class="intro">Bienvenido al sistema de gestión de reclamos. Aquí podrás registrar y gestionar tus reclamos de manera eficiente.</p>
+
+        <div class="botones">
+            <a class="btn-registro" href="{{ url_for('login') }}">Iniciar sesión</a>
+            <a class="btn-registro" href="{{ url_for('register') }}">Registrarte</a>
+        </div>
+    </div>
+
 </body>
+</html>

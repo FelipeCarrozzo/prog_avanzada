@@ -6,7 +6,7 @@ from modules.config import app, login_manager
 from modules.gestorUsuarios import GestorUsuarios
 from modules.gestorReclamos import GestorReclamos
 from modules.gestorLogin import GestorDeLogin
-from modules.formularios import RegistroForm, LoginForm
+from modules.formularios import RegistroForm, LoginForm, ReclamosForm
 from modules.factoriaRepositorios import crearRepositorio
 
 adminList = [1]
@@ -24,6 +24,7 @@ def inicio():
     """
     # Registro de usuarios administrativos
     archivoDatos = "./data/datosAdmins.txt"
+    
     with open(archivoDatos, 'r') as file:
         for line in file:
             nombre, apellido, email, nombreUsuario, rol, password = line.strip().split(',')
@@ -31,6 +32,7 @@ def inicio():
                 gestorUsuarios.registrarUsuario(nombre, apellido, email, nombreUsuario, rol, password)
             except ValueError as e:
                 print(f"Error al registrar admin {nombreUsuario}: {e}")  
+    
     return render_template('inicio.html')
 
 @app.route("/bienvenido")
@@ -47,7 +49,7 @@ def bienvenido():
         return redirect(url_for('login'))
     
     #     <div clas = "links">
-    #     <!-- <a href = "{{ url_for('reclamo') }}">Iniciar un nuevo reclamo</a> -->
+        # <!-- <a href = "{{ url_for('reclamo') }}">Iniciar un nuevo reclamo</a> -->
         
     #     <!-- <a href = "{{ url_for('misReclamos') }}">Ver mis reclamos</a> -->
 
@@ -88,9 +90,30 @@ def login():
             gestor_login.loginUsuario(usuario)
             session['username'] = gestor_login.nombreUsuarioActual
             return redirect(url_for('bienvenido'))
-
+    repoUsuario.eliminarRegistro(5)
     return render_template('login.html', form=form_login)
+
+
+# @app.route("/reclamos", methods=["GET", "POST"])
+# def crearReclamos():
+#     """
+#     Ruta que renderiza la página de reclamos.
+#     Muestra los reclamos del usuario actual si está autenticado.
+#     """
+#     form = ReclamosForm()
+#     descripReclamo = session.get('descripcion_reclamo')
+#     if 'username' in session:
+#         username = session['username']
+#         if form.validate_on_submit():
+#             descripcion = form.descripcion.data
+#             imagen = form.imagen.data
+#             try:
+#                 gestorReclamos.crearReclamo(descripcion, imagen, username)
+#                 flash("Reclamo creado con éxito")
+#                 return redirect(url_for('crearReclamos'))
+#             except ValueError as e:
+#                 flash(str(e))
+#         return render_template('reclamos.html', form=form, username=username, descripcion=descripReclamo)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
-
