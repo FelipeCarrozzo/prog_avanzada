@@ -19,53 +19,35 @@ class TestRegistroForm(unittest.TestCase):
         self.assertIn('apellido', form.errors)
         self.assertIn('email', form.errors)
         self.assertIn('nombreUsuario', form.errors)
-        self.assertIn('claustro', form.errors)
         self.assertIn('password', form.errors)
         self.assertIn('confirmacion', form.errors)
 
-    # def test_email_invalido(self):
-    #     data = {
-    #         'nombre': 'Juan',
-    #         'apellido': 'Pérez',
-    #         'email': 'noesemail',
-    #         'nombreUsuario': 'juanp',
-    #         'claustro': 'estudiante',
-    #         'password': '1234',
-    #         'confirmacion': '1234'
-    #     }
-    #     form = RegistroForm(data=data, meta={'csrf': False})
-    #     self.assertFalse(form.validate())
-    #     self.assertIn('email', form.errors)
-
-    # def test_passwords_no_coinciden(self):
-    #     data = {
-    #         'nombre': 'Juan',
-    #         'apellido': 'Pérez',
-    #         'email': 'juan@mail.com',
-    #         'nombreUsuario': 'juanp',
-    #         'claustro': 'docente',
-    #         'password': '1234',
-    #         'confirmacion': '5678'
-    #     }
-    #     form = RegistroForm(data=data, meta={'csrf': False})
-    #     self.assertFalse(form.validate())
-    #     self.assertIn('password', form.errors)
-
-    def test_claustro_vacio(self):
+    def test_email_invalido(self):
         data = {
-            'nombre': 'Ana',
-            'apellido': 'López',
-            'email': 'ana@mail.com',
-            'nombreUsuario': 'anal',
-            'claustro': '',
-            'password': 'abcd',
-            'confirmacion': 'abcd'
+            'nombre': 'Juan',
+            'apellido': 'Pérez',
+            'email': 'noesemail',
+            'nombreUsuario': 'juanp',
+            'password': '1234',
+            'confirmacion': '1234'
         }
         form = RegistroForm(data=data, meta={'csrf': False})
         self.assertFalse(form.validate())
-        self.assertIn('claustro', form.errors)
-        print(form.errors['claustro'])
-        self.assertTrue(any('Por favor seleccioná un claustro.' in err for err in form.errors['claustro']))
+        self.assertIn('email', form.errors)
+
+    def test_passwords_no_coinciden(self):
+        data = {
+            'nombre': 'Juan',
+            'apellido': 'Pérez',
+            'email': 'juan@mail.com',
+            'nombreUsuario': 'juanp',
+            'password': '1234',
+            'confirmacion': '5678'
+        }
+        form = RegistroForm(data=data, meta={'csrf': False})
+        self.assertFalse(form.validate())
+        self.assertIn('password', form.errors)
+
 
     def test_formulario_valido(self):
         data = {
@@ -73,7 +55,6 @@ class TestRegistroForm(unittest.TestCase):
             'apellido': 'López',
             'email': 'ana@mail.com',
             'nombreUsuario': 'anal',
-            'claustro': 'docente',
             'password': 'abcd',
             'confirmacion': 'abcd'
         }
