@@ -1,0 +1,12 @@
+# Archivos de caché de Python
+__pycache__/
+*.py[cod]
+
+# Flask cache (lo que mencionaste)
+flask_session_cache/
+
+# Archivos de configuración del IDE
+*.vscode/
+
+# Archivos de log
+*.log
