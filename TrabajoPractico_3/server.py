@@ -4,14 +4,15 @@ from flask import render_template, flash, redirect, url_for, session
 # from wtforms.validators import DataRequired, Length
 from modules.config import app, login_manager
 from modules.gestorUsuarios import GestorUsuarios
+from modules.gestorReclamos import GestorReclamos
 from modules.gestorLogin import GestorDeLogin
 from modules.formularios import RegistroForm, LoginForm
 from modules.factoriaRepositorios import crearRepositorio
 
 adminList = [1]
-# repoReclamo, repoUsuario = crear_repositorio()
-repoUsuario = crearRepositorio()
+repoUsuario, repoReclamo = crearRepositorio()
 gestorUsuarios = GestorUsuarios(repoUsuario)
+gestorReclamos = GestorReclamos(repoReclamo)
 gestor_login = GestorDeLogin(gestorUsuarios, login_manager, adminList)
 
 
@@ -29,10 +30,31 @@ def inicio():
             try:
                 gestorUsuarios.registrarUsuario(nombre, apellido, email, nombreUsuario, rol, password)
             except ValueError as e:
-                print(f"Error al registrar admin {nombreUsuario}: {e}")
-    
-
+                print(f"Error al registrar admin {nombreUsuario}: {e}")  
     return render_template('inicio.html')
+
+@app.route("/bienvenido")
+def bienvenido():
+    """
+    Ruta que renderiza la página de bienvenida.
+    Muestra el nombre de usuario actual si está autenticado.
+    """
+    if 'username' in session:
+        username = session['username']
+        return render_template('bienvenido.html', username=username)
+    else:
+        flash("Debes iniciar sesión primero.")
+        return redirect(url_for('login'))
+    
+    #     <div clas = "links">
+    #     <!-- <a href = "{{ url_for('reclamo') }}">Iniciar un nuevo reclamo</a> -->
+        
+    #     <!-- <a href = "{{ url_for('misReclamos') }}">Ver mis reclamos</a> -->
+
+    #     <!-- <a href = "{{ url_for('listarReclamos') }}">Ver reclamos existentes</a> -->
+
+    #     <!-- <a href = "{{ url_for('logout') }}">Cerrar sesión</a> -->
+    # </div>
 
 @app.route("/register", methods= ["GET", "POST"])
 def register():
@@ -65,9 +87,10 @@ def login():
         else:
             gestor_login.loginUsuario(usuario)
             session['username'] = gestor_login.nombreUsuarioActual
-            return redirect(url_for('inicio'))
+            return redirect(url_for('bienvenido'))
 
     return render_template('login.html', form=form_login)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
+

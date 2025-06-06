@@ -116,6 +116,7 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         
     def __map_modelo_a_usuario(self, modeloUsuario: ModeloUsuario):
         return Usuario(
+            id=modeloUsuario.id,  # Asumiendo que el modelo tiene un campo id
             nombre=modeloUsuario.nombre,
             apellido=modeloUsuario.apellido,
             email=modeloUsuario.email,

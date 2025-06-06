@@ -42,8 +42,10 @@ class GestorDeLogin:
 
     def __cargarUsuarioActual(self, idUsuario):
         """Carga el usuario actual desde la base de datos."""
-        diccUsuario = self.__gestorUsuarios.cargarUsuario(idUsuario)
-        return FlaskLoginUser(diccUsuario)
+        usuario = self.__gestorUsuarios.cargarUsuario(idUsuario)
+        if usuario:
+            return FlaskLoginUser(usuario)
+        return None
 
     def loginUsuario(self, diccUsuario):
         """Inicia sesión para el usuario con los datos proporcionados."""

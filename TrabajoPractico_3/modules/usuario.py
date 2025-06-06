@@ -1,6 +1,7 @@
 #capa de dominio
 class Usuario:
-    def __init__(self, nombre, apellido, email, nombreUsuario, rol=None, password=None):
+    def __init__(self, id, nombre, apellido, email, nombreUsuario, rol=None, password=None):
+        self.__id = id
         self.__nombre = nombre
         self.__apellido = apellido
         self.__email = email
@@ -9,10 +10,18 @@ class Usuario:
         self.__password = password
 
 
-    # @property
-    # def id(self):
-    #     return self.__id
-    
+    @property
+    def id(self):
+        return self.__id
+
+    def get_id(self):
+        """
+        Obtiene el ID del usuario.
+        Returns:
+            int: ID del usuario.
+        """
+        return str(self.__id) # Flask-Login requiere que el ID sea un string
+
     #setter id?
     
     @property
@@ -35,6 +44,10 @@ class Usuario:
     def rol(self):
         return self.__rol
     
+    @property
+    def password(self):
+        return self.__password
+    
     def to_dict(self):
         """
         Serializa el usuario en un diccionario.
@@ -42,6 +55,7 @@ class Usuario:
             dict: Representación del usuario como un diccionario.
         """
         return {
+            "id": self.id,
             "nombre": self.nombre,
             "apellido": self.apellido,
             "email": self.email,

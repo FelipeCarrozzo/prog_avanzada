@@ -7,7 +7,7 @@ class GestorReclamos:
     def __init__(self, repo: RepositorioAbstractoBD):
         self.__repo = repo
         self.__reclamos = [] #lista de diccionarios
-        self.__clasificador = ClasificadorDeReclamos()
+        # self.__clasificador = ClasificadorDeReclamos()
         self.__departamentos = []
 
     @property

@@ -123,6 +123,20 @@ input[type="submit"]:hover {
     /* Puedes agregar más estilos según tus inputs */
 }
 
+/* hacer un estilo para botones que redirijan a otra pagina */
+.links {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #005baa;
+    color: #fff !important;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
 p {
     margin-top: 20px;
     text-align: center;
