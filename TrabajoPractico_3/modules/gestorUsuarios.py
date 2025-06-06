@@ -24,8 +24,8 @@ class GestorUsuarios:
                                                  salt_length=8
                                                 )
         #genero la intancia de usuario CON ROL Y DEPARTAMENTO = None
-        usuario = Usuario(nombre, apellido, email, nombreUsuario,
-                          rol, passEncriptada)
+        usuario = Usuario(id = None, nombre = nombre, apellido = apellido, email = email, nombreUsuario = nombreUsuario,
+                          rol = rol, password = passEncriptada)
         self.__repo.guardarRegistro(usuario)
 
     def autenticarUsuario(self, nombreUsuario, password) -> dict:

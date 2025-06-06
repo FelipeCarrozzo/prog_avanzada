@@ -4,13 +4,6 @@ from wtforms import StringField, PasswordField, SelectField,ValidationError, Sub
 from wtforms.validators import DataRequired, Length
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
-# Diccionario de roles centralizado para toda la app
-# ROLES = {
-#     1: "estudiante",
-#     2: "docente",
-#     3: "PAyS",
-
-# }
 
 class LoginForm(FlaskForm):
     """"Formulario de inicio de sesión."""
@@ -40,3 +33,10 @@ class RegistroForm(FlaskForm):
         casilla de selección"""
         if field.data == "":
             raise ValidationError("Debes seleccionar un rol válido.")
+
+class ReclamosForm(FlaskForm):
+    """Formulario para crear un nuevo reclamo."""
+    
+    descripcion = StringField(label="Descripción del eclamo", validators=[DataRequired(), Length(max=500)])
+    imagen = StringField(label="URL de la imagen (opcional)", validators=[Length(max=200)])
+    submit = SubmitField('Crear Reclamo')  # Botón de envío del formulario

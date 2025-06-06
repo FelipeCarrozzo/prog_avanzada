@@ -1,7 +1,7 @@
 from modules.reclamo import Reclamo
 from modules.repositorioAbstractoBD import RepositorioAbstractoBD
 from modules.clasificadorReclamos import ClasificadorDeReclamos
-
+import datetime
 
 class GestorReclamos:
     def __init__(self, repo: RepositorioAbstractoBD):
@@ -20,28 +20,49 @@ class GestorReclamos:
         """Devuelve la lista de departamentos."""
         return self.__departamentos
 
-    def crearReclamo(self, idReclamo, fechaYHora, estado, tiempoResolucion,
-                    usuarioCreador, numeroAdheridos, usuariosAdheridos, descripcion, imagen): #saco el depto y lo agrego despues de la clasif
-        
-        # Verifica si el reclamo ya existe
-        if self.__repo.obtenerRegistroFiltro("idReclamo", idReclamo):
-            raise ValueError("El reclamo ya está registrado.")
 
-        else:
-            #clasifica el reclamo y guarda ese resultado como valor de departamento
-            """puede ser que el tipo de dato no esté bien"""
-            departamentoClasif = self.clasificarReclamo(descripcion)
+    # def crearReclamo(self, idReclamo, descripcion):
+    #     # Verifica si el reclamo ya existe
+    #     if self.__repo.obtenerRegistroFiltro("idReclamo", idReclamo):
+    #         raise ValueError("El reclamo ya está registrado.")
 
-            #Crea una instancia de Reclamo
-            reclamo = Reclamo(idReclamo, fechaYHora, estado, tiempoResolucion, departamentoClasif,
-                            usuarioCreador, numeroAdheridos, usuariosAdheridos, descripcion, imagen)
-            #busca reclamos similares
-            self.buscarReclamoSimilar(reclamo)
+    #     else:
+    #         #clasifica el reclamo y guarda ese resultado como valor de departamento
+    #         """puede ser que el tipo de dato no esté bien"""
+    #         departamentoClasif = self.clasificarReclamo(descripcion)
+    #         if departamentoClasif:
+    #             print(f"Reclamo clasificado en el departamento: {departamentoClasif}")
+    #         else:
+    #             print("No se pudo clasificar el reclamo, asignando departamento por defecto.")
+    #             departamentoClasif = "General"
 
-            #guarda el reclamo en el repositorio y también en la lista de reclamos
-            self.guardarReclamo(reclamo.to_dict())
+    #         #Crea una instancia de Reclamo
+    #         reclamo = Reclamo(idReclamo, fechaYHora, estado, tiempoResolucion, departamentoClasif,
+    #                         usuarioCreador, numeroAdheridos, usuariosAdheridos, descripcion, imagen)
+    #         #busca reclamos similares
+    #         # self.buscarReclamoSimilar(reclamo)
 
-        return reclamo
+    #         #guarda el reclamo en el repositorio y también en la lista de reclamos
+    #         # self.guardarReclamo(reclamo.to_dict())
+
+    #     return reclamo
+    def crearReclamo(self, idUsuario, descripcion):
+        try:
+            departamentoReclamo = self.__clasificador.clasificar([descripcion])
+            
+            reclamo = Reclamo(
+                idUsuario = idUsuario,
+                descripcion = descripcion,
+                estado = "Pendiente",  # Estado inicial del reclamo
+                departamento = departamentoReclamo,  # Clasificación del departamento
+                fecha_hora = datetime.now().replace(microsecond=0),  # Fecha y hora actuales sin microsegundos
+                tiempo_resolucion = None, # Sin resolución aún, podría actualizarse al cambiar el estado
+                numero_adheridos = 1  
+            )
+        except Exception as e:
+            print(f"Error al clasificar el reclamo: {e}")
+            departamentoReclamo = "General"
+        return departamentoReclamo
 
     def clasificarReclamo(self, descripcion: str):
         self.__clasificador.clasificar([descripcion])
@@ -98,3 +119,4 @@ class GestorReclamos:
     #             self.reclamos[i] = nuevo_reclamo
     #             return True
     #     return False
+ 
