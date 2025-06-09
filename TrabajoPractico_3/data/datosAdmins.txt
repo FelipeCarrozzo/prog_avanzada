@@ -1,3 +1,3 @@
-Juan, Perez, juanperez@uner.edu.ar, juanperez, secretarioTecnico, 12345678
-Martin, Diaz, marquitos@uner.edu.ar, marcosdipalma, jefeMaestranza, 12345678
-Ana, Lopez, analopez@uner.edu.ar, analopez, jefeInformatica, 12345678
+Juan,Perez,juanperez@uner.edu.ar,juanperez,secretarioTecnico,12345678
+Martin,Diaz,marquitos@uner.edu.ar,martindiaz,jefeMaestranza,12345678
+Ana,Lopez,analopez@uner.edu.ar,analopez,jefeInformatica,12345678
