@@ -32,7 +32,8 @@ def inicio():
                 gestorUsuarios.registrarUsuario(nombre, apellido, email, nombreUsuario, rol, password)
             except ValueError as e:
                 print(f"Error al registrar admin {nombreUsuario}: {e}")  
-    
+
+
     return render_template('inicio.html')
 
 @app.route("/bienvenido")
