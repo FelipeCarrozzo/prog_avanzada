@@ -17,10 +17,18 @@ class ModeloUsuario(Base):
     apellido = Column(String(50), nullable=False)
     email = Column(String(100), nullable=False, unique=True)
     nombreUsuario = Column(String(20), nullable=False, unique=True)
-    # claustro = Column(String(20), nullable=False)
     rol = Column(String(20), nullable=True, default=None)
     password = Column(String(20))
-    # departamento = Column(String(20), nullable=True, default=None)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "apellido": self.apellido,
+            "email": self.email,
+            "nombreUsuario": self.nombreUsuario,
+            "rol": self.rol
+        }
 
 class ModeloReclamo(Base):
     """Modelo de reclamo para la base de datos.
@@ -30,13 +38,11 @@ class ModeloReclamo(Base):
     """
     __tablename__ = 'Reclamos'
     id = Column(Integer(), primary_key=True)
+    idUsuario = Column(Integer, ForeignKey('Usuarios.id'), nullable=False)
     fechaYHora = Column(String(50), nullable=False)  # Formato de fecha y hora
     estado = Column(String(20), nullable=False, default='pendiente')
     tiempoResolucion = Column(Integer, nullable=True, default=None)
     departamento = Column(String(20), nullable=False)
-    usuarioCreador = Column(Integer, ForeignKey('Usuarios.id'), nullable=False)
     numeroAdheridos = Column(Integer, nullable=False, default=0)
-    # usuariosAdheridos = relationship('ModeloUsuario', secondary='reclamos_usuarios')
     descripcion = Column(Text, nullable=False)
     imagen = Column(String(255), nullable=True)
-    numeroAdheridos = Column(Integer, nullable=False, default=0)

@@ -1,27 +1,21 @@
+#dependencias
 import pickle
 import nltk
-# nltk.download('punkt')
-# nltk.download('punkt_tab')
-# nltk.download('wordnet')
-# nltk.download('omw-1.4')
 
 class ClasificadorDeReclamos:
-    def __init__(self, ruta_modelo):
-        self.ruta_modelo = ruta_modelo
-        self.clf = self._cargar_modelo()
-
-    def _cargar_modelo(self):
-        with open(self.ruta_modelo, 'rb') as archivo:
-            return pickle.load(archivo)
+    def __init__(self):
+        with open('./data/claims_clf.pkl', 'rb') as archivo:
+            self.clf = pickle.load(archivo)
 
     def clasificar(self, reclamos):
-        return self.clf.clasificar(reclamos)
-
+        if isinstance(reclamos, str):
+            reclamos = [reclamos]
+        reclamoClasificado = self.clf.clasificar(reclamos)
+        return reclamoClasificado[0] #para devolver el 1er elemento
 
 # Uso de la clase
 if __name__ == "__main__":
-    ruta_modelo = './data/claims_clf.pkl'
-    clasificador = ClasificadorDeReclamos(ruta_modelo)
+    clasificador = ClasificadorDeReclamos()
 
     reclamos = [
         "La computadora 1 del laboratorio 3 no enciende", 
@@ -34,8 +28,5 @@ if __name__ == "__main__":
         "El baño de la planta baja está inundado",
     ]
 
-    # Clasificación de múltiples reclamos
-    # print(clasificador.clasificar(reclamos))
-
     # Clasificación de un único reclamo
-    print(clasificador.clasificar(["El proyector del aula 2 no proyecta la imagen"]))
+    print(clasificador.clasificar(reclamos))

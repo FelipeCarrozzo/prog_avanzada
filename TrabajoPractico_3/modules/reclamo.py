@@ -1,18 +1,19 @@
 #capa de dominio
 
 class Reclamo:
-    def __init__(self, idReclamo, pFechaYHora, pEstado, pTiempoResolucion, pDepartamento, 
-                 pUsuarioCreador, pNumeroAdheridos, pUsuariosAdheridos, pDescripcion, pImagen):
-        self.__idReclamo = idReclamo
-        self.__fechaYHora = pFechaYHora
-        self.__estado = pEstado
-        self.__tiempoDeResolucion = pTiempoResolucion
-        self.__departamento = pDepartamento
-        self.__idUsuarioCreador = pUsuarioCreador #id del usuario en lugar del objeto Usuario?
-        self.__usuariosAdheridos = pUsuariosAdheridos #list[Usuario]
-        self.__numeroAdheridos = pNumeroAdheridos
-        self.__descripcion = pDescripcion
-        self.__imagen = pImagen
+    def __init__(self, idUsuario, fechaYHora, estado, tiempoResolucion, departamento, 
+                 numeroAdheridos, usuariosAdheridos, descripcion, imagen):
+
+        self.__idReclamo = None
+        self.__idUsuario = idUsuario
+        self.__fechaYHora = fechaYHora
+        self.__estado = estado
+        self.tiempoResolucion = tiempoResolucion
+        self.__departamento = departamento
+        self.__idAdheridos = []  # Lista de IDs de usuarios adheridos
+        self.__numeroAdheridos = numeroAdheridos
+        self.__descripcion = descripcion
+        self.__imagen = imagen
 
     @property
     def idReclamo(self):
@@ -21,8 +22,8 @@ class Reclamo:
     #@idReclamo.setter
     
     @property
-    def idUsuarioCreador(self):
-        return self.__idUsuarioCreador
+    def idUsuario(self):
+        return self.__idUsuario 
 
     @property
     def descripcion(self):
@@ -45,14 +46,14 @@ class Reclamo:
         self.__departamento = value
 
     @property
-    def tiempoDeResolucion(self):
-        return self.__tiempoDeResolucion
+    def tiempoResolucion(self):
+        return self.__tiempoResolucion
 
-    @tiempoDeResolucion.setter
-    def tiempoDeResolucion(self, value):
+    @tiempoResolucion.setter
+    def tiempoResolucion(self, value):
         if value is not None and value < 0:
             raise ValueError("El tiempo de resolución debe ser positivo.")
-        self.__tiempoDeResolucion = value
+        self.__tiempoResolucion = value
 
     @property
     def usuariosAdheridos(self):
@@ -76,16 +77,16 @@ class Reclamo:
         self.__estado = value
 
     def to_dict(self):
-        #actualizar cuando se definan bien los atributos
         return {
-            "idReclamo": self.idReclamo,
-            "idUsuarioCreador": self.idUsuarioCreador,
-            "descripcion": self.descripcion,
-            "departamento": self.departamento,
-            "fechaHora": self.fechaYHora,
-            "estado": self.estado,
-            "tiempoDeResolucion": self.tiempoDeResolucion,
-            "numeroAdheridos": self.numeroAdheridos,
-            "usuariosAdheridos": [usuario.to_dict() for usuario in self.usuariosAdheridos],
-            "imagen": self.imagen
+            "idReclamo": self.__idReclamo,
+            "idUsuario": self.__idUsuario,
+            "fechaYHora": self.__fechaYHora,
+            "estado": self.__estado,
+            "tiempoResolucion": self.__tiempoResolucion,
+            "departamento": self.__departamento,
+            "idAdheridos": self.__idAdheridos,
+            "numeroAdheridos": self.__numeroAdheridos,
+            "descripcion": self.__descripcion,
+            "imagen": self.__imagen
         }
+    

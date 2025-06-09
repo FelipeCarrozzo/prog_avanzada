@@ -138,6 +138,24 @@ input[type="submit"]:hover {
     text-align: center;
 }
 
+/* === Panel estilo Bootstrap === */
+.panel {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+    margin-bottom: 30px;
+    max-width: 550px;
+    margin: 30px auto;  
+}
+
+.panel-default {
+    border-color: #ddd;
+}
+
+.panel-body {
+    padding: 30px 25px 25px 25px;
+}
 
 /* === Texto === */
 p {

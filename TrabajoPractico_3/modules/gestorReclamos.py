@@ -7,7 +7,7 @@ class GestorReclamos:
     def __init__(self, repo: RepositorioAbstractoBD):
         self.__repo = repo
         self.__reclamos = [] #lista de diccionarios
-        # self.__clasificador = ClasificadorDeReclamos()
+        self.__clasificador = ClasificadorDeReclamos()
         self.__departamentos = []
 
     @property
@@ -16,53 +16,52 @@ class GestorReclamos:
         return self.__reclamos
     
     @property
+    def clasificador(self):
+        """Devuelve el clasificador de reclamos."""
+        return self.__clasificador
+    
+    @property
     def departamentos(self):
         """Devuelve la lista de departamentos."""
         return self.__departamentos
 
-
-    # def crearReclamo(self, idReclamo, descripcion):
-    #     # Verifica si el reclamo ya existe
-    #     if self.__repo.obtenerRegistroFiltro("idReclamo", idReclamo):
-    #         raise ValueError("El reclamo ya está registrado.")
-
-    #     else:
-    #         #clasifica el reclamo y guarda ese resultado como valor de departamento
-    #         """puede ser que el tipo de dato no esté bien"""
-    #         departamentoClasif = self.clasificarReclamo(descripcion)
-    #         if departamentoClasif:
-    #             print(f"Reclamo clasificado en el departamento: {departamentoClasif}")
-    #         else:
-    #             print("No se pudo clasificar el reclamo, asignando departamento por defecto.")
-    #             departamentoClasif = "General"
-
-    #         #Crea una instancia de Reclamo
-    #         reclamo = Reclamo(idReclamo, fechaYHora, estado, tiempoResolucion, departamentoClasif,
-    #                         usuarioCreador, numeroAdheridos, usuariosAdheridos, descripcion, imagen)
-    #         #busca reclamos similares
-    #         # self.buscarReclamoSimilar(reclamo)
-
-    #         #guarda el reclamo en el repositorio y también en la lista de reclamos
-    #         # self.guardarReclamo(reclamo.to_dict())
-
-    #     return reclamo
-    def crearReclamo(self, idUsuario, descripcion):
+    def crearReclamo(self, idUsuario, descripcion, imagen):
         try:
-            departamentoReclamo = self.__clasificador.clasificar([descripcion])
+            #verifico si ya existe recorriendo todos los reclamos del usuario
+            reclamosUsuario = self.__repo.obtenerRegistrosFiltro("idUsuario", idUsuario)
+            for reclamo in reclamosUsuario:
+                if reclamo.descripcion == descripcion:
+                    raise ValueError("El reclamo ya está registrado.")            
+        except ValueError as e:
+            print(f"Error al verificar si existe el reclamo: {e}")
             
-            reclamo = Reclamo(
-                idUsuario = idUsuario,
-                descripcion = descripcion,
-                estado = "Pendiente",  # Estado inicial del reclamo
-                departamento = departamentoReclamo,  # Clasificación del departamento
-                fecha_hora = datetime.now().replace(microsecond=0),  # Fecha y hora actuales sin microsegundos
-                tiempo_resolucion = None, # Sin resolución aún, podría actualizarse al cambiar el estado
-                numero_adheridos = 1  
-            )
+        """ Acá faltaría verificar si hay un reclamo similar en el repositorio"""
+
+
+        try:
+            #clasifico el reclamo
+            departamentoReclamo = self.__clasificador.clasificar([descripcion])
         except Exception as e:
             print(f"Error al clasificar el reclamo: {e}")
-            departamentoReclamo = "General"
-        return departamentoReclamo
+        
+        try:
+            reclamo = Reclamo(
+                idUsuario = idUsuario,
+                fechaYHora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                estado = 'pendiente',
+                tiempoResolucion = None,
+                departamento = departamentoReclamo,
+                numeroAdheridos = 0,
+                usuariosAdheridos = [],  # está vacía al crear el reclamo
+                descripcion = descripcion,
+                imagen = imagen
+            )
+
+            self.__repo.guardarRegistro(reclamo)  # Guardar en el repositorio
+            print(f"Reclamo creado con éxito: {reclamo.to_dict()}")
+        except Exception as e:
+            print(f"Error al guardar el reclamo en BD: {e}")
+
 
     def clasificarReclamo(self, descripcion: str):
         self.__clasificador.clasificar([descripcion])
@@ -108,15 +107,3 @@ class GestorReclamos:
             if reclamo['id'] == idReclamo:
                 return reclamo
         return None
-
-    """Estos métodos son necesarios?"""
-    # def eliminarReclamo(self, id_reclamo):
-    #     self.reclamos = [r for r in self.reclamos if r['id'] != id_reclamo]
-
-    # def editarReclamo(self, id_reclamo, nuevo_reclamo):
-    #     for i, reclamo in enumerate(self.reclamos):
-    #         if reclamo['id'] == id_reclamo:
-    #             self.reclamos[i] = nuevo_reclamo
-    #             return True
-    #     return False
- 

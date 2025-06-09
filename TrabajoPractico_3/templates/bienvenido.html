@@ -9,6 +9,8 @@
 <body>
     <h1>Bienvenido a la gestión de reclamos</h1>
     <p>Hola {{ username }}, aquí puedes gestionar tus reclamos.</p>
-
+    <div class="links">
+        <a href = "{{ url_for('crearReclamos') }}">Iniciar un nuevo reclamo</a>
+    </div>
 </body>
 </html>

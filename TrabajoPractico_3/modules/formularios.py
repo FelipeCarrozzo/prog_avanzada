@@ -1,5 +1,6 @@
 #dependencias
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SelectField,ValidationError, SubmitField
 from wtforms.validators import DataRequired, Length
 from wtforms.validators import DataRequired, Length, Email, EqualTo
@@ -37,6 +38,6 @@ class RegistroForm(FlaskForm):
 class ReclamosForm(FlaskForm):
     """Formulario para crear un nuevo reclamo."""
     
-    descripcion = StringField(label="Descripción del eclamo", validators=[DataRequired(), Length(max=500)])
-    imagen = StringField(label="URL de la imagen (opcional)", validators=[Length(max=200)])
+    descripcion = StringField(label="Descripción del reclamo", validators=[DataRequired(), Length(max=500)])
+    imagen = FileField(label="Imagen (opcional)", validators=[FileAllowed(['jpg', 'png', 'jpeg'], 'Solo se permiten imágenes en formato JPG, PNG o JPEG.')])
     submit = SubmitField('Crear Reclamo')  # Botón de envío del formulario

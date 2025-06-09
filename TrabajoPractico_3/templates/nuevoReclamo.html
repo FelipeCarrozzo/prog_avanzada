@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciá tu reclamo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container-reclamo">
+        <div class="header">
+            <img src="{{ url_for('static', filename='logoFiuner.png') }}" alt="Logo de la Facultad De Ingeniería UNER" class="logo" width="150" height="50">
+            <div class="separator"></div>
+            <h1>Gestor de reclamos</h1>
+        </div>
+
+        <div class="container" style="margin-top: 60px;">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h2 class="text-center">Nuevo reclamo</h2>
+
+                            <div class="error text-center">
+                                {% with messages = get_flashed_messages() %}
+                                  {% if messages %}
+                                    {% for message in messages %}
+                                      {{ message }}
+                                    {% endfor %}
+                                  {% endif %}
+                                {% endwith %}
+                            </div>
+
+                            <form method="POST" enctype="multipart/form-data">
+                                {{ form.hidden_tag() }}
+                                <p>{{ form.descripcion.label }}<br>{{ form.descripcion() }}</p>
+                                <p>{{ form.imagen.label }}<br>{{ form.imagen(class="form-control", accept="image/*") }}</p>
+                                <p>{{ form.submit() }}</p>
+                            </form>
+
+                            <p class="text-center">
+                                <a href="{{ url_for('inicio') }}">Volver al inicio</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

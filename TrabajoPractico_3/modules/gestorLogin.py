@@ -33,7 +33,7 @@ class GestorDeLogin:
         return current_user.nombre
 
     @property
-    def id_usuarioActual(self):
+    def idUsuarioActual(self):
         return current_user.id
     
     @property

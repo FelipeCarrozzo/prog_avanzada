@@ -100,6 +100,21 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
             self.__session.commit()
             return True
         return False
+    
+    def borrarTabla(self, nombre_tabla: str):
+        """
+        Elimina una tabla de la base de datos por su nombre.
+        Args:
+            nombre_tabla (str): Nombre de la tabla a eliminar.
+        """
+        from sqlalchemy import text
+        try:
+            self.__session.execute(text(f"DROP TABLE IF EXISTS {nombre_tabla}"))
+            self.__session.commit()
+            print(f"Tabla '{nombre_tabla}' eliminada correctamente.")
+        except Exception as e:
+            print(f"Error al eliminar la tabla '{nombre_tabla}': {e}")
+    
 
 #---------------------------------------------------------------------------
 
@@ -184,7 +199,7 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
         """
         if isinstance(valor, list) and len(valor) > 0:
             valor = valor[0] 
-        modeloReclamo = self._session.query(ModeloReclamo).filter_by(**{filtro: valor}).all()
+        modeloReclamo = self.__session.query(ModeloReclamo).filter_by(**{filtro: valor}).all()
 
         if modeloReclamo:
             return [self.__map_modelo_a_reclamo(reclamo) for reclamo in modeloReclamo]
@@ -199,34 +214,42 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
         """
         pass
 
+    def eliminarRegistro(self, idReclamo):
+        """
+        Elimina un reclamo de la base de datos por su id.
+        Args:
+            idReclamo: id del reclamo a eliminar.
+        """
+        reclamo = self.__session.query(ModeloReclamo).filter_by(id=idReclamo).first()
+        if reclamo:
+            self.__session.delete(reclamo)
+            self.__session.commit()
+            return True
+        return False
 
     #--------------------------------------------------------------------------
+
     def __map_reclamo_a_modelo(self, reclamo: Reclamo):
         return ModeloReclamo(
+            idUsuario=reclamo.idUsuario,  # id del usuario creador
             fechaYHora=reclamo.fechaYHora,
             estado=reclamo.estado,
-            tiempoResolucion=reclamo.tiempoDeResolucion,
+            tiempoResolucion=reclamo.tiempoResolucion,
             departamento=reclamo.departamento,
-            usuarioCreador=reclamo.idUsuarioCreador,  # id del usuario creador
             numeroAdheridos=reclamo.numeroAdheridos,
-            usuariosAdheridos=reclamo.usuariosAdheridos,  # lista de usuarios adheridos
             descripcion=reclamo.descripcion,
-            imagen=reclamo.imagen  # si se implementa imagen
+            imagen=reclamo.imagen
         )
     
     def __map_modelo_a_reclamo(self, modeloReclamo: ModeloReclamo):
         return Reclamo(
+            idUsuario=modeloReclamo.idUsuario,
             fechaYHora=modeloReclamo.fechaYHora,
             estado=modeloReclamo.estado,
-            tiempoDeResolucion=modeloReclamo.tiempoResolucion,
+            tiempoResolucion=modeloReclamo.tiempoResolucion,
             departamento=modeloReclamo.departamento,
-            idUsuarioCreador=modeloReclamo.usuarioCreador,  # id del usuario creador
             numeroAdheridos=modeloReclamo.numeroAdheridos,
-            usuariosAdheridos=modeloReclamo.usuariosAdheridos,  # lista de usuarios adheridos
+            usuariosAdheridos=[],
             descripcion=modeloReclamo.descripcion,
-            imagen=modeloReclamo.imagen  # si se implementa imagen
+            imagen=modeloReclamo.imagen
         )
-
-# class RepositorioDepartamentosBD(RepositorioAbstractoBD):
-#     pass
-
