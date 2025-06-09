@@ -47,9 +47,6 @@ Explica la funcionalidad de tu aplicación:
 
 ## 🙎‍♀️🙎‍♂️Autores
 
-- Apellido y Nombre del primer integrante
-- Apellido y Nombre del primer integrante
-
+- Carrozzo Felipe
+- Caporizzo Agistina
 ---
-
-> **Consejo**: Mantén el README **actualizado** conforme evoluciona el proyecto, y elimina (o añade) secciones según necesites. Esta plantilla es sólo un punto de partida general.
