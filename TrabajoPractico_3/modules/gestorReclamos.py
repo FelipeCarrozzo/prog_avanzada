@@ -1,11 +1,13 @@
 from modules.reclamo import Reclamo
 from modules.repositorioAbstractoBD import RepositorioAbstractoBD
+from modules.factoriaRepositorios import crearRepositorio
 from modules.clasificadorReclamos import ClasificadorDeReclamos
 import datetime
 import re
 from collections import Counter
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from modules.clasificadorReclamos import ClasificadorDeReclamos
 
 
 class GestorReclamos:
@@ -109,7 +111,7 @@ class GestorReclamos:
                 return reclamo
         return None
     
-    def obtenerReclamosSimilares(self, datos_reclamo, umbral=0.3):
+    def obtenerReclamosSimilares(self, datosNuevoReclamo, umbral=0.3):
         """
         datos_reclamo: dict con al menos {'descripcion': str} #usar reclamos atributos?
         Devuelve lista de Reclamo (objetos) parecidos.
@@ -121,15 +123,13 @@ class GestorReclamos:
             tokens = word_tokenize(texto.lower())
             return [t for t in tokens if t.isalpha() and t not in stop_words]
 
-        desc_nueva = datos_reclamo['descripcion']
+        desc_nueva = datosNuevoReclamo['descripcion']
         tokens_nuevo = set(tokenizar(desc_nueva))
         # clasificamos el nuevo reclamo
-        etiqueta = self.__clasificador.clasificar([desc_nueva])[0]
+        clasificacion = self.__clasificador.clasificar([desc_nueva])
 
-        # traemos sólo reclamos pendientes o en proceso con la misma clasificación
-        candidatos = self.__repo.filtrar(
-            lambda r: r.departamento == etiqueta and r.estado != 'resuelto'
-        )
+        candidatos = self.__repo.obtenerRegistrosFiltro("departamento", clasificacion)
+        candidatos = [r for r in candidatos if r.estado != 'resuelto']
 
         similares = []
         for r in candidatos:
@@ -143,4 +143,15 @@ class GestorReclamos:
 
         # ordeno de mayor a menor parecido y devuelvo sólo los objetos
         similares.sort(key=lambda x: x[1], reverse=True)
-        return [r for r, _ in similares]
+          
+        # return [r.descripcion for r, _ in similares]
+        return [{"id": r.idReclamo, "descripcion": r.descripcion} for r, _ in similares]
+    
+if __name__ == "__main__":
+    # Ejemplo de uso
+    repoUsuario, repoReclamo = crearRepositorio()
+    gestor = GestorReclamos(repoReclamo)
+
+
+    similares = gestor.obtenerReclamosSimilares({'descripcion': "El dispenser del agua caliente no funciona correctamente."})
+    print(similares)
