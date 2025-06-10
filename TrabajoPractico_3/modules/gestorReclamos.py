@@ -2,11 +2,16 @@ from modules.reclamo import Reclamo
 from modules.repositorioAbstractoBD import RepositorioAbstractoBD
 from modules.clasificadorReclamos import ClasificadorDeReclamos
 import datetime
+import re
+from collections import Counter
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
 
 class GestorReclamos:
     def __init__(self, repo: RepositorioAbstractoBD):
         self.__repo = repo
-        self.__reclamos = [] #lista de diccionarios
+        self.__reclamos = [] #lista de diccionarios #modificar, el gestor no tiene como atributo los reclamos
         self.__clasificador = ClasificadorDeReclamos()
         self.__departamentos = []
 
@@ -66,10 +71,6 @@ class GestorReclamos:
     def clasificarReclamo(self, descripcion: str):
         self.__clasificador.clasificar([descripcion])
 
-    def buscarReclamoSimilar(self, reclamo):
-        """Busca reclamos similares en el repositorio."""
-        # Implementar lógica de búsqueda de reclamos similares
-        pass
 
     def adherirAReclamo(self, id_reclamo, usuario):
         """Adhiere un usuario a un reclamo existente."""
@@ -107,3 +108,39 @@ class GestorReclamos:
             if reclamo['id'] == idReclamo:
                 return reclamo
         return None
+    
+    def obtenerReclamosSimilares(self, datos_reclamo, umbral=0.3):
+        """
+        datos_reclamo: dict con al menos {'descripcion': str} #usar reclamos atributos?
+        Devuelve lista de Reclamo (objetos) parecidos.
+        """
+
+        stop_words = set(stopwords.words('spanish'))
+
+        def tokenizar(texto):
+            tokens = word_tokenize(texto.lower())
+            return [t for t in tokens if t.isalpha() and t not in stop_words]
+
+        desc_nueva = datos_reclamo['descripcion']
+        tokens_nuevo = set(tokenizar(desc_nueva))
+        # clasificamos el nuevo reclamo
+        etiqueta = self.__clasificador.clasificar([desc_nueva])[0]
+
+        # traemos sólo reclamos pendientes o en proceso con la misma clasificación
+        candidatos = self.__repo.filtrar(
+            lambda r: r.departamento == etiqueta and r.estado != 'resuelto'
+        )
+
+        similares = []
+        for r in candidatos:
+            tokens_r = set(tokenizar(r.descripcion))
+            # similaridad Jaccard
+            inter = tokens_nuevo & tokens_r
+            union = tokens_nuevo | tokens_r
+            score = len(inter) / len(union) if union else 0
+            if score >= umbral:
+                similares.append((r, score))
+
+        # ordeno de mayor a menor parecido y devuelvo sólo los objetos
+        similares.sort(key=lambda x: x[1], reverse=True)
+        return [r for r, _ in similares]

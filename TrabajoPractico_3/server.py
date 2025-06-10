@@ -8,6 +8,7 @@ from modules.gestorReclamos import GestorReclamos
 from modules.gestorLogin import GestorDeLogin
 from modules.formularios import RegistroForm, LoginForm, ReclamosForm
 from modules.factoriaRepositorios import crearRepositorio
+from modules.gestorReportes import GestorReportes
 
 adminList = [1]
 repoUsuario, repoReclamo = crearRepositorio()
@@ -15,6 +16,7 @@ gestorUsuarios = GestorUsuarios(repoUsuario)
 gestorReclamos = GestorReclamos(repoReclamo)
 gestor_login = GestorDeLogin(gestorUsuarios, login_manager, adminList)
 
+gestorReportes = GestorReportes(repoReclamo)
 
 @app.route('/')
 def inicio():
@@ -118,5 +120,7 @@ def crearReclamos():
     else:
         flash("Debes iniciar sesión primero.")
         return redirect(url_for('login'))
+    
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
