@@ -214,13 +214,13 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
         """
         pass
 
-    def eliminarRegistro(self, idReclamo):
+    def eliminarRegistro(self, id):
         """
         Elimina un reclamo de la base de datos por su id.
         Args:
-            idReclamo: id del reclamo a eliminar.
+            id: id del reclamo a eliminar.
         """
-        reclamo = self.__session.query(ModeloReclamo).filter_by(id=idReclamo).first()
+        reclamo = self.__session.query(ModeloReclamo).filter_by(id=id).first()
         if reclamo:
             self.__session.delete(reclamo)
             self.__session.commit()
@@ -243,6 +243,7 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
     
     def __map_modelo_a_reclamo(self, modeloReclamo: ModeloReclamo):
         return Reclamo(
+            id = modeloReclamo.id, 
             idUsuario=modeloReclamo.idUsuario,
             fechaYHora=modeloReclamo.fechaYHora,
             estado=modeloReclamo.estado,

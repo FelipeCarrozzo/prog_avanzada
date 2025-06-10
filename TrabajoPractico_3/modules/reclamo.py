@@ -1,10 +1,10 @@
 #capa de dominio
 
 class Reclamo:
-    def __init__(self, idUsuario, fechaYHora, estado, tiempoResolucion, departamento, 
+    def __init__(self, id, idUsuario, fechaYHora, estado, tiempoResolucion, departamento, 
                  numeroAdheridos, usuariosAdheridos, descripcion, imagen):
 
-        self.__idReclamo = None
+        self.__id = id
         self.__idUsuario = idUsuario
         self.__fechaYHora = fechaYHora
         self.__estado = estado
@@ -16,10 +16,8 @@ class Reclamo:
         self.__imagen = imagen
 
     @property
-    def idReclamo(self):
-        return self.__idReclamo
-
-    #@idReclamo.setter
+    def id(self):
+        return self.__id
     
     @property
     def idUsuario(self):
@@ -78,7 +76,7 @@ class Reclamo:
 
     def to_dict(self):
         return {
-            "idReclamo": self.__idReclamo,
+            "id": self.__id,
             "idUsuario": self.__idUsuario,
             "fechaYHora": self.__fechaYHora,
             "estado": self.__estado,

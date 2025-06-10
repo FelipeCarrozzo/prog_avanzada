@@ -93,10 +93,10 @@ class GestorReclamos:
         self.__repo.guardarRegistro(reclamo.to_dict())
 
 
-    def resolverReclamo(self, idReclamo, tiempoResolucion):
+    def resolverReclamo(self, id, tiempoResolucion):
         """Marca un reclamo como resuelto y actualiza su tiempo de resolución."""
         for reclamo in self.reclamos:
-            if reclamo['id'] == idReclamo:
+            if reclamo['id'] == id:
                 reclamo['estado'] = 'resuelto'
                 reclamo['tiempoResolucion'] = tiempoResolucion
                 return True
@@ -105,9 +105,9 @@ class GestorReclamos:
     def listarReclamos(self):
         return self.reclamos
 
-    def devolverReclamo(self, idReclamo):
+    def devolverReclamo(self, id):
         for reclamo in self.reclamos:
-            if reclamo['id'] == idReclamo:
+            if reclamo['id'] == id:
                 return reclamo
         return None
     
@@ -145,13 +145,13 @@ class GestorReclamos:
         similares.sort(key=lambda x: x[1], reverse=True)
           
         # return [r.descripcion for r, _ in similares]
-        return [{"id": r.idReclamo, "descripcion": r.descripcion} for r, _ in similares]
+        return [{"id": r.id, "descripcion": r.descripcion} for r, _ in similares]
     
 if __name__ == "__main__":
     # Ejemplo de uso
     repoUsuario, repoReclamo = crearRepositorio()
     gestor = GestorReclamos(repoReclamo)
-
+    
 
     similares = gestor.obtenerReclamosSimilares({'descripcion': "El dispenser del agua caliente no funciona correctamente."})
     print(similares)
