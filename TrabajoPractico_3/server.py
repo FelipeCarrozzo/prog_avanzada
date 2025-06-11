@@ -75,7 +75,7 @@ def register():
             flash(str(e))
         else:
             flash("Usuario registrado con éxito")
-            return redirect(url_for("register"))
+            return redirect(url_for("login"))
     return render_template('registro.html', form=form_registro)
 
 
@@ -95,16 +95,16 @@ def login():
 
     return render_template('login.html', form=form_login)
 
-# @app.route("/adherirAReclamo/<int:id_reclamo>", methods=["GET", "POST"])
-# def adherir_a_reclamo(id_reclamo):
-#     usuario = gestor_login.usuarioActual  # Obtenés el usuario que está logueado
+@app.route("/adherir_a_reclamo/<int:idReclamo>", methods=["GET", "POST"])
+def adherir_a_reclamo(idReclamo):
+    usuario = gestor_login.idUsuarioActual  
 
-#     if gestorReclamos.adherirAReclamo(id_reclamo, usuario):
-#         flash("Te has adherido exitosamente al reclamo.")
-#     else:
-#         flash("No fue posible adherirse al reclamo (ya estás adherido o reclamo no existe).")
+    if gestorReclamos.adherirAReclamo(idReclamo, usuario):
+        flash("Te has adherido exitosamente al reclamo.")
+    else:
+        flash("No fue posible adherirse al reclamo (ya estás adherido o reclamo no existe).")
 
-#     return redirect(url_for("pagina_principal"))  # O a donde quieras redirigir
+    return redirect(url_for("pagina_principal"))  # O a donde quieras redirigir
 
 @app.route("/reclamos", methods=["GET", "POST"])
 def crearReclamos():
@@ -123,7 +123,7 @@ def crearReclamos():
             try:
                 reclamoSimilar = gestorReclamos.verificarReclamoExistente(idUsuario, {"descripcion": descripcion})
                 if reclamoSimilar:
-                    return render_template('adherirAReclamo.html', reclamos=reclamoSimilar, username=username)
+                    return render_template('adherirAReclamo.html', reclamos=reclamoSimilar)
             except ValueError as e:
                 flash(str(e))
                 return redirect(url_for('crearReclamos'))
@@ -133,13 +133,7 @@ def crearReclamos():
                 return redirect(url_for('crearReclamos')) #AGREGAR
             except ValueError as e:
                 flash(str(e))
-    # GET o si no está logueado
     return render_template("login.html", form=form)
-
-
-
-
-
 
     #             gestorReclamos.crearReclamo(idUsuario, descripcion, imagen)
     #             flash("Reclamo creado con éxito")

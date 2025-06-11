@@ -13,35 +13,34 @@
             <div class="separator"></div>
             <h1>Gestor de reclamos</h1>
         </div>
-            <div class="content">
+
+        <div class="content">
             <h2>Reclamos similares encontrados</h2>
-            <form method="POST" action="{{ url_for('adherirseAReclamo') }}">
-                <table class="reclamos-table">
-                    <thead>
+
+            <table class="reclamos-table">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Departamento</th>
+                        <th>Fecha y hora</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reclamo in reclamos %}
                         <tr>
-                            <th>Descripción</th>
-                            <th>Departamento</th>
-                            <th>Fecha y hora</th>
-                            <th>Seleccionar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for reclamo in reclamos %}
-                        <tr>
-                            <td>{{ reclamo.descripcion }}</td>
-                            <td>{{ reclamo.departamento }}</td>
-                            <td>{{ reclamo.fechaYHora }}</td>
+                            <td>{{ reclamo['descripcion'] }}</td>
+                            <td>{{ reclamo['departamento'] }}</td>
+                            <td>{{ reclamo['fechaYHora'] }}</td>
                             <td>
-                                <input type="radio" name="reclamo_id" value="{{ reclamo.id }}" required>
+                                <form method="POST" action="{{ url_for('adherir_a_reclamo', idReclamo=reclamo['id']) }}">
+                                    <button type="submit">Adherirme</button>
+                                </form>
                             </td>
                         </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <div class="botones">
-                    <button type="submit" class="btn-adherirse">Adherirse</button>
-                </div>
-            </form>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </body>

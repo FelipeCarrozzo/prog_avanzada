@@ -181,6 +181,17 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
         setattr(instancia, atributo, valor)
         self.__session.commit()
 
+    # En tu RepositorioSQLAlchemy o Repositorio concreto
+    def agregarUsuarioAReclamo(self, idReclamo, usuario):
+        reclamo = self.__session.get(ModeloReclamo, idReclamo)
+        if not reclamo:
+            raise ValueError(f"No se encontró reclamo con ID {idReclamo}")
+
+        if usuario not in reclamo.usuariosAdheridos:
+            reclamo.usuariosAdheridos.append(usuario)
+            reclamo.numeroAdheridos = len(reclamo.usuariosAdheridos)
+            self.__session.commit()
+
     def obtenerRegistroFiltro(self, filtro, valor):
         """
         Método abstracto para obtener un registro de la base de datos basado en un filtro.
