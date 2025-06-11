@@ -226,11 +226,24 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
             self.__session.commit()
             return True
         return False
-
+ 
+    def borrarTabla(self, nombre_tabla: str):
+        """
+        Elimina una tabla de la base de datos por su nombre.
+        Args:
+            nombre_tabla (str): Nombre de la tabla a eliminar.
+        """
+        from sqlalchemy import text
+        try:
+            self.__session.execute(text(f"DROP TABLE IF EXISTS {nombre_tabla}"))
+            self.__session.commit()
+            print(f"Tabla '{nombre_tabla}' eliminada correctamente.")
+        except Exception as e:
+            print(f"Error al eliminar la tabla '{nombre_tabla}': {e}")
     #--------------------------------------------------------------------------
 
     def __map_reclamo_a_modelo(self, reclamo: Reclamo):
-        return ModeloReclamo(
+        modelo = ModeloReclamo(
             idUsuario=reclamo.idUsuario,  # id del usuario creador
             fechaYHora=reclamo.fechaYHora,
             estado=reclamo.estado,
@@ -240,6 +253,8 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
             descripcion=reclamo.descripcion,
             imagen=reclamo.imagen
         )
+        modelo.usuariosAdheridos = reclamo.usuariosAdheridos
+        return modelo
     
     def __map_modelo_a_reclamo(self, modeloReclamo: ModeloReclamo):
         return Reclamo(
@@ -250,7 +265,7 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
             tiempoResolucion=modeloReclamo.tiempoResolucion,
             departamento=modeloReclamo.departamento,
             numeroAdheridos=modeloReclamo.numeroAdheridos,
-            usuariosAdheridos=[],
             descripcion=modeloReclamo.descripcion,
-            imagen=modeloReclamo.imagen
+            imagen=modeloReclamo.imagen,
+            usuariosAdheridos=[u.id for u in modeloReclamo.usuariosAdheridos]
         )

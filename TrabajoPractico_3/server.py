@@ -8,7 +8,7 @@ from modules.gestorReclamos import GestorReclamos
 from modules.gestorLogin import GestorDeLogin
 from modules.formularios import RegistroForm, LoginForm, ReclamosForm
 from modules.factoriaRepositorios import crearRepositorio
-from modules.gestorReportes import GestorReportes
+# from modules.gestorReportes import GestorReportes
 
 adminList = [1]
 repoUsuario, repoReclamo = crearRepositorio()
@@ -16,7 +16,7 @@ gestorUsuarios = GestorUsuarios(repoUsuario)
 gestorReclamos = GestorReclamos(repoReclamo)
 gestor_login = GestorDeLogin(gestorUsuarios, login_manager, adminList)
 
-gestorReportes = GestorReportes(repoReclamo)
+# gestorReportes = GestorReportes(repoReclamo)
 
 @app.route('/')
 def inicio():
@@ -95,6 +95,16 @@ def login():
 
     return render_template('login.html', form=form_login)
 
+# @app.route("/adherirAReclamo/<int:id_reclamo>", methods=["GET", "POST"])
+# def adherir_a_reclamo(id_reclamo):
+#     usuario = gestor_login.usuarioActual  # Obtenés el usuario que está logueado
+
+#     if gestorReclamos.adherirAReclamo(id_reclamo, usuario):
+#         flash("Te has adherido exitosamente al reclamo.")
+#     else:
+#         flash("No fue posible adherirse al reclamo (ya estás adherido o reclamo no existe).")
+
+#     return redirect(url_for("pagina_principal"))  # O a donde quieras redirigir
 
 @app.route("/reclamos", methods=["GET", "POST"])
 def crearReclamos():
@@ -104,22 +114,42 @@ def crearReclamos():
     """
     form = ReclamosForm()
     idUsuario = gestor_login.idUsuarioActual
-    descripReclamo = session.get('descripcion_reclamo')
+    # descripReclamo = session.get('descripcion_reclamo')
     if 'username' in session:
         username = session['username']
         if form.validate_on_submit():
             descripcion = form.descripcion.data
             imagen = form.imagen.data
             try:
-                gestorReclamos.crearReclamo(idUsuario, descripcion, imagen)
-                flash("Reclamo creado con éxito")
-                return redirect(url_for('crearReclamos'))
+                reclamoSimilar = gestorReclamos.verificarReclamoExistente(idUsuario, {"descripcion": descripcion})
+                if reclamoSimilar:
+                    return render_template('adherirAReclamo.html', reclamos=reclamoSimilar, username=username)
             except ValueError as e:
                 flash(str(e))
-        return render_template('nuevoReclamo.html', form=form, username=username, descripcion=descripReclamo)
-    else:
-        flash("Debes iniciar sesión primero.")
-        return redirect(url_for('login'))
+                return redirect(url_for('crearReclamos'))
+            try:
+                gestorReclamos.crearReclamo(idUsuario, descripcion, imagen)
+                flash("Reclamo creado con éxito")
+                return redirect(url_for('crearReclamos')) #AGREGAR
+            except ValueError as e:
+                flash(str(e))
+    # GET o si no está logueado
+    return render_template("login.html", form=form)
+
+
+
+
+
+
+    #             gestorReclamos.crearReclamo(idUsuario, descripcion, imagen)
+    #             flash("Reclamo creado con éxito")
+    #             return redirect(url_for('crearReclamos'))
+    #         except ValueError as e:
+    #             flash(str(e))
+    #     return render_template('nuevoReclamo.html', form=form, username=username, descripcion=descripReclamo)
+    # else:
+    #     flash("Debes iniciar sesión primero.")
+    #     return redirect(url_for('login'))
     
 
 if __name__ == "__main__":

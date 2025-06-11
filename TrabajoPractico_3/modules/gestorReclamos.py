@@ -1,10 +1,12 @@
 from modules.reclamo import Reclamo
+# from modules.usuario import Usuario
+from modules.gestorUsuarios import GestorUsuarios
 from modules.repositorioAbstractoBD import RepositorioAbstractoBD
 from modules.factoriaRepositorios import crearRepositorio
 from modules.clasificadorReclamos import ClasificadorDeReclamos
 import datetime
-import re
-from collections import Counter
+# import re
+# from collections import Counter
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from modules.clasificadorReclamos import ClasificadorDeReclamos
@@ -31,37 +33,46 @@ class GestorReclamos:
     def departamentos(self):
         """Devuelve la lista de departamentos."""
         return self.__departamentos
-
-    def crearReclamo(self, idUsuario, descripcion, imagen):
+    
+    def verificarReclamoExistente(self, idUsuario, descripcion):
+        #verifico si ya existe recorriendo todos los reclamos del usuario
         try:
-            #verifico si ya existe recorriendo todos los reclamos del usuario
             reclamosUsuario = self.__repo.obtenerRegistrosFiltro("idUsuario", idUsuario)
             for reclamo in reclamosUsuario:
                 if reclamo.descripcion == descripcion:
-                    raise ValueError("El reclamo ya está registrado.")            
+                    raise ValueError("El reclamo ya está registrado.")
         except ValueError as e:
             print(f"Error al verificar si existe el reclamo: {e}")
-            
-        """ Acá faltaría verificar si hay un reclamo similar en el repositorio"""
 
+        #busco reclamos similares
+        try:
+            reclamosSimilares = self.obtenerReclamosSimilares(descripcion)
+            if reclamosSimilares:
+                return reclamosSimilares
+            return None
+        except Exception as e:
+            print(f"Error al obtener reclamos similares: {e}")
 
+    def crearReclamo(self, idUsuario, descripcion, imagen):
         try:
             #clasifico el reclamo
             departamentoReclamo = self.__clasificador.clasificar([descripcion])
         except Exception as e:
             print(f"Error al clasificar el reclamo: {e}")
         
+        #creo la instancia de reclamo y la guardo en el repositorio
         try:
             reclamo = Reclamo(
+                id = None,
                 idUsuario = idUsuario,
                 fechaYHora = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 estado = 'pendiente',
                 tiempoResolucion = None,
                 departamento = departamentoReclamo,
                 numeroAdheridos = 0,
-                usuariosAdheridos = [],  # está vacía al crear el reclamo
                 descripcion = descripcion,
-                imagen = imagen
+                imagen = imagen,
+                usuariosAdheridos = []
             )
 
             self.__repo.guardarRegistro(reclamo)  # Guardar en el repositorio
@@ -74,16 +85,17 @@ class GestorReclamos:
         self.__clasificador.clasificar([descripcion])
 
 
-    def adherirAReclamo(self, id_reclamo, usuario):
+    def adherirAReclamo(self, id, usuario):
         """Adhiere un usuario a un reclamo existente."""
-        for reclamo in self.reclamos:
-            if reclamo['id'] == id_reclamo:
-                if usuario not in reclamo['usuariosAdheridos']:
-                    reclamo['usuariosAdheridos'].append(usuario)
-                    reclamo['numeroAdheridos'] += 1
-                    return True
+        reclamo = self.__repo.obtenerRegistroFiltro("id",id) 
+        if reclamo:
+            if usuario not in reclamo.usuariosAdheridos: #si el usuario ya está adherido
+                reclamo.usuariosAdheridos.append(usuario)
+                reclamo.numeroAdheridos += 1
+                self.__repo.actualizarAtributo(reclamo.id, "usuariosAdheridos", reclamo.usuariosAdheridos)
+                self.__repo.actualizarAtributo(reclamo.id, "numeroAdheridos", reclamo.numeroAdheridos)
+                return True
         return False
-    
 
     def guardarReclamo(self, reclamo):
         #guardo en la lista de reclamos
@@ -111,12 +123,12 @@ class GestorReclamos:
                 return reclamo
         return None
     
-    def obtenerReclamosSimilares(self, datosNuevoReclamo, umbral=0.3):
+    def obtenerReclamosSimilares(self, datosNuevoReclamo):
         """
         datos_reclamo: dict con al menos {'descripcion': str} #usar reclamos atributos?
         Devuelve lista de Reclamo (objetos) parecidos.
         """
-
+        umbral = 0.3
         stop_words = set(stopwords.words('spanish'))
 
         def tokenizar(texto):
@@ -150,8 +162,25 @@ class GestorReclamos:
 if __name__ == "__main__":
     # Ejemplo de uso
     repoUsuario, repoReclamo = crearRepositorio()
-    gestor = GestorReclamos(repoReclamo)
-    
+    gestorR = GestorReclamos(repoReclamo)
+    gestorU = GestorUsuarios(repoUsuario)
+    #necesito
+    # usuario = repoUsuario.obtenerRegistroFiltro("id", 4)
 
-    similares = gestor.obtenerReclamosSimilares({'descripcion': "El dispenser del agua caliente no funciona correctamente."})
-    print(similares)
+    # #similar
+    # similar = gestorR.verificarReclamoExistente(1, "El dispenser del agua caliente no funciona correctamente.")
+    # print(similar)
+
+    # #adherir
+    # adhesion = gestorR.adherirAReclamo(1, usuario)  # idReclamo, idUsuario
+    # if adhesion:
+    #     print("Usuario adherido al reclamo.")
+    # else:
+    #     print("No se pudo adherir al reclamo.")
+
+    # similares = gestor.obtenerReclamosSimilares({'descripcion': "El dispenser del agua caliente no funciona correctamente."})
+    # print(similares)
+
+    #elimino la tabla Reclamos
+    # repoUsuario.borrarTabla("Usuarios")
+    # repoReclamo.borrarTabla("Reclamos")

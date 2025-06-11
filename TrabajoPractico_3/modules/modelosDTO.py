@@ -6,6 +6,12 @@ from sqlalchemy.orm import relationship,  declarative_base
 
 Base = declarative_base()
 
+asociacion_usuarios_adheridos = Table(
+    'usuarios_adheridos', Base.metadata,
+    Column('usuario_id', Integer, ForeignKey('Usuarios.id'), primary_key=True),
+    Column('reclamo_id', Integer, ForeignKey('Reclamos.id'), primary_key=True)
+)
+
 class ModeloUsuario(Base):
     """Modelo de usuario para la base de datos.
     Representa un usuario en el sistema con atributos como nombre, apellido,
@@ -44,5 +50,12 @@ class ModeloReclamo(Base):
     tiempoResolucion = Column(Integer, nullable=True, default=None)
     departamento = Column(String(20), nullable=False)
     numeroAdheridos = Column(Integer, nullable=False, default=0)
+    # idAdheridos = Column(Integer, nullable=False, default=0)
     descripcion = Column(Text, nullable=False)
     imagen = Column(String(255), nullable=True)
+    
+    usuariosAdheridos = relationship(
+        "ModeloUsuario",
+        secondary=asociacion_usuarios_adheridos,
+        backref="reclamosAdheridos"
+    )
