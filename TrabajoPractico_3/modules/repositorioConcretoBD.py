@@ -172,13 +172,14 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
         param atributo: Nombre del atributo a actualizar.
         param valor: Nuevo valor del atributo.
         """
-        instancia = self._session.get(self.__tablaReclamo, id)
+        instancia = self.__session.get(ModeloReclamo, id)
+
 
         if not instancia:
             raise ValueError(f"Error: Instancia con id {id} no existe.")
         
         setattr(instancia, atributo, valor)
-        self._session.commit()
+        self.__session.commit()
 
     def obtenerRegistroFiltro(self, filtro, valor):
         """
@@ -212,7 +213,8 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
 
         return: Lista de todos los registros.
         """
-        pass
+        modeloReclamo = self.__session.query(ModeloReclamo).all()
+        return [self.__map_modelo_a_reclamo(reclamo) for reclamo in modeloReclamo]
 
     def eliminarRegistro(self, id):
         """
@@ -226,6 +228,7 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
             self.__session.commit()
             return True
         return False
+    
 
     #--------------------------------------------------------------------------
 

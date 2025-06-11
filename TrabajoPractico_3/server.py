@@ -16,7 +16,6 @@ gestorUsuarios = GestorUsuarios(repoUsuario)
 gestorReclamos = GestorReclamos(repoReclamo)
 gestor_login = GestorDeLogin(gestorUsuarios, login_manager, adminList)
 
-gestorReportes = GestorReportes(repoReclamo)
 
 @app.route('/')
 def inicio():
