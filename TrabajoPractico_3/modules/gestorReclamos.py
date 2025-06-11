@@ -98,30 +98,9 @@ class GestorReclamos:
         return False
 
     def guardarReclamo(self, reclamo):
-        #guardo en la lista de reclamos
-        self.reclamos.append(reclamo.to_dict()) #lista
-
         #guardo en el repositorio
         self.__repo.guardarRegistro(reclamo.to_dict())
 
-
-    def resolverReclamo(self, id, tiempoResolucion):
-        """Marca un reclamo como resuelto y actualiza su tiempo de resolución."""
-        for reclamo in self.reclamos:
-            if reclamo['id'] == id:
-                reclamo['estado'] = 'resuelto'
-                reclamo['tiempoResolucion'] = tiempoResolucion
-                return True
-        return False
-
-    def listarReclamos(self):
-        return self.reclamos
-
-    def devolverReclamo(self, id):
-        for reclamo in self.reclamos:
-            if reclamo['id'] == id:
-                return reclamo
-        return None
     
     def obtenerReclamosSimilares(self, datosNuevoReclamo):
         """
