@@ -1,6 +1,6 @@
 from modules.generadorDeEstadisticas import generadorDeEstadisticas
 from modules.graficador import Graficador
-from modules.gestorExportacion import GestorExportacion
+from modules.gestorExportacion import GestorExportacion, ExportadorPDF, ExportadorHTML
 from modules.repositorioAbstractoBD import RepositorioAbstractoBD
 
 class GestorReportes:
@@ -62,6 +62,7 @@ class GestorReportes:
         """
         if departamento is not None:
             self.__departamento = departamento
+
         return {
             "graficoTorta": self.generarGraficos()[0],
             "medianas": self.generarEstadisticas(self.__departamento)[1],
@@ -69,14 +70,27 @@ class GestorReportes:
         }
 
     
-    # def exportarReporte(self, formato):
-    #     """
-    #     Exporta el reporte en el formato especificado (PDF o HTML).
+    def exportarReporte(self, formato, departamento=None):
+        """
+        Exporta el reporte en el formato especificado (PDF o HTML).
 
-    #     Args:
-    #         formato (str): Formato de exportación ('pdf' o 'html').
+        Args:
+            formato (str): Formato de exportación ('pdf' o 'html').
 
-    #     Returns:
-    #         str: Ruta del archivo exportado.
-    #     """
-    #     return self.__gestorExportacion.exportar(self.__repositorio, formato, self.__departamento)
+        Returns:
+            str: Ruta del archivo exportado.
+        """
+        if departamento is not None:
+            self.__departamento = departamento
+
+        if formato == 'pdf':
+            exportador = ExportadorPDF()
+        elif formato == 'html':
+            exportador = ExportadorHTML()
+        else:
+            raise ValueError("Formato de exportación no válido.")
+        
+        # Genera el reporte y lo exporta
+        rutaReporte = exportador.exportar(self.generarReporte(self.__departamento), self.__departamento)
+
+        return rutaReporte
