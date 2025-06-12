@@ -12,3 +12,5 @@ Werkzeug
 WTForms
 email-validator
 pytest
+wordcloud
+matplotlib

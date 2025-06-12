@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestioná tus reclamos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Bienvenido a la gestión de reclamos</h1>
+    <p>Hola {{ username }}, aquí puedes gestionar los reclamos del departamento {{ departamento }}.</p>
+    <div class="links">
+        <a href = "{{ url_for('analiticas') }}">Ver analíticas</a>
+        <!-- <a href = "{{ url_for('reclamos') }}">Ver reclamos</a> -->
+         <a>Ver reclamos</a>
+        <!-- <a href = "{{ url_for('logout') }}">Cerrar sesión</a> -->
+         <a>Ayuda</a>
+         <a>Cerrar sesión</a>
+    </div>
+</body>
+</html>

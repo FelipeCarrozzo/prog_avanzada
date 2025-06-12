@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Analíticas de Reclamos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container-inicio">
+        <h1>📊 Analíticas: {{ departamento }}</h1>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>Medianas de tiempos de resolución</h2>
+                <p><strong>En proceso:</strong> {{ datos.medianas["en_proceso"] }}</p>
+                <p><strong>Resueltos:</strong> {{ datos.medianas["resuelto"] }}</p>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>Gráfico de reclamos por estado</h2>
+                <img src="{{ url_for('static', filename=datos.graficoTorta.split('static/')[1]) }}" alt="Gráfico Torta" style="width: 80%; max-width: 500px;">
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>Nube de palabras clave</h2>
+                <img src="{{ url_for('static', filename=datos.graficoNube.split('static/')[1]) }}" alt="Nube de palabras" style="width: 80%; max-width: 500px;">
+            </div>
+        </div>
+
+        <div class="botones">
+            <a href="{{ url_for('descargarReporte', formato='pdf') }}" class="btn-registro">📥 Descargar PDF</a>
+            <a href="{{ url_for('descargarReporte', formato='html') }}" class="btn-registro">🌐 Descargar HTML</a>
+        </div>
+    </div>
+
+</body>
+</html>

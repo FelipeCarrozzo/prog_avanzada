@@ -2,13 +2,15 @@
 from flask import render_template, flash, redirect, url_for, session
 # from wtforms import StringField, PasswordField, SubmitField
 # from wtforms.validators import DataRequired, Length
+import re
 from modules.config import app, login_manager
 from modules.gestorUsuarios import GestorUsuarios
 from modules.gestorReclamos import GestorReclamos
 from modules.gestorLogin import GestorDeLogin
 from modules.formularios import RegistroForm, LoginForm, ReclamosForm
 from modules.factoriaRepositorios import crearRepositorio
-# from modules.gestorReportes import GestorReportes
+from flask import send_file
+from modules.gestorReportes import GestorReportes
 
 adminList = [1]
 repoUsuario, repoReclamo = crearRepositorio()
@@ -16,7 +18,7 @@ gestorUsuarios = GestorUsuarios(repoUsuario)
 gestorReclamos = GestorReclamos(repoReclamo)
 gestor_login = GestorDeLogin(gestorUsuarios, login_manager, adminList)
 
-# gestorReportes = GestorReportes(repoReclamo)
+gestorReportes = GestorReportes(repoReclamo)
 
 @app.route('/')
 def inicio():
@@ -91,7 +93,16 @@ def login():
         else:
             gestor_login.loginUsuario(usuario)
             session['username'] = gestor_login.nombreUsuarioActual
-            return redirect(url_for('bienvenido'))
+            rol = gestor_login.obtenerRolUsuario()
+
+            #definir lista de departamentos posibles? para que cuando se agrega un departamento nuevo,
+            #solo se modifique al principio y no a lo largo del server
+            if rol == 'secretarioTecnico' or rol == "jefeMaestranza" or rol == "jefeSoporteInformático":
+                return redirect(url_for('panelAdmin'))
+            
+            elif rol == 'UsuarioFinal':
+                return redirect(url_for('bienvenido'))
+        return redirect(url_for('inicio'))
 
     return render_template('login.html', form=form_login)
 
@@ -104,7 +115,7 @@ def adherir_a_reclamo(idReclamo):
     else:
         flash("No fue posible adherirse al reclamo (ya estás adherido o reclamo no existe).")
 
-    return redirect(url_for("pagina_principal"))  # O a donde quieras redirigir
+    return redirect(url_for("pagina_principal"))
 
 @app.route("/reclamos", methods=["GET", "POST"])
 def crearReclamos():
@@ -134,17 +145,54 @@ def crearReclamos():
             except ValueError as e:
                 flash(str(e))
     return render_template("login.html", form=form)
-
-    #             gestorReclamos.crearReclamo(idUsuario, descripcion, imagen)
-    #             flash("Reclamo creado con éxito")
-    #             return redirect(url_for('crearReclamos'))
-    #         except ValueError as e:
-    #             flash(str(e))
-    #     return render_template('nuevoReclamo.html', form=form, username=username, descripcion=descripReclamo)
-    # else:
-    #     flash("Debes iniciar sesión primero.")
-    #     return redirect(url_for('login'))
     
+app.route("/panelAdmin")
+def panelAdmin():
+    """
+    Ruta que renderiza el panel de administración.
+    Muestra los reclamos del usuario actual si es un secretario técnico o jefe de departamento.
+    """
+    if 'username' in session:
+        username = session['username']
+    return render_template("panelAdmin.html", username=username)
+
+@app.route("/analitica")
+def analitica():
+    if 'username' not in session:
+        flash("Debes iniciar sesión primero.")
+        return redirect(url_for('login'))
+
+    rol = gestor_login.rolUsuarioActual
+    departamento = None
+    if rol.startswith("jefe"):
+        departamento = rol[4:]
+        departamento = re.sub(r'(?<!^)(?=[A-Z])', ' ', departamento).lower()
+
+    datosReporte = gestorReportes.generarReporte(departamento)
+    if departamento == None:
+        departamento = "Soporte Técnico"
+    else:
+        departamento = departamento.title()
+
+    return render_template("analiticas.html", datos=datosReporte, departamento=departamento)
+
+
+@app.route("/descargar/<formato>")
+def descargarReporte(formato):
+    if formato not in ['pdf', 'html']:
+        flash("Formato no soportado")
+        return redirect(url_for('bienvenido'))
+
+    #obtener departamento si se trata de un jefe
+    ruta = gestorReportes.exportarReporte(formato)
+
+    nombre_archivo = ruta.split("/")[-1]  # solo el nombre del archivo
+    return send_file(
+        ruta,
+        as_attachment=True,
+        download_name=nombre_archivo,
+        mimetype="application/pdf" if formato == "pdf" else "text/html"
+    )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
