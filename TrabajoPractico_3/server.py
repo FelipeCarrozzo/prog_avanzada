@@ -182,7 +182,7 @@ def panelAdmin():
                 nuevo_depto = request.form[depto_key]
                 repoReclamo.actualizarAtributo(rid, "departamento", nuevo_depto)
 
-        flash("Cambios guardados correctamente.")
+        #flash("Cambios guardados correctamente.")
         return redirect(url_for('panelAdmin'))
 
     # --- GET: mostrar página con los reclamos ---
@@ -230,10 +230,15 @@ def analitica():
 def descargarReporte(formato):
     if formato not in ['pdf', 'html']:
         flash("Formato no soportado")
-        return redirect(url_for('bienvenido'))
+        return redirect(url_for('inicio'))
 
+    departamento = None
+    rol = gestor_login.rolUsuarioActual
     #obtener departamento si se trata de un jefe
-    ruta = gestorReportes.exportarReporte(formato)
+    if rol.startswith("jefe"):
+        departamento = rol[4:]
+        departamento = re.sub(r'(?<!^)(?=[A-Z])', ' ', departamento).lower()
+    ruta = gestorReportes.exportarReporte(formato, departamento)
 
     nombre_archivo = ruta.split("/")[-1]  # solo el nombre del archivo
     return send_file(

@@ -13,15 +13,15 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <h2>Medianas de tiempos de resolución</h2>
-                <p><strong>En proceso:</strong> {{ datos.medianas["enProceso"] }}</p>
-                <p><strong>Resueltos:</strong> {{ datos.medianas["resueltos"] }}</p>
+                <p><strong>En proceso:</strong> {{ datos.medianas["enProceso"] }} días</p>
+                <p><strong>Resueltos:</strong> {{ datos.medianas["resueltos"] }} días</p>
             </div>
         </div>
 
         <div class="panel panel-default">
             <div class="panel-body">
                 <h2>Gráfico de reclamos por estado</h2>
-                <img src="{{ url_for('static', filename=datos.graficoTorta.split('static/')[1]) }}" alt="Gráfico Torta" style="width: 80%; max-width: 500px;">
+                <img src="{{ url_for('static', filename=datos.graficoTorta.split('static/')[1]) }}" alt="Gráfico Torta" style="width: 100%; max-width: 700px;">
             </div>
         </div>
 
@@ -35,6 +35,7 @@
         <div class="botones">
             <a href="{{ url_for('descargarReporte', formato='pdf') }}" class="btn-registro">Descargar PDF</a>
             <a href="{{ url_for('descargarReporte', formato='html') }}" class="btn-registro">Descargar HTML</a>
+            <a href="{{ url_for('panelAdmin') }}" class="btn-registro">Volver al Panel</a>
         </div>
     </div>
 

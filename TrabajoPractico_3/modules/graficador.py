@@ -1,5 +1,7 @@
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg') 
 
 class Graficador:
     def __init__(self):
@@ -12,20 +14,18 @@ class Graficador:
 
         porcentajes = {estado: (count / total) * 100 for estado, count in cantidades.items()}
 
-        plt.figure(figsize=(12, 8))
+        plt.figure(figsize=(40, 34))
         plt.pie(
             porcentajes.values(),
-            labels=[
-                f"{estado} ({cantidades[estado]})" 
-                for estado in porcentajes
-            ],
             autopct='%1.1f%%',
             startangle=140
         )
 
+        plt.rcParams.update({'font.size': 60})
         plt.title(f"Porcentaje de reclamos por estado\n(Cantidad total: {total})")
         plt.axis('equal')
         plt.tight_layout()
+        plt.legend([f"{estado} ({cantidades[estado]})" for estado in porcentajes], loc='upper right', fontsize=60)
 
         if ruta_salida:
             plt.savefig(ruta_salida)
@@ -33,6 +33,7 @@ class Graficador:
             return ruta_salida
         else:
             plt.show()
+
 
     def graficarPorcentajesReclamos(self, porcentajes, ruta_salida=None):
         """
