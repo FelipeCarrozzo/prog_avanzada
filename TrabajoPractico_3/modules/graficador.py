@@ -42,7 +42,7 @@ class Graficador:
         ruta_salida: opcional, nombre de archivo PNG de salida
         """
     
-        plt.figure(figsize=(12, 8))
+        plt.figure(figsize=(16, 12))
         plt.pie(porcentajes.values(), labels=porcentajes.keys(), autopct='%1.1f%%', startangle=140)
         plt.title('Porcentaje de reclamos por estado')
         plt.tight_layout()

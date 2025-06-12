@@ -24,7 +24,7 @@ class GestorReportes:
         Returns:
             list: Lista de tuplas con las palabras clave y su frecuencia.
         """
-        if departamento is None:
+        if departamento is None: #secretario
             # Si no se especifica un departamento, se obtienen estadísticas de todos los reclamos
             cantidades = self.__generadorDeEstadisticas.obtenerCantidadesReclamos(self.__repositorio.obtenerRegistrosTotales())
             #porcentajes = self.__generadorDeEstadisticas.obtenerPorcentajesReclamos(self.__repositorio.obtenerRegistrosTotales())
@@ -32,9 +32,10 @@ class GestorReportes:
             medianas = self.__generadorDeEstadisticas.obtenerMedianas(self.__repositorio.obtenerRegistrosTotales())
         else:
             # Si se especifica un departamento, se obtienen estadísticas filtradas por ese departamento
+            cantidades = self.__generadorDeEstadisticas.obtenerCantidadesReclamos(self.__repositorio.obtenerRegistrosFiltro("departamento", departamento))
             palabras_clave = self.__generadorDeEstadisticas.obtenerPalabrasClave(self.__repositorio.obtenerRegistrosFiltro("departamento", departamento))
             medianas = self.__generadorDeEstadisticas.obtenerMedianas(self.__repositorio.obtenerRegistrosFiltro("departamento", departamento))
-            porcentajes = self.__generadorDeEstadisticas.obtenerPorcentajesReclamos(self.__repositorio.obtenerRegistrosFiltro("departamento", departamento))
+            #porcentajes = self.__generadorDeEstadisticas.obtenerPorcentajesReclamos(self.__repositorio.obtenerRegistrosFiltro("departamento", departamento))
         
         return (cantidades, medianas, palabras_clave)
         #return (porcentajes, medianas, palabras_clave)
@@ -50,9 +51,9 @@ class GestorReportes:
         #porcentajes = self.generarEstadisticas(self.__departamento)[0]
         palabras_clave = self.generarEstadisticas(self.__departamento)[2]
 
-        rutaGraficoTorta = self.__graficador.graficarCantidadesReclamos(cantidades, ruta_salida=f"./data/grafico_torta_{self.__departamento}.png" if self.__departamento else "./data/grafico_torta_secretario.png")
+        rutaGraficoTorta = self.__graficador.graficarCantidadesReclamos(cantidades, ruta_salida=f"./static/grafico_torta_{self.__departamento}.png" if self.__departamento else "./static/grafico_torta_secretario.png")
         #rutaGraficoTorta = self.__graficador.graficarPorcentajesReclamos(porcentajes, ruta_salida=f"./data/grafico_torta_{self.__departamento}.png" if self.__departamento else "./data/grafico_torta_secretario.png")
-        rutaGraficoNube = self.__graficador.graficarPalabrasClave(palabras_clave, ruta_salida=f"./data/grafico_nube_{self.__departamento}.png" if self.__departamento else "./data/grafico_nube_secretario.png")
+        rutaGraficoNube = self.__graficador.graficarPalabrasClave(palabras_clave, ruta_salida=f"./static/grafico_nube_{self.__departamento}.png" if self.__departamento else "./static/grafico_nube_secretario.png")
 
         return (rutaGraficoTorta, rutaGraficoNube)
     

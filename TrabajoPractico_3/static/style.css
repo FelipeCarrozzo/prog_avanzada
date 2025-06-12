@@ -63,6 +63,27 @@ h1 {
     background-color: #0056b3;
 }
 
+.links {
+    display: flex;
+    justify-content: center; /* o space-around / space-between */
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.links a {
+    text-decoration: none;
+    background-color: #0056b3;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.links a:hover {
+    background-color: #003d80;
+}
+
+
 /* === Formularios === */
 
 form {
@@ -203,5 +224,38 @@ p {
     gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 20px;
+}
+
+
+
+/* panel de admins */
+.tabla-reclamos {
+    background-color: white;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 30px;
+}
+
+.tabla-reclamos table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-reclamos th, .tabla-reclamos td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.tabla-reclamos thead {
+    background-color: #f9f9f9;
+}
+
+.submit-container {
+    text-align: center;
     margin-top: 20px;
 }

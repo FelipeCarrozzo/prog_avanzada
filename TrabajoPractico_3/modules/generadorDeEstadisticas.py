@@ -94,7 +94,9 @@ class generadorDeEstadisticas:
 
         medianaResueltos = monticuloResuelto.obtenerMediana()
 
-        return (medianaEnProceso, medianaResueltos)
+        medianas = {"enProceso":medianaEnProceso,
+                    "resueltos": medianaResueltos}
+        return (medianas)
 
 
 

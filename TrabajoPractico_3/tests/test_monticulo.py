@@ -12,9 +12,12 @@ class TestMonticuloBinario(unittest.TestCase):
 
     def test_insertar_max(self):
         """Test para insertar valores en un montículo máximo."""
+        #arrange
         monticulo = MonticuloBinario("max")
         for valor in [5, 3, 8, 1]:
+            #act
             monticulo.insertar(valor)
+        #assert
         self.assertEqual(monticulo.devolverListaValores()[1], 8)
 
     def test_eliminar_min(self):
@@ -49,15 +52,20 @@ class TestMonticuloMediana(unittest.TestCase):
 
     def test_mediana_incremental(self):
         """Test para verificar la mediana al agregar valores de forma incremental."""
+        #arrange
         secuencia = [5, 15, 1, 3, 8, 12, 7, 9, 4]
         esperado = [5, 10.0, 5, 4.0, 5, 6.5, 7, 7.5, 7]
         for i, valor in enumerate(secuencia):
+            #act
             self.m.agregarValor(valor)
+            #assert
             self.assertAlmostEqual(self.m.obtenerMediana(), esperado[i])
 
     def test_insertar_y_obtener_mediana(self):
         """Test para insertar valores y verificar la mediana en diferentes etapas."""
+        #act
         self.m.agregarValor(5)
+        #assert
         self.assertEqual(self.m.obtenerMediana(), 5)
 
         self.m.agregarValor(10)
@@ -74,6 +82,7 @@ class TestMonticuloMediana(unittest.TestCase):
 
     def test_vacio(self):
         """Test para intentar obtener la mediana de un montículo vacío."""
+
         with self.assertRaises(ValueError):
             self.m.obtenerMediana()
 

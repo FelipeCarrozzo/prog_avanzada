@@ -9,7 +9,7 @@ from modules.gestorReclamos import GestorReclamos
 from modules.gestorLogin import GestorDeLogin
 from modules.formularios import RegistroForm, LoginForm, ReclamosForm
 from modules.factoriaRepositorios import crearRepositorio
-from flask import send_file
+from flask import send_file, request
 from modules.gestorReportes import GestorReportes
 
 adminList = [1]
@@ -148,34 +148,62 @@ def crearReclamos():
                 flash(str(e))
     return render_template("login.html", form=form)
 
-@app.route("/panelAdmin")
+@app.route("/panelAdmin", methods=["GET", "POST"])
 def panelAdmin():
-    """
-    Ruta que renderiza el panel de administración.
-    Muestra los reclamos del usuario actual si es un secretario técnico o jefe de departamento.
-    """
     if 'username' not in session:
         flash("Debes iniciar sesión primero.")
         return redirect(url_for('login'))
-    else:
-        username = session['username']
-        #se deben listar los reclamos del departamento del usuario
+
+    username = session['username']
     rol = gestor_login.rolUsuarioActual
     departamento = None
-    if rol.startswith("jefe"):
-        departamento = rol[4:]
-        departamento = re.sub(r'(?<!^)(?=[A-Z])', ' ', departamento).lower()
-        print(departamento)
-    
-    # Listar reclamos del departamento del usuario
-    if rol == 'secretarioTecnico' or rol == "jefeMaestranza" or rol == "jefeSoporteInformático":
-        try:
-            reclamosDepto = repoReclamo.obtenerRegistrosFiltro("departamento", departamento)
-            # reclamosPendientes = [reclamo for reclamo in reclamosDepto if reclamo.estado == '']
-        except ValueError as e:
-            flash(str(e))
+    es_secretario = False
 
-    return render_template("panelAdmin.html", username=username, rol=rol, reclamos=reclamosDepto)
+    # --- POST: procesar cambios en reclamos ---
+    if request.method == "POST":
+        # Recorremos los reclamos existentes
+        reclamos = repoReclamo.obtenerRegistrosTotales()  # O filtrados por departamento
+        for reclamo in reclamos:
+            rid = reclamo.id
+            estado_key = f"estado_{rid}"
+            tiempo_key = f"tiempo_{rid}"
+            depto_key = f"departamento_{rid}"
+
+            # Si se enviaron datos para este reclamo:
+            if estado_key in request.form:
+                nuevo_estado = request.form[estado_key]
+                repoReclamo.actualizarAtributo(rid, "estado", nuevo_estado)
+
+            if tiempo_key in request.form and request.form[tiempo_key].strip() != "":
+                nuevo_tiempo = int(request.form[tiempo_key])
+                repoReclamo.actualizarAtributo(rid, "tiempoResolucion", nuevo_tiempo)
+
+            if rol == "secretarioTecnico" and depto_key in request.form:
+                nuevo_depto = request.form[depto_key]
+                repoReclamo.actualizarAtributo(rid, "departamento", nuevo_depto)
+
+        flash("Cambios guardados correctamente.")
+        return redirect(url_for('panelAdmin'))
+
+    # --- GET: mostrar página con los reclamos ---
+    if rol.startswith("jefe"):
+        departamento = re.sub(r'(?<!^)(?=[A-Z])', ' ', rol[4:]).lower()
+        reclamos = repoReclamo.obtenerRegistrosFiltro("departamento", departamento)
+    elif rol == "secretarioTecnico":
+        es_secretario = True
+        departamento = "todos"
+        reclamos = repoReclamo.obtenerRegistrosTotales()
+    else:
+        flash("No tenés permisos para acceder al panel de administración.")
+        return redirect(url_for("bienvenido"))
+
+    return render_template("panelAdmin.html", 
+                           username=username, 
+                           rol=rol,
+                           departamento=departamento, 
+                           reclamos=reclamos, 
+                           es_secretario=es_secretario)
+
 
 @app.route("/analitica")
 def analitica():
@@ -195,7 +223,7 @@ def analitica():
     else:
         departamento = departamento.title()
 
-    return render_template("analiticas.html", datos=datosReporte, departamento=departamento)
+    return render_template("analitica.html", datos=datosReporte, departamento=departamento)
 
 
 @app.route("/descargar/<formato>")
@@ -214,6 +242,10 @@ def descargarReporte(formato):
         download_name=nombre_archivo,
         mimetype="application/pdf" if formato == "pdf" else "text/html"
     )
+
+@app.route("/ayuda")
+def ayuda():
+    return render_template("ayuda.html")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

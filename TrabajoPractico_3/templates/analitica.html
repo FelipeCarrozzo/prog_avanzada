@@ -8,13 +8,13 @@
 <body>
 
     <div class="container-inicio">
-        <h1>📊 Analíticas: {{ departamento }}</h1>
+        <h1>Analíticas: {{ departamento }}</h1>
 
         <div class="panel panel-default">
             <div class="panel-body">
                 <h2>Medianas de tiempos de resolución</h2>
-                <p><strong>En proceso:</strong> {{ datos.medianas["en_proceso"] }}</p>
-                <p><strong>Resueltos:</strong> {{ datos.medianas["resuelto"] }}</p>
+                <p><strong>En proceso:</strong> {{ datos.medianas["enProceso"] }}</p>
+                <p><strong>Resueltos:</strong> {{ datos.medianas["resueltos"] }}</p>
             </div>
         </div>
 
@@ -33,8 +33,8 @@
         </div>
 
         <div class="botones">
-            <a href="{{ url_for('descargarReporte', formato='pdf') }}" class="btn-registro">📥 Descargar PDF</a>
-            <a href="{{ url_for('descargarReporte', formato='html') }}" class="btn-registro">🌐 Descargar HTML</a>
+            <a href="{{ url_for('descargarReporte', formato='pdf') }}" class="btn-registro">Descargar PDF</a>
+            <a href="{{ url_for('descargarReporte', formato='html') }}" class="btn-registro">Descargar HTML</a>
         </div>
     </div>
 
