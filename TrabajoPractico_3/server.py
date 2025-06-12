@@ -102,7 +102,9 @@ def login():
             
             elif rol == 'UsuarioFinal':
                 return redirect(url_for('bienvenido'))
-        return redirect(url_for('inicio'))
+
+            else:
+                return redirect(url_for('inicio'))
 
     return render_template('login.html', form=form_login)
 
@@ -145,16 +147,35 @@ def crearReclamos():
             except ValueError as e:
                 flash(str(e))
     return render_template("login.html", form=form)
-    
-app.route("/panelAdmin")
+
+@app.route("/panelAdmin")
 def panelAdmin():
     """
     Ruta que renderiza el panel de administración.
     Muestra los reclamos del usuario actual si es un secretario técnico o jefe de departamento.
     """
-    if 'username' in session:
+    if 'username' not in session:
+        flash("Debes iniciar sesión primero.")
+        return redirect(url_for('login'))
+    else:
         username = session['username']
-    return render_template("panelAdmin.html", username=username)
+        #se deben listar los reclamos del departamento del usuario
+    rol = gestor_login.rolUsuarioActual
+    departamento = None
+    if rol.startswith("jefe"):
+        departamento = rol[4:]
+        departamento = re.sub(r'(?<!^)(?=[A-Z])', ' ', departamento).lower()
+        print(departamento)
+    
+    # Listar reclamos del departamento del usuario
+    if rol == 'secretarioTecnico' or rol == "jefeMaestranza" or rol == "jefeSoporteInformático":
+        try:
+            reclamosDepto = repoReclamo.obtenerRegistrosFiltro("departamento", departamento)
+            reclamosPendientes = [reclamo for reclamo in reclamosDepto if reclamo.estado == 'pendiente']
+        except ValueError as e:
+            flash(str(e))
+
+    return render_template("panelAdmin.html", username=username, rol=rol, reclamos=reclamosPendientes)
 
 @app.route("/analitica")
 def analitica():
