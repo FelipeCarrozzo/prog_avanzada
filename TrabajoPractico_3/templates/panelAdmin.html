@@ -16,7 +16,6 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Título</th>
                         <th>Descripción</th>
                         <th>Fecha</th>
                         <th>Estado</th>
@@ -26,7 +25,6 @@
                     {% for reclamo in reclamos %}
                         <tr>
                             <td>{{ reclamo.id }}</td>
-                            <td>{{ reclamo.titulo }}</td>
                             <td>{{ reclamo.descripcion }}</td>
                             <td>{{ reclamo.fecha }}</td>
                             <td>{{ reclamo.estado }}</td>

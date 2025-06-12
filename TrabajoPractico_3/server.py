@@ -171,11 +171,11 @@ def panelAdmin():
     if rol == 'secretarioTecnico' or rol == "jefeMaestranza" or rol == "jefeSoporteInformático":
         try:
             reclamosDepto = repoReclamo.obtenerRegistrosFiltro("departamento", departamento)
-            reclamosPendientes = [reclamo for reclamo in reclamosDepto if reclamo.estado == 'pendiente']
+            # reclamosPendientes = [reclamo for reclamo in reclamosDepto if reclamo.estado == '']
         except ValueError as e:
             flash(str(e))
 
-    return render_template("panelAdmin.html", username=username, rol=rol, reclamos=reclamosPendientes)
+    return render_template("panelAdmin.html", username=username, rol=rol, reclamos=reclamosDepto)
 
 @app.route("/analitica")
 def analitica():
