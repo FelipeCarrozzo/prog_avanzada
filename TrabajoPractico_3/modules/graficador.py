@@ -35,25 +35,42 @@ class Graficador:
             plt.show()
 
 
-    def graficarPorcentajesReclamos(self, porcentajes, ruta_salida=None):
-        """
-        grafica en un gráfico de torta los porcentajes de reclamos por estado e incluye los valores de los porcentajes.
-        Args:
-        porcentajes: diccionario con los porcentajes de reclamos por estado
-        ruta_salida: opcional, nombre de archivo PNG de salida
-        """
-    
-        plt.figure(figsize=(16, 12))
-        plt.pie(porcentajes.values(), labels=porcentajes.keys(), autopct='%1.1f%%', startangle=140)
-        plt.title('Porcentaje de reclamos por estado')
-        plt.tight_layout()
-        plt.legend(porcentajes.keys())
-        plt.axis('equal')
 
-        if ruta_salida:
-           plt.savefig(ruta_salida)
-           plt.close()
-           return ruta_salida
+def graficarPorcentajesReclamos(self, porcentajes, ruta_salida=None):
+    """
+    Grafica en un gráfico de torta los porcentajes de reclamos por estado e incluye los valores de los porcentajes.
+    Args:
+    porcentajes: diccionario con los porcentajes de reclamos por estado
+    ruta_salida: opcional, nombre de archivo PNG de salida
+    """
+
+    plt.figure(figsize=(16, 12))
+
+    # Graficar y capturar textos de autopct
+    wedges, texts, autotexts = plt.pie(
+        porcentajes.values(),
+        labels=porcentajes.keys(),
+        autopct='%1.1f%%',
+        startangle=140,
+        textprops={'fontsize': 14}  #tamaño de las etiquetas
+    )
+
+    # También puedes cambiar el tamaño de las etiquetas si lo deseas:
+    for text in texts:
+        text.set_fontsize(16)  # Tamaño de etiquetas (nombres de las porciones)
+    for autotext in autotexts:
+        autotext.set_fontsize(16)  # Tamaño de los porcentajes
+
+    plt.title('Porcentaje de reclamos por estado', fontsize=20)
+    plt.tight_layout()
+    plt.legend(porcentajes.keys(), fontsize=12)
+    plt.axis('equal')
+
+    if ruta_salida:
+        plt.savefig(ruta_salida)
+        plt.close()
+        return ruta_salida
+
 
     def graficarPalabrasClave(self, palabras_frecuentes, ruta_salida=None):
         """

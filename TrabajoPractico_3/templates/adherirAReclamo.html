@@ -42,6 +42,11 @@
                 </tbody>
             </table>
         </div>
-    </div>
+        <!-- Botón de Cancelar -->
+        <div style="margin-top: 20px;">
+            <form action="{{ url_for('bienvenido') }}" method="get">
+                <button type="submit">Cancelar reclamo</button>
+            </form>
+        </div>
+    </div> <!-- cierre de .container-reclamo -->
 </body>
-</html>

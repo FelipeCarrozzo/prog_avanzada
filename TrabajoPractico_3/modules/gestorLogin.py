@@ -65,7 +65,7 @@ class GestorDeLogin:
             return current_user.rol
         return None
 
-    def logout_usuario(self):
+    def logoutUsuario(self):
         """Cierra sesión del usuario actual."""
         logout_user()
         print("Usuario ha cerrado sesión")

@@ -252,5 +252,16 @@ def descargarReporte(formato):
 def ayuda():
     return render_template("ayuda.html")
 
+@app.route("/logout")
+def logout():
+    """
+    Ruta para cerrar sesión del usuario actual.
+    Limpia la sesión y redirige a la página de inicio.
+    """
+    session.pop('username', None)
+    gestor_login.logoutUsuario()
+    flash("Has cerrado sesión exitosamente.")
+    return redirect(url_for('inicio'))
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
