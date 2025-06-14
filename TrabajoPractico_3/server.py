@@ -11,6 +11,7 @@ from modules.formularios import RegistroForm, LoginForm, ReclamosForm
 from modules.factoriaRepositorios import crearRepositorio
 from flask import send_file, request, send_from_directory
 from modules.gestorReportes import GestorReportes
+from flask_login import current_user
 
 adminList = [1]
 repoUsuario, repoReclamo = crearRepositorio()
@@ -232,6 +233,10 @@ def analitica():
 
 @app.route("/descargar/<formato>")
 def descargarReporte(formato):
+    if not current_user.is_authenticated:
+        flash("Debes iniciar sesión primero.")
+        return redirect(url_for('login'))
+    
     if formato not in ['pdf', 'html']:
         flash("Formato no soportado")
         return redirect(url_for('inicio'))
@@ -244,7 +249,9 @@ def descargarReporte(formato):
         departamento = re.sub(r'(?<!^)(?=[A-Z])', ' ', departamento).lower()
     ruta = gestorReportes.exportarReporte(formato, departamento)
 
-    nombre_archivo = ruta.split("/")[-1]  # solo el nombre del archivo
+    #nombre_archivo = ruta.split("/")[-1]  # solo el nombre del archivo
+    import os
+    nombre_archivo = os.path.basename(ruta)
     return send_file(
         ruta,
         as_attachment=True,

@@ -2,7 +2,10 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from modules.repositorioAbstractoBD import RepositorioAbstractoBD
 import os
-from fpdf import FPDF
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Image, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+
 
 class GestorExportacion(ABC):
     def __init__(self):
@@ -14,30 +17,37 @@ class GestorExportacion(ABC):
 class ExportadorPDF(GestorExportacion):
     def exportar(self, datosReporte, departamento=None):
         nombre = f"reporte_{departamento or 'todos'}"
-        ruta = f"./data/{nombre}.pdf"
+        ruta = os.path.join("data", f"{nombre}.pdf")
 
-        pdf = FPDF()
-        pdf.add_page()
-        pdf.set_font("Arial", size=12)
+        doc = SimpleDocTemplate(ruta, pagesize=letter, title="Reporte de reclamos")
+        styles = getSampleStyleSheet()
+        elements = []
 
-        pdf.cell(200, 10, txt="Reporte de Reclamos", ln=True, align="C")
-        pdf.ln(10)
+        elements.append(Paragraph("Reporte de reclamos", styles["Title"]))
+        elements.append(Spacer(1, 12))
 
-        pdf.cell(200, 10, txt="Mediana de tiempo de resolución de reclamos en proceso (en días): " +
-                 str(datosReporte['medianas'].get('enProceso', 0)), ln=True)
-        pdf.cell(200, 10, txt="Mediana de tiempo de resolución de reclamos resueltos (en días): " +
-                 str(datosReporte['medianas'].get('resueltos', 0)), ln=True)
+        # Medianas
+        elements.append(Paragraph(f"Mediana de tiempos de resolución de reclamos en proceso: {datosReporte['medianas'].get('enProceso', 0)} días", styles["Normal"]))
+        elements.append(Paragraph(f"Mediana de tiempos de resolución de reclamos resueltos: {datosReporte['medianas'].get('resueltos', 0)} días", styles["Normal"]))
+        elements.append(Spacer(1, 12))
 
-        # Agregar gráficos (solo si fpdf puede cargar imágenes)
-        pdf.ln(10)
-        pdf.cell(200, 10, txt="Porcentaje de reclamos por estado:", ln=True)
-        pdf.image(datosReporte['graficoTorta'], w=160)
+        # Gráfico torta
+        if os.path.exists(datosReporte['graficoTorta']):
+            elements.append(Paragraph("Gráfico de reclamos por estado:", styles["Heading2"]))
+            img_torta = Image(datosReporte['graficoTorta'])
+            img_torta._restrictSize(400, 300)
+            elements.append(img_torta)
+            elements.append(Spacer(1, 12))
 
-        pdf.ln(10)
-        pdf.cell(200, 10, txt="Palabras clave:", ln=True)
-        pdf.image(datosReporte['graficoNube'], w=160)
+        # Gráfico nube
+        if os.path.exists(datosReporte['graficoNube']):
+            elements.append(Paragraph("Nube de palabras clave:", styles["Heading2"]))
+            img_nube = Image(datosReporte['graficoNube'])
+            img_nube._restrictSize(400, 300)
+            elements.append(img_nube)
+            elements.append(Spacer(1, 12))
 
-        pdf.output(ruta)
+        doc.build(elements)
         return ruta
 
 class ExportadorHTML(GestorExportacion):
@@ -48,42 +58,59 @@ class ExportadorHTML(GestorExportacion):
         carpeta = "data"
         os.makedirs(carpeta, exist_ok=True)
 
-        ruta_css_original = os.path.join("static", "style.css")
+        # Copiar style.css si no existe
+        ruta_css_origen = os.path.join("static", "style.css")
         ruta_css_destino = os.path.join(carpeta, "style.css")
-        if os.path.exists(ruta_css_original) and not os.path.exists(ruta_css_destino):
-            shutil.copy(ruta_css_original, ruta_css_destino)
+        if os.path.exists(ruta_css_origen) and not os.path.exists(ruta_css_destino):
+            shutil.copy(ruta_css_origen, ruta_css_destino)
 
-        ruta_torta = datosReporte["graficoTorta"]
-        ruta_nube = datosReporte["graficoNube"]
-
-        nombre_torta = os.path.basename(ruta_torta)
-        nombre_nube = os.path.basename(ruta_nube)
-
-        nueva_ruta_torta = os.path.join(carpeta, nombre_torta)
-        nueva_ruta_nube = os.path.join(carpeta, nombre_nube)
-
-        # Copiar si no existen
-        if not os.path.exists(nueva_ruta_torta):
-            shutil.copy(ruta_torta, nueva_ruta_torta)
-        if not os.path.exists(nueva_ruta_nube):
-            shutil.copy(ruta_nube, nueva_ruta_nube)
+        # Copiar imágenes y obtener rutas absolutas
+        ruta_torta = os.path.abspath(datosReporte["graficoTorta"])
+        ruta_nube = os.path.abspath(datosReporte["graficoNube"])
 
         ruta_html = os.path.join(carpeta, f"{nombre}.html")
+
+                # CSS mínimo embebido
+        css_content = """
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            padding: 40px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        p {
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 90%;
+            height: auto;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        """
+
         with open(ruta_html, "w", encoding="utf-8") as f:
-            f.write("<!DOCTYPE html>")
-            f.write("<html lang='es'>")
-            f.write("<head>")
-            f.write("<meta charset='UTF-8'>")
-            f.write("<title>Reporte HTML</title>")
-            f.write("<link rel='stylesheet' href='style.css'>")  # Apunta al CSS en la misma carpeta
-            f.write("</head>")
-            f.write("<body>")
-            f.write("<h1>Reporte HTML</h1>")
-            f.write(f"<img src='{nombre_torta}' width='400'><br>")
-            f.write(f"<p><strong>Medianas en proceso:</strong> {datosReporte['medianas'].get('enProceso', 0)} días</p>")
-            f.write(f"<p><strong>Medianas resueltos:</strong> {datosReporte['medianas'].get('resueltos', 0)} días</p>")
-            f.write("<h2>Palabras clave más frecuentes:</h2>")
-            f.write(f"<img src='{nombre_nube}' width='400'>")
+            f.write("<!DOCTYPE html><html lang='es'><head>")
+            f.write("<meta charset='UTF-8'><title>Reporte</title>")
+            f.write(f"<style>{css_content}</style>")
+            f.write("</head><body>")
+            f.write("<h1>Reporte HTML de Reclamos</h1>")
+
+            f.write(f"<p><strong>Mediana de tiempos de resolución de reclamos en proceso:</strong> {datosReporte['medianas'].get('enProceso', 0)} días</p>")
+            f.write(f"<p><strong>Mediana de tiempos de resolución de reclamos resueltos:</strong> {datosReporte['medianas'].get('resueltos', 0)} días</p>")
+
+            f.write("<h2>Gráfico de reclamos por estado</h2>")
+            f.write(f"<img src='file:///{ruta_torta}' width='500'>")
+
+            f.write("<h2>Nube de palabras clave</h2>")
+            f.write(f"<img src='file:///{ruta_nube}' width='500'>")
+
             f.write("</body></html>")
 
         return ruta_html
