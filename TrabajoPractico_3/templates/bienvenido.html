@@ -9,9 +9,11 @@
 <body>
     <h1>Bienvenido a la gestión de reclamos</h1>
     <p>Hola {{ username }}, aquí puedes gestionar tus reclamos.</p>
-    <div class="links">
-        <a href = "{{ url_for('crearReclamos') }}">Iniciar un nuevo reclamo</a>
-    <p><a href="{{ url_for('logout') }}">Cerrar sesión</a></p>
+
+    <div class="botones">
+        <a href = "{{ url_for('crearReclamos') }}" class = "btn-registro">Iniciar un nuevo reclamo</a>
+        <a href = "{{ url_for('listarReclamos') }}" class = "btn-registro">Ver reclamos existentes</a>
+        <a href="{{ url_for('logout') }}" class = "btn-registro">Cerrar sesión</a>
     </div>
 </body>
 </html>

@@ -52,12 +52,6 @@ def bienvenido():
     else:
         flash("Debes iniciar sesión primero.")
         return redirect(url_for('login'))
-    
-
-        
-    #     <!-- <a href = "{{ url_for('misReclamos') }}">Ver mis reclamos</a> -->
-
-    #     <!-- <a href = "{{ url_for('listarReclamos') }}">Ver reclamos existentes</a> -->
 
     #     <!-- <a href = "{{ url_for('logout') }}">Cerrar sesión</a> -->
     # </div>
@@ -108,6 +102,36 @@ def login():
 
     return render_template('login.html', form=form_login)
 
+@app.route("/listarReclamos", methods=["GET", "POST"])
+def listarReclamos():
+    if 'username' not in session:
+        flash("Debes iniciar sesión primero.")
+        return redirect(url_for('login'))
+
+    username = session['username']
+    idUsuario = gestor_login.idUsuarioActual
+
+    filtro_usuario = request.form.get("filtroUsuario", "mios")
+    filtro_departamento = request.form.get("filtroDepartamento", "todos")
+
+    reclamos = repoReclamo.obtenerRegistrosFiltro("estado", "pendiente")
+
+    # Filtrar por usuario
+    if filtro_usuario == "mios":
+        reclamos = [r for r in reclamos if r.idUsuario == idUsuario]
+
+    # Filtrar por departamento
+    if filtro_departamento != "todos":
+        reclamos = [r for r in reclamos if r.departamento == filtro_departamento]
+
+    return render_template("listarReclamos.html", reclamos=reclamos, username=username)
+
+
+
+    # else:
+    #     flash("No tenés permisos para acceder a esta sección.")
+    #     return redirect(url_for("bienvenido"))
+
 @app.route("/adherir_a_reclamo/<int:idReclamo>", methods=["GET", "POST"])
 def adherir_a_reclamo(idReclamo):
     usuario = gestor_login.idUsuarioActual  
@@ -143,7 +167,7 @@ def crearReclamos():
             try:
                 gestorReclamos.crearReclamo(idUsuario, descripcion, imagen)
                 flash("Reclamo creado con éxito")
-                return redirect(url_for('crearReclamos')) #AGREGAR
+                return redirect(url_for('listarReclamos')) #AGREGAR
             except ValueError as e:
                 flash(str(e))
     return render_template("login.html", form=form)
