@@ -61,10 +61,10 @@ class generadorDeEstadisticas:
         stop_words = set(stopwords.words("spanish"))
         for r in reclamos:
             tokens = word_tokenize(r.descripcion.lower())
-            filtrados = [t for t in tokens if t.isalpha() and t not in stop_words]
+            filtrados = [t for t in tokens if t.isalpha() and t not in stop_words] #Filtra palabras no alfabéticas y stopwords
             todas.extend(filtrados)
 
-        conteo = Counter(todas)
+        conteo = Counter(todas) # Cuenta la frecuencia de cada palabra
         return conteo.most_common(num_palabras)    
     
     def obtenerMedianas(self, reclamos):
@@ -85,13 +85,10 @@ class generadorDeEstadisticas:
         for r in reclamos:
             if r.tiempoResolucion is not None and r.estado == "en proceso":
                 monticuloEnProceso.agregarValor(r.tiempoResolucion)
-
-        medianaEnProceso = monticuloEnProceso.obtenerMediana()
-
-        for r in reclamos:
-            if r.tiempoResolucion is not None and r.estado == "resuelto":
+            elif r.tiempoResolucion is not None and r.estado == "resuelto":
                 monticuloResuelto.agregarValor(r.tiempoResolucion)
 
+        medianaEnProceso = monticuloEnProceso.obtenerMediana()
         medianaResueltos = monticuloResuelto.obtenerMediana()
 
         medianas = {"enProceso":medianaEnProceso,

@@ -15,15 +15,10 @@ from modules.clasificadorReclamos import ClasificadorDeReclamos
 class GestorReclamos:
     def __init__(self, repo: RepositorioAbstractoBD):
         self.__repo = repo
-        self.__reclamos = [] #lista de diccionarios #modificar, el gestor no tiene como atributo los reclamos
         self.__clasificador = ClasificadorDeReclamos()
         self.__departamentos = []
+        
 
-    @property
-    def reclamos(self):
-        """Devuelve la lista de reclamos."""
-        return self.__reclamos
-    
     @property
     def clasificador(self):
         """Devuelve el clasificador de reclamos."""

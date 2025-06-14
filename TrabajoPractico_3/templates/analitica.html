@@ -21,22 +21,21 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <h2>Gráfico de reclamos por estado</h2>
-                <img src="{{ url_for('static', filename=datos.graficoTorta.split('static/')[1]) }}" alt="Gráfico Torta" style="width: 100%; max-width: 700px;">
+                <img src="{{ url_for('data_static', filename=datos.graficoTorta.split('data/')[1]) }}" alt="Gráfico Torta" style="width: 100%; max-width: 700px;">
             </div>
         </div>
 
         <div class="panel panel-default">
             <div class="panel-body">
                 <h2>Nube de palabras clave</h2>
-                <img src="{{ url_for('static', filename=datos.graficoNube.split('static/')[1]) }}" alt="Nube de palabras" style="width: 80%; max-width: 500px;">
+                <img src="{{ url_for('data_static', filename=datos.graficoNube.split('data/')[1]) }}" alt="Nube de palabras" style="width: 80%; max-width: 500px;">
             </div>
         </div>
 
         <div class="botones">
-            <a href="{{ url_for('descargarReporte', formato='pdf') }}" class="btn-registro">Descargar PDF</a>
-            <a href="{{ url_for('descargarReporte', formato='html') }}" class="btn-registro">Descargar HTML</a>
+            <a href="{{ url_for('descargarReporte', formato='pdf') }}" class="btn-registro">Descargar como PDF</a>
+            <a href="{{ url_for('descargarReporte', formato='html') }}" class="btn-registro">Descargar como HTML</a>
             <a href="{{ url_for('panelAdmin') }}" class="btn-registro">Volver al Panel</a>
-            <a href="{{ url_for('inicio') }}" class="btn-registro">Volver al Inicio</a>
             <a href="{{ url_for('logout') }}" class="btn-registro">Cerrar sesión</a>
         </div>
     </div>

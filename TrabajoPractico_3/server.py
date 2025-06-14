@@ -9,7 +9,7 @@ from modules.gestorReclamos import GestorReclamos
 from modules.gestorLogin import GestorDeLogin
 from modules.formularios import RegistroForm, LoginForm, ReclamosForm
 from modules.factoriaRepositorios import crearRepositorio
-from flask import send_file, request
+from flask import send_file, request, send_from_directory
 from modules.gestorReportes import GestorReportes
 
 adminList = [1]
@@ -181,8 +181,8 @@ def panelAdmin():
             if rol == "secretarioTecnico" and depto_key in request.form:
                 nuevo_depto = request.form[depto_key]
                 repoReclamo.actualizarAtributo(rid, "departamento", nuevo_depto)
-
-        #flash("Cambios guardados correctamente.")
+        
+        flash("Cambios guardados correctamente.", "success")      
         return redirect(url_for('panelAdmin'))
 
     # --- GET: mostrar página con los reclamos ---
@@ -204,6 +204,10 @@ def panelAdmin():
                            reclamos=reclamos, 
                            es_secretario=es_secretario)
 
+
+@app.route('/data/<path:filename>')
+def data_static(filename):
+    return send_from_directory('data', filename)
 
 @app.route("/analitica")
 def analitica():

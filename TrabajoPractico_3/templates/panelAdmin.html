@@ -12,7 +12,8 @@
         <div class="separator"></div>
         <h1>Gestor de reclamos</h1>
     </div>
-    
+
+
     {% if es_secretario %}
         <p>Hola {{ username }}, estás gestionando todos los reclamos del sistema.</p>
     {% else %}
@@ -73,7 +74,16 @@
                     {% endfor %}
                 </tbody>
             </table>
-
+            <!-- Bloque de mensajes flash -->
+            <div class="text-center">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
             <div class="submit-container">
                 <input type="submit" value="Guardar cambios">
             </div>

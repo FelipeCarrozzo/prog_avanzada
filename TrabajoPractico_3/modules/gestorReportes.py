@@ -9,80 +9,69 @@ class GestorReportes:
         self.__repositorio = repo
         self.__generadorDeEstadisticas = generadorDeEstadisticas()
         self.__graficador = Graficador()
-        #self.__gestorExportacion = GestorExportacion()
 
-        self.__reportes = None
-
-    def generarEstadisticas(self, departamento=None):
+    def obtenerReclamos(self):
         """
-        Genera estadísticas de los reclamos y devuelve las palabras clave más frecuentes.
-        
-        Args:
-            reclamos (list): Lista de objetos Reclamo.
-            num_palabras (int): Número de palabras clave a devolver.
-        
+        Obtiene los reclamos según el departamento actual.
         Returns:
-            list: Lista de tuplas con las palabras clave y su frecuencia.
+            list: Lista de objetos Reclamo filtrados por departamento o todos los reclamos.
         """
-        if departamento is None: #secretario
-            # Si no se especifica un departamento, se obtienen estadísticas de todos los reclamos
-            cantidades = self.__generadorDeEstadisticas.obtenerCantidadesReclamos(self.__repositorio.obtenerRegistrosTotales())
-            #porcentajes = self.__generadorDeEstadisticas.obtenerPorcentajesReclamos(self.__repositorio.obtenerRegistrosTotales())
-            palabras_clave = self.__generadorDeEstadisticas.obtenerPalabrasClave(self.__repositorio.obtenerRegistrosTotales())
-            medianas = self.__generadorDeEstadisticas.obtenerMedianas(self.__repositorio.obtenerRegistrosTotales())
-        else:
-            # Si se especifica un departamento, se obtienen estadísticas filtradas por ese departamento
-            cantidades = self.__generadorDeEstadisticas.obtenerCantidadesReclamos(self.__repositorio.obtenerRegistrosFiltro("departamento", departamento))
-            palabras_clave = self.__generadorDeEstadisticas.obtenerPalabrasClave(self.__repositorio.obtenerRegistrosFiltro("departamento", departamento))
-            medianas = self.__generadorDeEstadisticas.obtenerMedianas(self.__repositorio.obtenerRegistrosFiltro("departamento", departamento))
-            #porcentajes = self.__generadorDeEstadisticas.obtenerPorcentajesReclamos(self.__repositorio.obtenerRegistrosFiltro("departamento", departamento))
-        
-        return (cantidades, medianas, palabras_clave)
-        #return (porcentajes, medianas, palabras_clave)
+        if self.__departamento:
+            return self.__repositorio.obtenerRegistrosFiltro("departamento", self.__departamento)
+        return self.__repositorio.obtenerRegistrosTotales()
 
-    def generarGraficos(self):
+    def generarEstadisticas(self):
         """
-        Genera gráficos a partir de los reclamos y los muestra en la interfaz.
-
-        Args:
-            reclamos (list): Lista de objetos Reclamo.
+        Calcula estadísticas a partir de los reclamos.
+        Returns:
+            tuple: (cantidades, medianas, palabrasClave)
         """
-        cantidades = self.generarEstadisticas(self.__departamento)[0]
-        #porcentajes = self.generarEstadisticas(self.__departamento)[0]
-        palabras_clave = self.generarEstadisticas(self.__departamento)[2]
+        reclamos = self.obtenerReclamos()
+        cantidades = self.__generadorDeEstadisticas.obtenerCantidadesReclamos(reclamos)
+        palabrasClave = self.__generadorDeEstadisticas.obtenerPalabrasClave(reclamos)
+        medianas = self.__generadorDeEstadisticas.obtenerMedianas(reclamos)
+        return cantidades, medianas, palabrasClave
 
-        rutaGraficoTorta = self.__graficador.graficarCantidadesReclamos(cantidades, ruta_salida=f"./static/grafico_torta_{self.__departamento}.png" if self.__departamento else "./static/grafico_torta_secretario.png")
-        #rutaGraficoTorta = self.__graficador.graficarPorcentajesReclamos(porcentajes, ruta_salida=f"./data/grafico_torta_{self.__departamento}.png" if self.__departamento else "./data/grafico_torta_secretario.png")
-        rutaGraficoNube = self.__graficador.graficarPalabrasClave(palabras_clave, ruta_salida=f"./static/grafico_nube_{self.__departamento}.png" if self.__departamento else "./static/grafico_nube_secretario.png")
+    def generarGraficos(self, cantidades, palabrasClave):
+        """
+        Genera gráficos a partir de los datos ya calculados.
+        Returns:
+            tuple: rutas de los gráficos generados
+        """
+        depto_str = self.__departamento or "secretariaTecnica"
+        rutaGraficoTorta = self.__graficador.graficarCantidadesReclamos(
+            cantidades, rutaSalida=f"./data/grafico_torta_{depto_str}.png"
+        )
+        rutaGraficoNube = self.__graficador.graficarPalabrasClave(
+            palabrasClave, rutaSalida=f"./data/grafico_nube_{depto_str}.png"
+        )
+        return rutaGraficoTorta, rutaGraficoNube
 
-        return (rutaGraficoTorta, rutaGraficoNube)
-    
     def generarReporte(self, departamento=None):
         """
-        Devuelve un diccionario con el gráfico de torta, las medianas y el gráfico de palabras clave.
+        Genera un reporte de reclamos para el departamento especificado.
+        Devuelve un diccionario con gráficos y datos estadísticos.
         """
         if departamento is not None:
             self.__departamento = departamento
+
+        cantidades, medianas, palabrasClave = self.generarEstadisticas()
+        graficoTorta, graficoNube = self.generarGraficos(cantidades, palabrasClave)
 
         return {
-            "graficoTorta": self.generarGraficos()[0],
-            "medianas": self.generarEstadisticas(self.__departamento)[1],
-            "graficoNube": self.generarGraficos()[1]
+            "graficoTorta": graficoTorta,
+            "graficoNube": graficoNube,
+            "medianas": medianas
         }
 
-    
     def exportarReporte(self, formato, departamento=None):
         """
-        Exporta el reporte en el formato especificado (PDF o HTML).
-
-        Args:
-            formato (str): Formato de exportación ('pdf' o 'html').
-
-        Returns:
-            str: Ruta del archivo exportado.
+        Exporta el reporte en PDF o HTML.
         """
         if departamento is not None:
             self.__departamento = departamento
+
+        datos = self.generarReporte()
 
         if formato == 'pdf':
             exportador = ExportadorPDF()
@@ -90,8 +79,5 @@ class GestorReportes:
             exportador = ExportadorHTML()
         else:
             raise ValueError("Formato de exportación no válido.")
-        
-        # Genera el reporte y lo exporta
-        rutaReporte = exportador.exportar(self.generarReporte(self.__departamento), self.__departamento)
 
-        return rutaReporte
+        return exportador.exportar(datos, self.__departamento)
