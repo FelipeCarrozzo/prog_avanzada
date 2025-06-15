@@ -12,7 +12,16 @@
         <div class="separator"></div>
         <h1>Gestor de reclamos</h1>
     </div>
-
+    <!-- Bloque de mensajes flash -->
+    <div class="error text-center">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>    
     <div class="tabla-reclamos">
         <form method="post" action="{{ url_for('listarReclamos') }}">
             <div class="filtros-superiores">
@@ -39,6 +48,7 @@
                             </select>
                         </th>
                         <th style="width: 15%;">Cantidad de adheridos</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,11 +61,21 @@
                                 <td>{{ reclamo.estado }}</td>
                                 <td>{{ reclamo.departamento }}</td>
                                 <td>{{ reclamo.numeroAdheridos }}</td>
+                                <td>
+                                    {% if reclamo.idUsuario != idUsuario %}
+                                        <form action="{{ url_for('adherir_a_reclamo', idReclamo=reclamo.id) }}" method="post">
+                                            <button type="submit" class="btn-registro">Adherirse</button>
+                                        </form>
+                                    {% else %}
+                                        <!-- No mostrar nada si es el creador -->
+                                        <span>-</span>
+                                    {% endif %}
+                                </td>
                             </tr>
                         {% endfor %}
                     {% else %}
                         <tr>
-                            <td colspan="5" style="text-align: center;">No hay reclamos para mostrar.</td>
+                            <td colspan="6" style="text-align: center;">No hay reclamos para mostrar.</td>
                         </tr>
                     {% endif %}
                 </tbody>
@@ -66,7 +86,6 @@
     <div class="botones">
         <a href="{{ url_for('bienvenido') }}" class="btn-registro">Volver al inicio</a>
         <a href="{{ url_for('logout') }}" class="btn-registro">Cerrar sesión</a>
-        <a href="{{ url_for('ayuda') }}" class="btn-registro">Ayuda</a>
     </div>
 </body>
 </html>

@@ -80,14 +80,9 @@ class GestorReclamos:
         self.__clasificador.clasificar([descripcion])
 
 
-    def adherirAReclamo(self, id, usuario):
+    def adherirAReclamo(self, idReclamo, usuario):
         """Adhiere un usuario a un reclamo existente."""
-        reclamo = self.__repo.obtenerRegistroFiltro("id", id)
-        if reclamo:
-            if usuario not in reclamo.usuariosAdheridos:
-                self.__repo.agregarUsuarioAReclamo(reclamo.id, usuario)
-                return True
-        return False
+        self.__repo.agregarUsuarioAReclamo(idReclamo, usuario)
 
 
     def guardarReclamo(self, reclamo):

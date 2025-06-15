@@ -18,8 +18,9 @@ repoUsuario, repoReclamo = crearRepositorio()
 gestorUsuarios = GestorUsuarios(repoUsuario)
 gestorReclamos = GestorReclamos(repoReclamo)
 gestor_login = GestorDeLogin(gestorUsuarios, login_manager, adminList)
-
 gestorReportes = GestorReportes(repoReclamo)
+
+ROLES_ADMIN = {'secretarioTecnico', 'jefeMaestranza', 'jefeSoporteInformático'}
 
 @app.route('/')
 def inicio():
@@ -92,21 +93,22 @@ def login():
 
             #definir lista de departamentos posibles? para que cuando se agrega un departamento nuevo,
             #solo se modifique al principio y no a lo largo del server
-            if rol == 'secretarioTecnico' or rol == "jefeMaestranza" or rol == "jefeSoporteInformático":
+            if rol in ROLES_ADMIN:
                 return redirect(url_for('panelAdmin'))
             
             elif rol == 'UsuarioFinal':
                 return redirect(url_for('bienvenido'))
 
             else:
-                return redirect(url_for('inicio'))
+                flash("No tenés permisos para acceder", "error")
+                return redirect(url_for('inicio')) #? nunca va a pasar
 
     return render_template('login.html', form=form_login)
 
 @app.route("/listarReclamos", methods=["GET", "POST"])
 def listarReclamos():
     if 'username' not in session:
-        flash("Debes iniciar sesión primero.")
+        flash("Debes iniciar sesión primero.", "error")
         return redirect(url_for('login'))
 
     username = session['username']
@@ -125,7 +127,7 @@ def listarReclamos():
     if filtro_departamento != "todos":
         reclamos = [r for r in reclamos if r.departamento == filtro_departamento]
 
-    return render_template("listarReclamos.html", reclamos=reclamos, username=username)
+    return render_template("listarReclamos.html", reclamos=reclamos, username=username, idUsuario=idUsuario)
 
 
 
@@ -135,14 +137,15 @@ def listarReclamos():
 
 @app.route("/adherir_a_reclamo/<int:idReclamo>", methods=["GET", "POST"])
 def adherir_a_reclamo(idReclamo):
-    usuario = gestor_login.idUsuarioActual  
+    usuario_id = gestor_login.idUsuarioActual  
+    usuario = repoUsuario.obtenerRegistroFiltro("id", usuario_id)
 
     if gestorReclamos.adherirAReclamo(idReclamo, usuario):
         flash("Te has adherido exitosamente al reclamo.")
     else:
         flash("No fue posible adherirse al reclamo (ya estás adherido o reclamo no existe).")
 
-    return redirect(url_for("pagina_principal"))
+    return redirect(url_for("listarReclamos"))
 
 @app.route("/reclamos", methods=["GET", "POST"])
 def crearReclamos():
@@ -150,33 +153,38 @@ def crearReclamos():
     Ruta que renderiza la página de reclamos.
     Muestra los reclamos del usuario actual si está autenticado.
     """
+    if 'username' not in session:
+        flash("Debes iniciar sesión primero.", "error")
+        return redirect(url_for('login'))
+    
     form = ReclamosForm()
     idUsuario = gestor_login.idUsuarioActual
     # descripReclamo = session.get('descripcion_reclamo')
-    if 'username' in session:
-        username = session['username']
-        if form.validate_on_submit():
-            descripcion = form.descripcion.data
-            imagen = form.imagen.data
-            try:
-                reclamoSimilar = gestorReclamos.verificarReclamoExistente(idUsuario, {"descripcion": descripcion})
-                if reclamoSimilar:
-                    return render_template('adherirAReclamo.html', reclamos=reclamoSimilar)
-            except ValueError as e:
-                flash(str(e))
-                return redirect(url_for('crearReclamos'))
-            try:
-                gestorReclamos.crearReclamo(idUsuario, descripcion, imagen)
-                flash("Reclamo creado con éxito")
-                return redirect(url_for('listarReclamos')) #AGREGAR
-            except ValueError as e:
-                flash(str(e))
-    return render_template("login.html", form=form)
+
+
+    username = session['username']
+    if form.validate_on_submit():
+        descripcion = form.descripcion.data
+        imagen = form.imagen.data
+        try:
+            reclamoSimilar = gestorReclamos.verificarReclamoExistente(idUsuario, {"descripcion": descripcion})
+            if reclamoSimilar:
+                return render_template('adherirAReclamo.html', reclamos=reclamoSimilar)
+        except ValueError as e:
+            flash(str(e), "error")
+            return redirect(url_for('crearReclamos'))
+        try:
+            gestorReclamos.crearReclamo(idUsuario, descripcion, imagen)
+            flash("Reclamo creado con éxito", "success")
+            return redirect(url_for('listarReclamos')) #AGREGAR
+        except ValueError as e:
+            flash(str(e), "error")
+    return render_template("nuevoReclamo.html", form=form, username=username)
 
 @app.route("/panelAdmin", methods=["GET", "POST"])
 def panelAdmin():
     if 'username' not in session:
-        flash("Debes iniciar sesión primero.")
+        flash("Debes iniciar sesión primero.", "error")
         return redirect(url_for('login'))
 
     username = session['username']
@@ -295,7 +303,7 @@ def logout():
     """
     session.pop('username', None)
     gestor_login.logoutUsuario()
-    flash("Has cerrado sesión exitosamente.")
+    flash("Has cerrado sesión exitosamente.", "success") 
     return redirect(url_for('inicio'))
 
 if __name__ == "__main__":

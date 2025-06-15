@@ -60,6 +60,11 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         modeloUsuario = self.__session.query(ModeloUsuario).filter_by(**{filtro:valor}).first()
         return self.__map_modelo_a_usuario(modeloUsuario) if modeloUsuario else None
 
+    def obtenerModeloPorId(self, id):
+        """
+        Método para obtener un modelo de usuario por su id.
+        """
+        return self.__session.get(ModeloUsuario, id)
 
     def obtenerRegistrosFiltro(self, filtro, valor):
         """
@@ -181,16 +186,21 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
         setattr(instancia, atributo, valor)
         self.__session.commit()
 
-    # En tu RepositorioSQLAlchemy o Repositorio concreto
-    def agregarUsuarioAReclamo(self, idReclamo, usuario):
+    def agregarUsuarioAReclamo(self, idReclamo, usuarioDominio):
+        usuarioModelo = self.__session.query(ModeloUsuario).get(usuarioDominio.id)
         reclamo = self.__session.get(ModeloReclamo, idReclamo)
+
         if not reclamo:
             raise ValueError(f"No se encontró reclamo con ID {idReclamo}")
+        if not usuarioModelo:
+            raise ValueError(f"No se encontró usuario con ID {usuarioDominio.id}")
 
-        if usuario not in reclamo.usuariosAdheridos:
-            reclamo.usuariosAdheridos.append(usuario)
+        if usuarioModelo not in reclamo.usuariosAdheridos:
+            reclamo.usuariosAdheridos.append(usuarioModelo)
             reclamo.numeroAdheridos = len(reclamo.usuariosAdheridos)
             self.__session.commit()
+            return True
+        return False
 
     def obtenerRegistroFiltro(self, filtro, valor):
         """

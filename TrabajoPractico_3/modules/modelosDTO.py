@@ -1,5 +1,4 @@
 """MODELOS DATA TRANSFER OBJECT"""
-#dependencias
 
 from sqlalchemy import Column, Integer, String, ForeignKey, Table, Text
 from sqlalchemy.orm import relationship,  declarative_base
@@ -43,7 +42,7 @@ class ModeloReclamo(Base):
     descripción, imagen y número de adheridos.
     """
     __tablename__ = 'Reclamos'
-    id = Column(Integer(), primary_key=True)
+    id = Column(Integer(), primary_key=True, autoincrement=True)
     idUsuario = Column(Integer, ForeignKey('Usuarios.id'), nullable=False)
     fechaYHora = Column(String(50), nullable=False)  # Formato de fecha y hora
     estado = Column(String(20), nullable=False, default='pendiente')
@@ -58,4 +57,4 @@ class ModeloReclamo(Base):
         "ModeloUsuario",
         secondary=asociacion_usuarios_adheridos,
         backref="reclamosAdheridos"
-    )
+    ) #como definimos backref no hace falta poner la relacion inversa
