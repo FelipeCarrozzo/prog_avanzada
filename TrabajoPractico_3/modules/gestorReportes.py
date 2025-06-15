@@ -17,8 +17,12 @@ class GestorReportes:
             list: Lista de objetos Reclamo filtrados por departamento o todos los reclamos.
         """
         if self.__departamento:
-            return self.__repositorio.obtenerRegistrosFiltro("departamento", self.__departamento)
-        return self.__repositorio.obtenerRegistrosTotales()
+            reclamos = self.__repositorio.obtenerRegistrosFiltro("departamento", self.__departamento)
+        else:
+            reclamos = self.__repositorio.obtenerRegistrosTotales()
+
+        return reclamos or []
+    
 
     def generarEstadisticas(self):
         """
@@ -27,9 +31,13 @@ class GestorReportes:
             tuple: (cantidades, medianas, palabrasClave)
         """
         reclamos = self.obtenerReclamos()
+        if not reclamos:
+            return {}, {}, {}
+
         cantidades = self.__generadorDeEstadisticas.obtenerCantidadesReclamos(reclamos)
         palabrasClave = self.__generadorDeEstadisticas.obtenerPalabrasClave(reclamos)
         medianas = self.__generadorDeEstadisticas.obtenerMedianas(reclamos)
+
         return cantidades, medianas, palabrasClave
 
     def generarGraficos(self, cantidades, palabrasClave):
@@ -56,6 +64,9 @@ class GestorReportes:
             self.__departamento = departamento
 
         cantidades, medianas, palabrasClave = self.generarEstadisticas()
+        if not cantidades:
+            raise ValueError("No hay reclamos para generar el reporte.")
+        
         graficoTorta, graficoNube = self.generarGraficos(cantidades, palabrasClave)
 
         return {

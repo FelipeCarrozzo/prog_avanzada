@@ -12,23 +12,31 @@
 
         <div class="panel panel-default">
             <div class="panel-body">
-                <h2>Medianas de tiempos de resolución</h2>
-                <p><strong>En proceso:</strong> {{ datos.medianas["enProceso"] }} días</p>
-                <p><strong>Resueltos:</strong> {{ datos.medianas["resueltos"] }} días</p>
+                <h2>Medianas de tiempos de resolución (en días)</h2>
+                <p><strong>En proceso:</strong> {{ datos.medianas["enProceso"] }}</p>
+                <p><strong>Resueltos:</strong> {{ datos.medianas["resueltos"] }}</p>
             </div>
         </div>
 
         <div class="panel panel-default">
             <div class="panel-body">
                 <h2>Gráfico de reclamos por estado</h2>
+                {% if datos.graficoTorta %}
                 <img src="{{ url_for('data_static', filename=datos.graficoTorta.split('data/')[1]) }}" alt="Gráfico Torta" style="width: 100%; max-width: 700px;">
+                {% else %}
+                <p>No hay datos suficientes para generar el gráfico de torta.</p>
+                {% endif %}
             </div>
         </div>
 
         <div class="panel panel-default">
             <div class="panel-body">
                 <h2>Nube de palabras clave</h2>
+                {% if datos.graficoNube %}
                 <img src="{{ url_for('data_static', filename=datos.graficoNube.split('data/')[1]) }}" alt="Nube de palabras" style="width: 80%; max-width: 500px;">
+                {% else %}
+                <p>No hay datos suficientes para generar la nube de palabras.</p>
+                {% endif %}
             </div>
         </div>
 

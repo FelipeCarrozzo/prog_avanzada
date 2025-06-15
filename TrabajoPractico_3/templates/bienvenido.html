@@ -7,8 +7,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Bienvenido a la gestión de reclamos</h1>
     <p>Hola {{ username }}, aquí puedes gestionar tus reclamos.</p>
+    <div class="header">
+        <img src="{{ url_for('static', filename='logoFiuner.png') }}" alt="Logo de la Facultad De Ingeniería UNER" class="logo" width="150" height="50">
+        <div class="separator"></div>
+        <h1>Gestor de reclamos</h1>
+    </div>
 
     <div class="botones">
         <a href = "{{ url_for('crearReclamos') }}" class = "btn-registro">Iniciar un nuevo reclamo</a>

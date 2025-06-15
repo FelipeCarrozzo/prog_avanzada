@@ -82,7 +82,7 @@ class GestorReclamos:
 
     def adherirAReclamo(self, idReclamo, usuario):
         """Adhiere un usuario a un reclamo existente."""
-        self.__repo.agregarUsuarioAReclamo(idReclamo, usuario)
+        return(self.__repo.agregarUsuarioAReclamo(idReclamo, usuario))
 
 
     def guardarReclamo(self, reclamo):

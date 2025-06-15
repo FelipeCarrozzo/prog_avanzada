@@ -1,7 +1,5 @@
-# from flask_wtf import FlaskForm
+#dependencias
 from flask import render_template, flash, redirect, url_for, session
-# from wtforms import StringField, PasswordField, SubmitField
-# from wtforms.validators import DataRequired, Length
 import re
 from modules.config import app, login_manager
 from modules.gestorUsuarios import GestorUsuarios
@@ -11,7 +9,12 @@ from modules.formularios import RegistroForm, LoginForm, ReclamosForm
 from modules.factoriaRepositorios import crearRepositorio
 from flask import send_file, request, send_from_directory
 from modules.gestorReportes import GestorReportes
-from flask_login import current_user
+from flask_login import current_user, login_required
+
+login_manager.login_view = 'login'  # nombre de la vista
+login_manager.login_message = "Debes iniciar sesión para acceder a esta página."
+login_manager.login_message_category = "error"  # para que aparezca como mensaje flash
+
 
 adminList = [1]
 repoUsuario, repoReclamo = crearRepositorio()
@@ -20,7 +23,7 @@ gestorReclamos = GestorReclamos(repoReclamo)
 gestor_login = GestorDeLogin(gestorUsuarios, login_manager, adminList)
 gestorReportes = GestorReportes(repoReclamo)
 
-ROLES_ADMIN = {'secretarioTecnico', 'jefeMaestranza', 'jefeSoporteInformático'}
+ROLES_ADMIN = ['secretarioTecnico', 'jefeMaestranza', 'jefeSoporteInformático']
 
 @app.route('/')
 def inicio():
@@ -30,8 +33,8 @@ def inicio():
     """
     # Registro de usuarios administrativos
     archivoDatos = "./data/datosAdmins.txt"
-    
-    with open(archivoDatos, 'r') as file:
+
+    with open(archivoDatos, 'r', encoding='utf-8') as file:
         for line in file:
             nombre, apellido, email, nombreUsuario, rol, password = line.strip().split(',')
             try:
@@ -54,9 +57,6 @@ def bienvenido():
     else:
         flash("Debes iniciar sesión primero.")
         return redirect(url_for('login'))
-
-    #     <!-- <a href = "{{ url_for('logout') }}">Cerrar sesión</a> -->
-    # </div>
 
 @app.route("/register", methods= ["GET", "POST"])
 def register():
@@ -101,39 +101,31 @@ def login():
 
             else:
                 flash("No tenés permisos para acceder", "error")
-                return redirect(url_for('inicio')) #? nunca va a pasar
+                return redirect(url_for('inicio'))
 
     return render_template('login.html', form=form_login)
 
 @app.route("/listarReclamos", methods=["GET", "POST"])
+@login_required
 def listarReclamos():
-    if 'username' not in session:
-        flash("Debes iniciar sesión primero.", "error")
-        return redirect(url_for('login'))
-
     username = session['username']
     idUsuario = gestor_login.idUsuarioActual
 
     filtro_usuario = request.form.get("filtroUsuario", "mios")
     filtro_departamento = request.form.get("filtroDepartamento", "todos")
 
-    reclamos = repoReclamo.obtenerRegistrosFiltro("estado", "pendiente")
-
-    # Filtrar por usuario
-    if filtro_usuario == "mios":
-        reclamos = [r for r in reclamos if r.idUsuario == idUsuario]
-
+    # Filtrar pendientes
+    if filtro_usuario == "todos":
+        reclamos = repoReclamo.obtenerRegistrosFiltro("estado", "pendiente")
+    elif filtro_usuario == "mios":
+        reclamos = repoReclamo.obtenerRegistrosFiltro("idUsuario", idUsuario)
+        
     # Filtrar por departamento
     if filtro_departamento != "todos":
         reclamos = [r for r in reclamos if r.departamento == filtro_departamento]
 
-    return render_template("listarReclamos.html", reclamos=reclamos, username=username, idUsuario=idUsuario)
+    return render_template("listarReclamos.html", reclamos=reclamos, username=username, idUsuario=idUsuario, filtro_usuario=filtro_usuario)
 
-
-
-    # else:
-    #     flash("No tenés permisos para acceder a esta sección.")
-    #     return redirect(url_for("bienvenido"))
 
 @app.route("/adherir_a_reclamo/<int:idReclamo>", methods=["GET", "POST"])
 def adherir_a_reclamo(idReclamo):
@@ -141,9 +133,9 @@ def adherir_a_reclamo(idReclamo):
     usuario = repoUsuario.obtenerRegistroFiltro("id", usuario_id)
 
     if gestorReclamos.adherirAReclamo(idReclamo, usuario):
-        flash("Te has adherido exitosamente al reclamo.")
+        flash("Te has adherido exitosamente al reclamo.", "success")
     else:
-        flash("No fue posible adherirse al reclamo (ya estás adherido o reclamo no existe).")
+        flash("No fue posible adherirse al reclamo (ya estás adherido o reclamo no existe).", "error")
 
     return redirect(url_for("listarReclamos"))
 
@@ -254,7 +246,12 @@ def analitica():
         departamento = rol[4:]
         departamento = re.sub(r'(?<!^)(?=[A-Z])', ' ', departamento).lower()
 
-    datosReporte = gestorReportes.generarReporte(departamento)
+    try:
+        datosReporte = gestorReportes.generarReporte(departamento)
+    except ValueError:
+        datosReporte = {}  # no hay datos para graficar
+
+    # datosReporte = gestorReportes.generarReporte(departamento)
     if departamento == None:
         departamento = "Soporte Técnico"
     else:
@@ -264,11 +261,8 @@ def analitica():
 
 
 @app.route("/descargar/<formato>")
+@login_required
 def descargarReporte(formato):
-    if not current_user.is_authenticated:
-        flash("Debes iniciar sesión primero.")
-        return redirect(url_for('login'))
-    
     if formato not in ['pdf', 'html']:
         flash("Formato no soportado")
         return redirect(url_for('inicio'))

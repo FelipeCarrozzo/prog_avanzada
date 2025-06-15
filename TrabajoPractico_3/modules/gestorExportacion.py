@@ -27,8 +27,8 @@ class ExportadorPDF(GestorExportacion):
         elements.append(Spacer(1, 12))
 
         # Medianas
-        elements.append(Paragraph(f"Mediana de tiempos de resolución de reclamos en proceso: {datosReporte['medianas'].get('enProceso', 0)} días", styles["Normal"]))
-        elements.append(Paragraph(f"Mediana de tiempos de resolución de reclamos resueltos: {datosReporte['medianas'].get('resueltos', 0)} días", styles["Normal"]))
+        elements.append(Paragraph(f"Mediana de tiempos de resolución de reclamos en proceso (en días): {datosReporte['medianas'].get('enProceso', 0)}", styles["Normal"]))
+        elements.append(Paragraph(f"Mediana de tiempos de resolución de reclamos resueltos (en días): {datosReporte['medianas'].get('resueltos', 0)}", styles["Normal"]))
         elements.append(Spacer(1, 12))
 
         # Gráfico torta
@@ -102,8 +102,8 @@ class ExportadorHTML(GestorExportacion):
             f.write("</head><body>")
             f.write("<h1>Reporte HTML de Reclamos</h1>")
 
-            f.write(f"<p><strong>Mediana de tiempos de resolución de reclamos en proceso:</strong> {datosReporte['medianas'].get('enProceso', 0)} días</p>")
-            f.write(f"<p><strong>Mediana de tiempos de resolución de reclamos resueltos:</strong> {datosReporte['medianas'].get('resueltos', 0)} días</p>")
+            f.write(f"<p><strong>Mediana de tiempos de resolución de reclamos en proceso (en días):</strong> {datosReporte['medianas'].get('enProceso', 0)}</p>")
+            f.write(f"<p><strong>Mediana de tiempos de resolución de reclamos resueltos (en días):</strong> {datosReporte['medianas'].get('resueltos', 0)}</p>")
 
             f.write("<h2>Gráfico de reclamos por estado</h2>")
             f.write(f"<img src='file:///{ruta_torta}' width='500'>")

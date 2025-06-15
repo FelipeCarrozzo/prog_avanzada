@@ -12,6 +12,7 @@
         <div class="separator"></div>
         <h1>Gestor de reclamos</h1>
     </div>
+
     <!-- Bloque de mensajes flash -->
     <div class="error text-center">
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -22,13 +23,14 @@
             {% endif %}
         {% endwith %}
     </div>    
+
     <div class="tabla-reclamos">
         <form method="post" action="{{ url_for('listarReclamos') }}">
             <div class="filtros-superiores">
                 <label for="filtroUsuario">Ver:</label>
                 <select name="filtroUsuario" onchange="this.form.submit()">
                     <option value="mios" {% if request.form.get('filtroUsuario') == 'mios' %}selected{% endif %}>Mis reclamos</option>
-                    <option value="todos" {% if request.form.get('filtroUsuario') == 'todos' %}selected{% endif %}>Todos los reclamos</option>
+                    <option value="todos" {% if request.form.get('filtroUsuario') == 'todos' %}selected{% endif %}>Todos los reclamos pendientes</option>
                 </select>
             </div>
             <table>
@@ -48,7 +50,9 @@
                             </select>
                         </th>
                         <th style="width: 15%;">Cantidad de adheridos</th>
-                        <th>Acción</th>
+                        {% if filtro_usuario != 'mios' %}
+                            <th>Acción</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -61,21 +65,25 @@
                                 <td>{{ reclamo.estado }}</td>
                                 <td>{{ reclamo.departamento }}</td>
                                 <td>{{ reclamo.numeroAdheridos }}</td>
+                                
+                                {% if filtro_usuario != 'mios' %}
                                 <td>
-                                    {% if reclamo.idUsuario != idUsuario %}
+                                    {% if reclamo.idUsuario == idUsuario %}
+                                        <span>-</span>
+                                    {% elif idUsuario in reclamo.usuariosAdheridos %}
+                                        <span>Adherido</span>
+                                    {% else %}
                                         <form action="{{ url_for('adherir_a_reclamo', idReclamo=reclamo.id) }}" method="post">
                                             <button type="submit" class="btn-registro">Adherirse</button>
                                         </form>
-                                    {% else %}
-                                        <!-- No mostrar nada si es el creador -->
-                                        <span>-</span>
                                     {% endif %}
                                 </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     {% else %}
                         <tr>
-                            <td colspan="6" style="text-align: center;">No hay reclamos para mostrar.</td>
+                            <td colspan="7" style="text-align: center;">No hay reclamos para mostrar.</td>
                         </tr>
                     {% endif %}
                 </tbody>

@@ -26,9 +26,6 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         
         modelo_usuario = self.__map_usuario_a_modelo(usuario)
         self.__session.add(modelo_usuario)
-        #tabla intermedia - para cuando IMPLEMENTEMOS EL RECLAMO
-        # usuario = self.__session.query(ModeloUsuario).filter_by(id=reclamo.idUsuario).first()
-        # usuario.reclamosSeguidos.apend(modeloReclamo)
         self.__session.commit()
 
     def actualizarAtributo(self, id, atributo, valor):

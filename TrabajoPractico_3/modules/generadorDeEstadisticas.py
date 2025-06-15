@@ -77,23 +77,25 @@ class generadorDeEstadisticas:
         Returns:
             float: Mediana de los tiempos de resolución.
         """
-        medianaEnProceso = None
-        medianaResueltos = None
         monticuloEnProceso = MonticuloMediana()
-        monticuloResuelto = MonticuloMediana()
+        monticuloResueltos = MonticuloMediana()
 
         for r in reclamos:
-            if r.tiempoResolucion is not None and r.estado == "en proceso":
+            if r.estado == "en proceso" and r.tiempoResolucion is not None:
                 monticuloEnProceso.agregarValor(r.tiempoResolucion)
-            elif r.tiempoResolucion is not None and r.estado == "resuelto":
-                monticuloResuelto.agregarValor(r.tiempoResolucion)
+            elif r.estado == "resuelto" and r.tiempoResolucion is not None:
+                monticuloResueltos.agregarValor(r.tiempoResolucion)
 
-        medianaEnProceso = monticuloEnProceso.obtenerMediana()
-        medianaResueltos = monticuloResuelto.obtenerMediana()
+        medianas = {}
 
-        medianas = {"enProceso":medianaEnProceso,
-                    "resueltos": medianaResueltos}
-        return (medianas)
+        try:
+            medianas["enProceso"] = monticuloEnProceso.obtenerMediana()
+        except ValueError:
+            medianas["enProceso"] = "No hay datos disponibles"
 
+        try:
+            medianas["resueltos"] = monticuloResueltos.obtenerMediana()
+        except ValueError:
+            medianas["resueltos"] = "No hay datos disponibles"
 
-
+        return medianas

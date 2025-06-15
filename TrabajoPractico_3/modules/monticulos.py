@@ -136,9 +136,3 @@ class MonticuloMediana:
             return self.__monticuloMax.devolverListaValores()[1]
         else:
             return (self.__monticuloMin.devolverListaValores()[1] + self.__monticuloMax.devolverListaValores()[1]) / 2
-
-#operaciones:
-#inicializar()
-#agregarValor(valor)
-#obtenerMediana(): float
-#operacion eliminar() hace falta? spoiler: no. lo hace el montículo binario
