@@ -1,0 +1,26 @@
+[run]
+omit =
+    */tests/*
+    */modules/config.py
+    */modules/classifier.py
+    */modules/factoriaRepositorios.py
+    */modules/text_vectorizer.py
+    */modules/clasificadorReclamos.py
+    */modules/formularios.py
+    */modules/gestorReclamos.py
+    */modules/gestorUsuarios.py
+    */modules/modelosDTO.py
+    */modules/repositorioAbstracto.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    if self\.debug:
+    raise NotImplementedError
+
+# Opcional: para mostrar el coverage en orden descendente
+sort = Cover
+
+# Opcional: muestra también archivos sin cobertura en el reporte
+show_missing = True

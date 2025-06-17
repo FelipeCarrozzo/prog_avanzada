@@ -10,7 +10,7 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
     """
 
     def __init__(self, session):
-        self.__tablaUsuario = ModeloUsuario()
+        self.__tablaUsuario = ModeloUsuario
         self.__session = session
         self.__tablaUsuario.metadata.create_all(self.__session.bind)
     
@@ -37,13 +37,13 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         atributo: Nombre del atributo a actualizar.
         valor: Nuevo valor del atributo.
         """
-        instancia = self._session.get(self.__tablaUsuario, id)
+        instancia = self.__session.get(self.__tablaUsuario, id)
 
         if not instancia:
             raise ValueError(f"Error: Instancia con id {id} no existe.")
         
         setattr(instancia, atributo, valor)
-        self._session.commit()
+        self.__session.commit()
 
     def obtenerRegistroFiltro(self, filtro, valor):
         """
@@ -74,7 +74,7 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         """
         if isinstance(valor, list) and len(valor) > 0:
             valor = valor[0] 
-        modeloUsuario = self._session.query(ModeloUsuario).filter_by(**{filtro: valor}).all()
+        modeloUsuario = self.__session.query(ModeloUsuario).filter_by(**{filtro: valor}).all()
 
         if modeloUsuario:
             return [self.__map_modelo_a_usuario(usuario) for usuario in modeloUsuario]
@@ -87,7 +87,7 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
 
         return: Lista de todos los registros.
         """
-        modeloUsuario = self._session.query(ModeloUsuario).all()
+        modeloUsuario = self.__session.query(ModeloUsuario).all()
         return [self.__map_modelo_a_usuario(usuario) for usuario in modeloUsuario]
 
     def eliminarRegistro(self, idUsuario):
@@ -146,7 +146,7 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
 class RepositorioReclamosBD(RepositorioAbstractoBD):
     """Repositorio de reclamos en la base de datos."""
     def __init__(self, session):
-        self.__tablaReclamo = ModeloReclamo()
+        self.__tablaReclamo = ModeloReclamo
         self.__session = session
         self.__tablaReclamo.metadata.create_all(self.__session.bind)
     
