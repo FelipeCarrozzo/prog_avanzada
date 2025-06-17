@@ -2,9 +2,7 @@
 from abc import ABC, abstractmethod
 
 class RepositorioAbstractoBD(ABC):
-    """
-    Clase abstracta que define la interfaz para un repositorio de base de datos.
-    """
+    """Clase abstracta que define la interfaz para un repositorio de base de datos."""
 
     def __init__(self, conexion):
         """

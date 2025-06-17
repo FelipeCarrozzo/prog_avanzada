@@ -4,10 +4,18 @@ import matplotlib
 matplotlib.use('Agg') # Para evitar problemas con el backend de matplotlib en entornos sin GUI
 
 class Graficador:
+    """
+    Clase para generar gráficos y visualizaciones a partir de datos de reclamos.
+    Permite graficar cantidades de reclamos por estado y generar nubes de palabras clave.
+    """
     def __init__(self):
         pass
 
     def graficarCantidadesReclamos(self, cantidades, rutaSalida=None):
+        """
+        cantidades: dict con estados de reclamos y sus cantidades
+        ruta_salida: opcional, nombre de archivo PNG de salida
+        """
         total = sum(cantidades.values())
         if total == 0:
             raise ValueError("No hay reclamos para graficar.")

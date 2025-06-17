@@ -4,6 +4,10 @@ from modules.reclamo import Reclamo
 
 #arrange
 class FakeRepo:
+    """
+    Repositorio falso para pruebas unitarias, simula el comportamiento del repositorio de reclamos.
+    Permite filtrar reclamos por departamento.
+    """
     def __init__(self, reclamos):
         self._reclamos = reclamos
     def obtenerRegistrosFiltro(self, campo, valor):
@@ -13,6 +17,10 @@ class FakeRepo:
         return []
 
 class FakeClasificador:
+    """
+    Clasificador falso para pruebas unitarias, simula la clasificación de reclamos.
+    Siempre devuelve un departamento fijo para simplificar las pruebas.
+    """
     def clasificar(self, descripciones):
         # Devuelve un departamento fijo para test
         return ["Mantenimiento"]

@@ -8,6 +8,10 @@ from modules.reclamo import Reclamo
 from modules.modelosDTO import ModeloReclamo
 
 class TestRepositorioUsuariosBD(unittest.TestCase):
+    """
+    Clase de prueba para el repositorio de usuarios en la base de datos.
+    Utiliza una base de datos SQLite en memoria para pruebas unitarias.
+    """
     def setUp(self):
         # Crea una base de datos en memoria para pruebas
         engine = create_engine('sqlite:///:memory:')
@@ -50,6 +54,10 @@ class TestRepositorioUsuariosBD(unittest.TestCase):
         self.assertEqual(actualizado.apellido, "Gómez")
 
 class TestRepositorioReclamosBD(unittest.TestCase):
+    """
+    Clase de prueba para el repositorio de reclamos en la base de datos.
+    Utiliza una base de datos SQLite en memoria para pruebas unitarias.
+    """
     def setUp(self):
         # Crea una base de datos en memoria y una sesión nueva para cada test
         engine = create_engine('sqlite:///:memory:')

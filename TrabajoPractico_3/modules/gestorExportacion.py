@@ -15,6 +15,10 @@ class GestorExportacion(ABC):
         pass
 
 class ExportadorPDF(GestorExportacion):
+    """
+    Clase para exportar reportes en formato PDF.
+    Utiliza ReportLab para generar el PDF con los datos del reporte.
+    """
     def exportar(self, datosReporte, departamento=None):
         nombre = f"reporte_{departamento or 'todos'}"
         ruta = os.path.join("data", f"{nombre}.pdf")
@@ -51,6 +55,10 @@ class ExportadorPDF(GestorExportacion):
         return ruta
 
 class ExportadorHTML(GestorExportacion):
+    """
+    Clase para exportar reportes en formato HTML.
+    Genera un archivo HTML con los datos del reporte y gráficos.
+    """
     def exportar(self, datosReporte, departamento=None):
         import shutil
 

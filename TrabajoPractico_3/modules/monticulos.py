@@ -1,4 +1,8 @@
 class MonticuloBinario:
+    """
+    Clase que representa un montículo binario.
+    Permite insertar elementos y mantener la propiedad de montículo (min o max).
+    """
     def __init__(self, pTipo):
         self.__listaValores = [None]
         self.__tamanioActual = 0

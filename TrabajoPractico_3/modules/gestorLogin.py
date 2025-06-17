@@ -1,8 +1,7 @@
 #dependencias
 from flask_login import UserMixin
-from flask_login import login_user, logout_user, login_required, current_user
-from flask import abort
-from functools import wraps
+from flask_login import login_user, logout_user, current_user
+
 
 class FlaskLoginUser(UserMixin):
     """

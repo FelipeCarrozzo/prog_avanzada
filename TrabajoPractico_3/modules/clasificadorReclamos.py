@@ -3,6 +3,10 @@ import pickle
 import nltk
 
 class ClasificadorDeReclamos:
+    """
+    Clase para clasificar reclamos en diferentes categorías.
+    Utiliza un modelo previamente entrenado y guardado en un archivo pickle.
+    """
     def __init__(self):
         with open('./data/claims_clf.pkl', 'rb') as archivo:
             self.clf = pickle.load(archivo)

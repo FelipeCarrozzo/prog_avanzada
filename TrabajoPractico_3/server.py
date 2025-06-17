@@ -9,7 +9,7 @@ from modules.formularios import RegistroForm, LoginForm, ReclamosForm
 from modules.factoriaRepositorios import crearRepositorio
 from flask import send_file, request, send_from_directory
 from modules.gestorReportes import GestorReportes
-from flask_login import current_user, login_required
+from flask_login import login_required
 
 login_manager.login_view = 'login'  # nombre de la vista
 login_manager.login_message = "Debes iniciar sesión para acceder a esta página."
@@ -41,16 +41,16 @@ def inicio():
                 gestorUsuarios.registrarUsuario(nombre, apellido, email, nombreUsuario, rol, password)
             except ValueError as e:
                 print(f"Error al registrar admin {nombreUsuario}: {e}")  
-
-
     return render_template('inicio.html')
 
 @app.route("/bienvenido")
+@login_required
 def bienvenido():
     """
     Ruta que renderiza la página de bienvenida.
     Muestra el nombre de usuario actual si está autenticado.
     """
+    idUsuario = gestor_login.idUsuarioActual
     if 'username' in session:
         username = session['username']
         return render_template('bienvenido.html', username=username)
@@ -60,6 +60,11 @@ def bienvenido():
 
 @app.route("/register", methods= ["GET", "POST"])
 def register():
+    """
+    Ruta para registrar un nuevo usuario.
+    Se utiliza un formulario para capturar los datos del usuario.
+    Si el formulario es válido, se registra el usuario y se redirige a la página de inicio de sesión.
+    """
     form_registro = RegistroForm()
     if form_registro.validate_on_submit():
         try:
@@ -76,9 +81,12 @@ def register():
             return redirect(url_for("login"))
     return render_template('registro.html', form=form_registro)
 
-
 @app.route("/login", methods= ["GET", "POST"])
 def login():
+    """
+    Ruta para iniciar sesión. Se utiliza un formulario de inicio de sesión.
+    Si el formulario es válido, se autentica al usuario y se redirige según su rol.
+    """
     form_login = LoginForm()
     if form_login.validate_on_submit():
         try:
@@ -91,14 +99,10 @@ def login():
             session['username'] = gestor_login.nombreUsuarioActual
             rol = gestor_login.obtenerRolUsuario()
 
-            #definir lista de departamentos posibles? para que cuando se agrega un departamento nuevo,
-            #solo se modifique al principio y no a lo largo del server
             if rol in ROLES_ADMIN:
                 return redirect(url_for('panelAdmin'))
-            
             elif rol == 'UsuarioFinal':
                 return redirect(url_for('bienvenido'))
-
             else:
                 flash("No tenés permisos para acceder", "error")
                 return redirect(url_for('inicio'))
@@ -108,6 +112,10 @@ def login():
 @app.route("/listarReclamos", methods=["GET", "POST"])
 @login_required
 def listarReclamos():
+    """"
+    Ruta que lista los reclamos del usuario actual.
+    Permite filtrar por reclamos propios y departamento.
+    """
     username = session['username']
     idUsuario = gestor_login.idUsuarioActual
 
@@ -128,8 +136,12 @@ def listarReclamos():
 
 
 @app.route("/adherir_a_reclamo/<int:idReclamo>", methods=["GET", "POST"])
+@login_required
 def adherir_a_reclamo(idReclamo):
-    usuario_id = gestor_login.idUsuarioActual  
+    """
+    Ruta para adherirse a un reclamo existente. 
+    """
+    usuario_id = gestor_login.idUsuarioActual
     usuario = repoUsuario.obtenerRegistroFiltro("id", usuario_id)
 
     if gestorReclamos.adherirAReclamo(idReclamo, usuario):
@@ -140,19 +152,15 @@ def adherir_a_reclamo(idReclamo):
     return redirect(url_for("listarReclamos"))
 
 @app.route("/reclamos", methods=["GET", "POST"])
+@login_required
 def crearReclamos():
     """
     Ruta que renderiza la página de reclamos.
     Muestra los reclamos del usuario actual si está autenticado.
     """
-    if 'username' not in session:
-        flash("Debes iniciar sesión primero.", "error")
-        return redirect(url_for('login'))
-    
+    idUsuario = gestor_login.idUsuarioActual
     form = ReclamosForm()
     idUsuario = gestor_login.idUsuarioActual
-    # descripReclamo = session.get('descripcion_reclamo')
-
 
     username = session['username']
     if form.validate_on_submit():
@@ -174,17 +182,20 @@ def crearReclamos():
     return render_template("nuevoReclamo.html", form=form, username=username)
 
 @app.route("/panelAdmin", methods=["GET", "POST"])
+@login_required
 def panelAdmin():
-    if 'username' not in session:
-        flash("Debes iniciar sesión primero.", "error")
-        return redirect(url_for('login'))
-
+    """
+    Ruta para el panel de administración.
+    Permite a los usuarios con rol de administrador gestionar reclamos.
+    Se utiliza expresiones regulares para formatear el rol del usuario y obtener el departamento.
+    """
+    idUsuario = gestor_login.idUsuarioActual
     username = session['username']
     rol = gestor_login.rolUsuarioActual
     departamento = None
     es_secretario = False
 
-    # --- POST: procesar cambios en reclamos ---
+    #POST: procesar cambios en reclamos
     if request.method == "POST":
         # Recorremos los reclamos existentes
         reclamos = repoReclamo.obtenerRegistrosTotales()  # O filtrados por departamento
@@ -210,7 +221,7 @@ def panelAdmin():
         flash("Cambios guardados correctamente.", "success")      
         return redirect(url_for('panelAdmin'))
 
-    # --- GET: mostrar página con los reclamos ---
+    #GET: mostrar página con los reclamos
     if rol.startswith("jefe"):
         departamento = re.sub(r'(?<!^)(?=[A-Z])', ' ', rol[4:]).lower()
         reclamos = repoReclamo.obtenerRegistrosFiltro("departamento", departamento)
@@ -232,14 +243,20 @@ def panelAdmin():
 
 @app.route('/data/<path:filename>')
 def data_static(filename):
+    """
+    Ruta para servir archivos estáticos desde el directorio 'data'.
+    """
     return send_from_directory('data', filename)
 
 @app.route("/analitica")
+@login_required
 def analitica():
-    if 'username' not in session:
-        flash("Debes iniciar sesión primero.")
-        return redirect(url_for('login'))
-
+    """"
+    Ruta para mostrar la analítica de reclamos.
+    Muestra un gráfico con el porcentaje de reclamos por estado.
+    Utiliza expresiones regulares para formatear el rol del usuario y obtener el departamento.
+    """
+    idUsuario = gestor_login.idUsuarioActual
     rol = gestor_login.rolUsuarioActual
     departamento = None
     if rol.startswith("jefe"):
@@ -249,9 +266,8 @@ def analitica():
     try:
         datosReporte = gestorReportes.generarReporte(departamento)
     except ValueError:
-        datosReporte = {}  # no hay datos para graficar
+        datosReporte = {}  #no hay datos para graficar
 
-    # datosReporte = gestorReportes.generarReporte(departamento)
     if departamento == None:
         departamento = "Soporte Técnico"
     else:
@@ -263,6 +279,12 @@ def analitica():
 @app.route("/descargar/<formato>")
 @login_required
 def descargarReporte(formato):
+    """
+    Ruta para descargar el reporte en el formato especificado.
+    El formato puede ser 'pdf' o 'html'.
+    Si el formato no es soportado, redirige a la página de inicio con un mensaje de error.
+    """
+    idUsuario = gestor_login.idUsuarioActual
     if formato not in ['pdf', 'html']:
         flash("Formato no soportado")
         return redirect(url_for('inicio'))
@@ -275,7 +297,6 @@ def descargarReporte(formato):
         departamento = re.sub(r'(?<!^)(?=[A-Z])', ' ', departamento).lower()
     ruta = gestorReportes.exportarReporte(formato, departamento)
 
-    #nombre_archivo = ruta.split("/")[-1]  # solo el nombre del archivo
     import os
     nombre_archivo = os.path.basename(ruta)
     return send_file(
@@ -287,14 +308,19 @@ def descargarReporte(formato):
 
 @app.route("/ayuda")
 def ayuda():
+    """
+    Ruta para mostrar la página de ayuda.
+    """
     return render_template("ayuda.html")
 
 @app.route("/logout")
+@login_required
 def logout():
     """
     Ruta para cerrar sesión del usuario actual.
     Limpia la sesión y redirige a la página de inicio.
     """
+    idUsuario = gestor_login.idUsuarioActual
     session.pop('username', None)
     gestor_login.logoutUsuario()
     flash("Has cerrado sesión exitosamente.", "success") 

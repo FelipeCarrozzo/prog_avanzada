@@ -3,6 +3,10 @@ from flask import Flask
 from modules.formularios import RegistroForm
 
 class TestRegistroForm(unittest.TestCase):
+    """
+    Clase de prueba para el formulario de registro de usuarios.
+    Verifica que los campos obligatorios estén presentes y que las validaciones funcionen correctamente.
+    """
     def setUp(self):
         self.app = Flask(__name__)
         self.app.config['WTF_CSRF_ENABLED'] = False

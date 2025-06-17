@@ -1,6 +1,11 @@
 #capa de dominio
 
 class Reclamo:
+    """
+    Clase que representa un reclamo en la aplicación.
+    Permite almacenar información sobre el reclamo, su estado,
+    el usuario que lo creó, y los usuarios adheridos.
+    """
     def __init__(self, id, idUsuario, fechaYHora, estado, tiempoResolucion, departamento, 
                  numeroAdheridos, descripcion, imagen, usuariosAdheridos=None):
 

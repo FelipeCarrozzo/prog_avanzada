@@ -4,6 +4,11 @@ from modules.gestorExportacion import GestorExportacion, ExportadorPDF, Exportad
 from modules.repositorioAbstractoBD import RepositorioAbstractoBD
 
 class GestorReportes:
+    """
+    Clase para gestionar la generación de reportes de reclamos.
+    Permite generar estadísticas, gráficos y exportar reportes en diferentes formatos.
+    """
+
     def __init__(self, repo: RepositorioAbstractoBD, departamento=None):
         self.__departamento = departamento
         self.__repositorio = repo

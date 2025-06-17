@@ -116,7 +116,6 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
             print(f"Tabla '{nombre_tabla}' eliminada correctamente.")
         except Exception as e:
             print(f"Error al eliminar la tabla '{nombre_tabla}': {e}")
-    
 
 #---------------------------------------------------------------------------
 

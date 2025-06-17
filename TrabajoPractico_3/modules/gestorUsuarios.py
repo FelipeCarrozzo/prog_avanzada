@@ -4,8 +4,10 @@ from modules.repositorioAbstractoBD import RepositorioAbstractoBD
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class GestorUsuarios:
-    """Clase para gestionar usuarios en el sistema.
-    Permite registrar, loguear y cargar usuarios."""
+    """
+    Clase para gestionar usuarios en el sistema.
+    Permite registrar, loguear y cargar usuarios.
+    """
 
     def __init__(self, repo: RepositorioAbstractoBD): #es el repositorio de usuarios
         self.__repo = repo

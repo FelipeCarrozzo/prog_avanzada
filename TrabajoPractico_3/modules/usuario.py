@@ -1,5 +1,10 @@
 #capa de dominio
 class Usuario:
+    """
+    Clase que representa un usuario en la aplicación.
+    Permite almacenar información sobre el usuario, como su ID, nombre,
+    apellido, email, nombre de usuario, rol y contraseña.
+    """
     def __init__(self, id, nombre, apellido, email, nombreUsuario, rol=None, password=None):
         self.__id = id
         self.__nombre = nombre
