@@ -46,4 +46,5 @@ class GestorUsuarios:
         """ Carga un usuario por su ID.
             args: id_usuario
         """
-        return self.__repo.obtenerRegistroFiltro("id", idUsuario).to_dict()
+        registro = self.__repo.obtenerRegistroFiltro("id", idUsuario) #devuelve un objeto Usuario o None
+        return registro.to_dict() if registro else None

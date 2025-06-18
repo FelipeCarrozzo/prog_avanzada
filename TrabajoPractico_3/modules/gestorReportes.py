@@ -9,33 +9,37 @@ class GestorReportes:
     Permite generar estadísticas, gráficos y exportar reportes en diferentes formatos.
     """
 
-    def __init__(self, repo: RepositorioAbstractoBD, departamento=None):
-        self.__departamento = departamento
+    def __init__(self, repo: RepositorioAbstractoBD):
+
         self.__repositorio = repo
         self.__generadorDeEstadisticas = generadorDeEstadisticas()
         self.__graficador = Graficador()
 
-    def obtenerReclamos(self):
+    def obtenerReclamos(self, departamento=None):
         """
         Obtiene los reclamos según el departamento actual.
+        Args:
+            departamento (str): Nombre del departamento para filtrar los reclamos.
         Returns:
             list: Lista de objetos Reclamo filtrados por departamento o todos los reclamos.
         """
-        if self.__departamento:
-            reclamos = self.__repositorio.obtenerRegistrosFiltro("departamento", self.__departamento)
+        if departamento:
+            reclamos = self.__repositorio.obtenerRegistrosFiltro("departamento", departamento)
         else:
             reclamos = self.__repositorio.obtenerRegistrosTotales()
 
         return reclamos or []
     
 
-    def generarEstadisticas(self):
+    def generarEstadisticas(self, departamento=None):
         """
         Calcula estadísticas a partir de los reclamos.
+        Args:
+            departamento (str): Nombre del departamento para filtrar los reclamos.
         Returns:
             tuple: (cantidades, medianas, palabrasClave)
         """
-        reclamos = self.obtenerReclamos()
+        reclamos = self.obtenerReclamos(departamento)
         if not reclamos:
             return {}, {}, {}
 
@@ -44,19 +48,19 @@ class GestorReportes:
         medianas = self.__generadorDeEstadisticas.obtenerMedianas(reclamos)
 
         return cantidades, medianas, palabrasClave
-
-    def generarGraficos(self, cantidades, palabrasClave):
+    
+    def generarGraficos(self, cantidades, palabrasClave, departamento=None):
         """
         Genera gráficos a partir de los datos ya calculados.
         Returns:
             tuple: rutas de los gráficos generados
         """
-        depto_str = self.__departamento or "secretariaTecnica"
+        depto = departamento or "secretariaTecnica" 
         rutaGraficoTorta = self.__graficador.graficarCantidadesReclamos(
-            cantidades, rutaSalida=f"./data/grafico_torta_{depto_str}.png"
+            cantidades, rutaSalida=f"./data/grafico_torta_{depto}.png"
         )
         rutaGraficoNube = self.__graficador.graficarPalabrasClave(
-            palabrasClave, rutaSalida=f"./data/grafico_nube_{depto_str}.png"
+            palabrasClave, rutaSalida=f"./data/grafico_nube_{depto}.png"
         )
         return rutaGraficoTorta, rutaGraficoNube
 
@@ -65,10 +69,7 @@ class GestorReportes:
         Genera un reporte de reclamos para el departamento especificado.
         Devuelve un diccionario con gráficos y datos estadísticos.
         """
-        if departamento is not None:
-            self.__departamento = departamento
-
-        cantidades, medianas, palabrasClave = self.generarEstadisticas()
+        cantidades, medianas, palabrasClave = self.generarEstadisticas(departamento)
         if not cantidades:
             raise ValueError("No hay reclamos para generar el reporte.")
         
@@ -84,10 +85,7 @@ class GestorReportes:
         """
         Exporta el reporte en PDF o HTML.
         """
-        if departamento is not None:
-            self.__departamento = departamento
-
-        datos = self.generarReporte()
+        datos = self.generarReporte(departamento)
 
         if formato == 'pdf':
             exportador = ExportadorPDF()
@@ -96,4 +94,4 @@ class GestorReportes:
         else:
             raise ValueError("Formato de exportación no válido.")
 
-        return exportador.exportar(datos, self.__departamento)
+        return exportador.exportar(datos, departamento)

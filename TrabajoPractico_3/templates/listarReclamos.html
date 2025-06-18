@@ -77,7 +77,6 @@
                             {% elif idUsuario in reclamo.usuariosAdheridos %}
                                 <span>Adherido</span>
                             {% else %}
-                                <!-- ESTE FORM FUNCIONA AHORA -->
                                 <form action="{{ url_for('adherir_a_reclamo', idReclamo=reclamo.id) }}" method="post">
                                     <button type="submit" class="btn-registro">Adherirse</button>
                                 </form>
@@ -96,6 +95,7 @@
 </div>
     <div class="botones">
         <a href="{{ url_for('bienvenido') }}" class="btn-registro">Volver al inicio</a>
+        <a href="{{ url_for('crearReclamos') }}" class="btn-registro">Iniciar nuevo reclamo</a>
         <a href="{{ url_for('logout') }}" class="btn-registro">Cerrar sesión</a>
     </div>
 </body>

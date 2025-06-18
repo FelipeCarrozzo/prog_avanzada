@@ -5,48 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adherite a un reclamo</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
-    <div class="container-reclamo">
+    <div class="container-inicio">
+
+        <!-- Header -->
         <div class="header">
             <img src="{{ url_for('static', filename='logoFiuner.png') }}" alt="Logo de la Facultad De Ingeniería UNER" class="logo" width="150" height="50">
             <div class="separator"></div>
             <h1>Gestor de reclamos</h1>
         </div>
 
-        <div class="content">
-            <h2>Reclamos similares encontrados</h2>
+        <!-- Título -->
+        <h2 class="intro">Reclamos similares encontrados</h2>
 
-            <table class="reclamos-table">
-                <thead>
-                    <tr>
-                        <th>Descripción</th>
-                        <th>Departamento</th>
-                        <th>Fecha y hora</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for reclamo in reclamos %}
-                        <tr>
-                            <td>{{ reclamo['descripcion'] }}</td>
-                            <td>{{ reclamo['departamento'] }}</td>
-                            <td>{{ reclamo['fechaYHora'] }}</td>
-                            <td>
-                                <form method="POST" action="{{ url_for('adherir_a_reclamo', idReclamo=reclamo['id']) }}">
-                                    <button type="submit">Adherirme</button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <!-- Tabla de reclamos -->
+        <table class="reclamos-table">
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reclamo in reclamos %}
+                <tr>
+                    <td>{{ reclamo['descripcion'] }}</td>
+                    <td>
+                        <div class="acciones">
+                            <form method="POST" action="{{ url_for('adherir_a_reclamo', idReclamo=reclamo['id']) }}">
+                                <button type="submit" class="btn-registro">Adherirme</button>
+                            </form>
+
+                            <form method="POST" action="{{ url_for('adherir_a_reclamo', idReclamo=0) }}">
+                                <input type="hidden" name="descripcion" value="{{ descripcionOriginal }}">
+                                <button type="submit" class="btn-crear-detodasformas">Crear mi reclamo de todas formas</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Botón cancelar -->
+        <div class="botones">
+            <a href="{{ url_for('bienvenido') }}" class="btn-registro">Cancelar y volver</a>
         </div>
-        <!-- Botón de Cancelar -->
-        <div style="margin-top: 20px;">
-            <form action="{{ url_for('bienvenido') }}" method="get">
-                <button type="submit">Cancelar reclamo</button>
-            </form>
-        </div>
-    </div> <!-- cierre de .container-reclamo -->
+
+    </div>
 </body>
+</html>

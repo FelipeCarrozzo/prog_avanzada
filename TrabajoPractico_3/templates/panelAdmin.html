@@ -28,6 +28,7 @@
                     <tr>
                         <th>ID</th>
                         <th>ID Creador</th>
+                        <th>ID Usuarios adheridos</th>
                         <th>Descripción</th>
                         <th>Fecha/Hora</th>
                         <th>Estado</th>
@@ -42,6 +43,12 @@
                         <tr>
                             <td>{{ reclamo.id }}</td>
                             <td>{{ reclamo.idUsuario }}</td>
+                            <td>
+                                {% if reclamo.usuariosAdheridos %}
+                                    {{ reclamo.usuariosAdheridos | join(', ') }}
+                                {% else %}
+                                    Ninguno
+                                {% endif %}
                             <td>{{ reclamo.descripcion }}</td>
                             <td>{{ reclamo.fechaYHora }}</td>
 
