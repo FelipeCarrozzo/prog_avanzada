@@ -2,9 +2,8 @@ from collections import Counter
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from modules.monticulos import MonticuloMediana
-from modules.reclamo import Reclamo
 
-class generadorDeEstadisticas:
+class GeneradorDeEstadisticas:
     def __init__(self):
         """
         Inicializa el generador de estadísticas.

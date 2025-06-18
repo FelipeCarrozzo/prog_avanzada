@@ -12,8 +12,8 @@ class GestorReclamos:
     Clase para gestionar los reclamos en la aplicación.
     Permite crear, clasificar y adherir usuarios a reclamos.
     """
-    def __init__(self, repo: RepositorioAbstractoBD):
-        self.__repo = repo
+    def __init__(self, repositorio: RepositorioAbstractoBD):
+        self.__repositorio = repositorio
         self.__clasificador = ClasificadorDeReclamos()
         self.__departamentos = []
 
@@ -33,7 +33,7 @@ class GestorReclamos:
         Si el reclamo ya existe, devuelve una lista de reclamos similares.
         """
         try:
-            reclamosUsuario = self.__repo.obtenerRegistrosFiltro("idUsuario", idUsuario)
+            reclamosUsuario = self.__repositorio.obtenerRegistrosFiltro("idUsuario", idUsuario)
             for reclamo in reclamosUsuario:
                 if reclamo.descripcion == descripcion:
                     raise ValueError("El reclamo ya está registrado.")
@@ -74,7 +74,7 @@ class GestorReclamos:
                 usuariosAdheridos = []
             )
 
-            self.__repo.guardarRegistro(reclamo)  # Guardar en el repositorio
+            self.__repositorio.guardarRegistro(reclamo)  # Guardar en el repositorio
             print(f"Reclamo creado con éxito: {reclamo.to_dict()}")
         except Exception as e:
             print(f"Error al guardar el reclamo en BD: {e}")
@@ -93,7 +93,7 @@ class GestorReclamos:
         """
         Adhiere un usuario a un reclamo existente.
         """
-        return(self.__repo.agregarUsuarioAReclamo(idReclamo, usuario))
+        return(self.__repositorio.agregarUsuarioAReclamo(idReclamo, usuario))
 
 
     def guardarReclamo(self, reclamo):
@@ -101,7 +101,7 @@ class GestorReclamos:
         Guarda un reclamo en el repositorio.
         reclamo: Reclamo - Objeto Reclamo a guardar.
         """
-        self.__repo.guardarRegistro(reclamo.to_dict())
+        self.__repositorio.guardarRegistro(reclamo.to_dict())
 
     
     def obtenerReclamosSimilares(self, datosNuevoReclamo):
@@ -121,7 +121,7 @@ class GestorReclamos:
         # clasificamos el nuevo reclamo
         clasificacion = self.__clasificador.clasificar([desc_nueva])
 
-        candidatos = self.__repo.obtenerRegistrosFiltro("departamento", clasificacion)
+        candidatos = self.__repositorio.obtenerRegistrosFiltro("departamento", clasificacion)
         candidatos = [r for r in candidatos if r.estado != 'resuelto']
 
         similares = []

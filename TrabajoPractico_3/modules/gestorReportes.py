@@ -1,4 +1,4 @@
-from modules.generadorDeEstadisticas import generadorDeEstadisticas
+from modules.generadorDeEstadisticas import GeneradorDeEstadisticas
 from modules.graficador import Graficador
 from modules.gestorExportacion import GestorExportacion, ExportadorPDF, ExportadorHTML
 from modules.repositorioAbstractoBD import RepositorioAbstractoBD
@@ -9,10 +9,9 @@ class GestorReportes:
     Permite generar estadísticas, gráficos y exportar reportes en diferentes formatos.
     """
 
-    def __init__(self, repo: RepositorioAbstractoBD):
-
-        self.__repositorio = repo
-        self.__generadorDeEstadisticas = generadorDeEstadisticas()
+    def __init__(self, repositorio: RepositorioAbstractoBD):
+        self.__repositorio = repositorio
+        self.__generadorEstadisticas = GeneradorDeEstadisticas()
         self.__graficador = Graficador()
 
     def obtenerReclamos(self, departamento=None):
@@ -43,9 +42,9 @@ class GestorReportes:
         if not reclamos:
             return {}, {}, {}
 
-        cantidades = self.__generadorDeEstadisticas.obtenerCantidadesReclamos(reclamos)
-        palabrasClave = self.__generadorDeEstadisticas.obtenerPalabrasClave(reclamos)
-        medianas = self.__generadorDeEstadisticas.obtenerMedianas(reclamos)
+        cantidades = self.__generadorEstadisticas.obtenerCantidadesReclamos(reclamos)
+        palabrasClave = self.__generadorEstadisticas.obtenerPalabrasClave(reclamos)
+        medianas = self.__generadorEstadisticas.obtenerMedianas(reclamos)
 
         return cantidades, medianas, palabrasClave
     

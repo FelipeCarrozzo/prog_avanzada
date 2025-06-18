@@ -8,7 +8,6 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
     """Repositorio de usuarios en la base de datos.
     Hereda de RepositorioAbstractoBD para implementar operaciones CRUD.
     """
-
     def __init__(self, session):
         self.__tablaUsuario = ModeloUsuario
         self.__session = session
@@ -103,7 +102,7 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
             return True
         return False
     
-    def borrarTabla(self, nombre_tabla: str):
+    def eliminarTabla(self, nombreTabla: str):
         """
         Elimina una tabla de la base de datos por su nombre.
         Args:
@@ -111,11 +110,11 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         """
         from sqlalchemy import text
         try:
-            self.__session.execute(text(f"DROP TABLE IF EXISTS {nombre_tabla}"))
+            self.__session.execute(text(f"DROP TABLE IF EXISTS {nombreTabla}"))
             self.__session.commit()
-            print(f"Tabla '{nombre_tabla}' eliminada correctamente.")
+            print(f"Tabla '{nombreTabla}' eliminada correctamente.")
         except Exception as e:
-            print(f"Error al eliminar la tabla '{nombre_tabla}': {e}")
+            print(f"Error al eliminar la tabla '{nombreTabla}': {e}")
 
 #---------------------------------------------------------------------------
 
@@ -246,19 +245,19 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
             return True
         return False
  
-    def borrarTabla(self, nombre_tabla: str):
+    def eliminarTabla(self, nombreTabla: str):
         """
         Elimina una tabla de la base de datos por su nombre.
         Args:
-            nombre_tabla (str): Nombre de la tabla a eliminar.
+            nombreTabla (str): Nombre de la tabla a eliminar.
         """
         from sqlalchemy import text
         try:
-            self.__session.execute(text(f"DROP TABLE IF EXISTS {nombre_tabla}"))
+            self.__session.execute(text(f"DROP TABLE IF EXISTS {nombreTabla}"))
             self.__session.commit()
-            print(f"Tabla '{nombre_tabla}' eliminada correctamente.")
+            print(f"Tabla '{nombreTabla}' eliminada correctamente.")
         except Exception as e:
-            print(f"Error al eliminar la tabla '{nombre_tabla}': {e}")
+            print(f"Error al eliminar la tabla '{nombreTabla}': {e}")
     #--------------------------------------------------------------------------
 
     def __map_reclamo_a_modelo(self, reclamo: Reclamo):
