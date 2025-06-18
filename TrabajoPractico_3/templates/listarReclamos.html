@@ -24,73 +24,76 @@
         {% endwith %}
     </div>    
 
-    <div class="tabla-reclamos">
-        <form method="post" action="{{ url_for('listarReclamos') }}">
-            <div class="filtros-superiores">
-                <label for="filtroUsuario">Ver:</label>
-                <select name="filtroUsuario" onchange="this.form.submit()">
-                    <option value="mios" {% if request.form.get('filtroUsuario') == 'mios' %}selected{% endif %}>Mis reclamos</option>
-                    <option value="todos" {% if request.form.get('filtroUsuario') == 'todos' %}selected{% endif %}>Todos los reclamos pendientes</option>
-                </select>
-            </div>
-            <table>
-                <thead>
+<div class="tabla-reclamos">
+
+    <!-- FORMULARIO SOLO PARA FILTROS -->
+    <form method="post" action="{{ url_for('listarReclamos') }}">
+        <div class="filtros-superiores">
+            <label for="filtroUsuario">Ver:</label>
+            <select name="filtroUsuario" onchange="this.form.submit()">
+                <option value="mios" {% if request.form.get('filtroUsuario') == 'mios' %}selected{% endif %}>Mis reclamos</option>
+                <option value="todos" {% if request.form.get('filtroUsuario') == 'todos' %}selected{% endif %}>Todos los reclamos pendientes</option>
+            </select>
+            <label for="filtroDepartamento">Departamento:</label>
+            <select name="filtroDepartamento" onchange="this.form.submit()">
+                <option value="todos" {% if request.form.get('filtroDepartamento') == 'todos' %}selected{% endif %}>Todos</option>
+                <option value="soporte informático" {% if request.form.get('filtroDepartamento') == 'soporte informático' %}selected{% endif %}>Soporte Informático</option>
+                <option value="maestranza" {% if request.form.get('filtroDepartamento') == 'maestranza' %}selected{% endif %}>Maestranza</option>
+                <option value="secretaría técnica" {% if request.form.get('filtroDepartamento') == 'secretaría técnica' %}selected{% endif %}>Secretaría Técnica</option>
+            </select>
+        </div>
+    </form>
+
+    <!-- TABLA FUERA DEL FORM PRINCIPAL -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Fecha/Hora</th>
+                <th>Estado</th>
+                <th>Departamento</th>
+                <th>Cantidad de adheridos</th>
+                {% if filtro_usuario != 'mios' %}
+                    <th>Acción</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% if reclamos %}
+                {% for reclamo in reclamos %}
                     <tr>
-                        <th>ID</th>
-                        <th>Descripción</th>
-                        <th style="width: 13%;">Fecha/Hora</th>
-                        <th>Estado</th>
-                        <th style="width: 11%;">
-                            Departamento
-                            <select name="filtroDepartamento" onchange="this.form.submit()">
-                                <option value="todos" {% if request.form.get('filtroDepartamento') == 'todos' %}selected{% endif %}>Todos</option>
-                                <option value="soporte informático" {% if request.form.get('filtroDepartamento') == 'soporte informático' %}selected{% endif %}>Soporte Informático</option>
-                                <option value="maestranza" {% if request.form.get('filtroDepartamento') == 'maestranza' %}selected{% endif %}>Maestranza</option>
-                                <option value="secretaría técnica" {% if request.form.get('filtroDepartamento') == 'secretaría técnica' %}selected{% endif %}>Secretaría Técnica</option>
-                            </select>
-                        </th>
-                        <th style="width: 15%;">Cantidad de adheridos</th>
+                        <td>{{ reclamo.id }}</td>
+                        <td>{{ reclamo.descripcion }}</td>
+                        <td>{{ reclamo.fechaYHora }}</td>
+                        <td>{{ reclamo.estado }}</td>
+                        <td>{{ reclamo.departamento }}</td>
+                        <td>{{ reclamo.numeroAdheridos }}</td>
+
                         {% if filtro_usuario != 'mios' %}
-                            <th>Acción</th>
+                        <td>
+                            {% if reclamo.idUsuario == idUsuario %}
+                                <span>-</span>
+                            {% elif idUsuario in reclamo.usuariosAdheridos %}
+                                <span>Adherido</span>
+                            {% else %}
+                                <!-- ESTE FORM FUNCIONA AHORA -->
+                                <form action="{{ url_for('adherir_a_reclamo', idReclamo=reclamo.id) }}" method="post">
+                                    <button type="submit" class="btn-registro">Adherirse</button>
+                                </form>
+                            {% endif %}
+                        </td>
                         {% endif %}
                     </tr>
-                </thead>
-                <tbody>
-                    {% if reclamos %}
-                        {% for reclamo in reclamos %}
-                            <tr>
-                                <td>{{ reclamo.id }}</td>
-                                <td>{{ reclamo.descripcion }}</td>
-                                <td>{{ reclamo.fechaYHora }}</td>
-                                <td>{{ reclamo.estado }}</td>
-                                <td>{{ reclamo.departamento }}</td>
-                                <td>{{ reclamo.numeroAdheridos }}</td>
-                                
-                                {% if filtro_usuario != 'mios' %}
-                                <td>
-                                    {% if reclamo.idUsuario == idUsuario %}
-                                        <span>-</span>
-                                    {% elif idUsuario in reclamo.usuariosAdheridos %}
-                                        <span>Adherido</span>
-                                    {% else %}
-                                        <form action="{{ url_for('adherir_a_reclamo', idReclamo=reclamo.id) }}" method="post">
-                                            <button type="submit" class="btn-registro">Adherirse</button>
-                                        </form>
-                                    {% endif %}
-                                </td>
-                                {% endif %}
-                            </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="7" style="text-align: center;">No hay reclamos para mostrar.</td>
-                        </tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        </form>
-    </div>
-
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="7" style="text-align: center;">No hay reclamos para mostrar.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
     <div class="botones">
         <a href="{{ url_for('bienvenido') }}" class="btn-registro">Volver al inicio</a>
         <a href="{{ url_for('logout') }}" class="btn-registro">Cerrar sesión</a>

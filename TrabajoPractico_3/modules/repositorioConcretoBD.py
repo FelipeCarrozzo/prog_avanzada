@@ -191,7 +191,7 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
         if not usuarioModelo:
             raise ValueError(f"No se encontró usuario con ID {usuarioDominio.id}")
 
-        if usuarioModelo not in reclamo.usuariosAdheridos:
+        if usuarioModelo.id not in [u.id for u in reclamo.usuariosAdheridos]:
             reclamo.usuariosAdheridos.append(usuarioModelo)
             reclamo.numeroAdheridos = len(reclamo.usuariosAdheridos)
             self.__session.commit()

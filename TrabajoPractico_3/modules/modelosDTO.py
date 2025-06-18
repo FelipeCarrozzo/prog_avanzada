@@ -58,3 +58,16 @@ class ModeloReclamo(Base):
         secondary=asociacion_usuarios_adheridos,
         backref="reclamosAdheridos"
     ) #como definimos backref no hace falta poner la relacion inversa
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "idUsuario": self.idUsuario,
+            "fechaYHora": self.fechaYHora,
+            "estado": self.estado,
+            "tiempoResolucion": self.tiempoResolucion,
+            "departamento": self.departamento,
+            "numeroAdheridos": self.numeroAdheridos,
+            "descripcion": self.descripcion,
+            "imagen": self.imagen
+        }

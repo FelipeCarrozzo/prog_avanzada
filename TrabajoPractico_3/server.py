@@ -118,17 +118,26 @@ def listarReclamos():
     """
     username = session['username']
     idUsuario = gestor_login.idUsuarioActual
+    usuario = repoUsuario.obtenerRegistroFiltro("id", idUsuario)
 
     filtro_usuario = request.form.get("filtroUsuario", "mios")
     filtro_departamento = request.form.get("filtroDepartamento", "todos")
 
-    # Filtrar pendientes
+    #filtrar pendientes
     if filtro_usuario == "todos":
         reclamos = repoReclamo.obtenerRegistrosFiltro("estado", "pendiente")
+    #filtrar por usuario
     elif filtro_usuario == "mios":
         reclamos = repoReclamo.obtenerRegistrosFiltro("idUsuario", idUsuario)
+
+    #reclamos a los que se adhirió el usuario
+    todos_reclamos = repoReclamo.obtenerRegistrosTotales()
+    reclamos_adheridos = [r for r in todos_reclamos if idUsuario in r.usuariosAdheridos]
+
+    #unir sin duplicados (por si el usuario se adhirió a uno propio)
+    reclamos = {r.id: r for r in reclamos + reclamos_adheridos}.values()
         
-    # Filtrar por departamento
+    #filtrar por departamento
     if filtro_departamento != "todos":
         reclamos = [r for r in reclamos if r.departamento == filtro_departamento]
 
@@ -141,9 +150,9 @@ def adherir_a_reclamo(idReclamo):
     """
     Ruta para adherirse a un reclamo existente. 
     """
-    usuario_id = gestor_login.idUsuarioActual
-    usuario = repoUsuario.obtenerRegistroFiltro("id", usuario_id)
-
+    idUsuario = gestor_login.idUsuarioActual
+    usuario = repoUsuario.obtenerRegistroFiltro("id", idUsuario)
+    
     if gestorReclamos.adherirAReclamo(idReclamo, usuario):
         flash("Te has adherido exitosamente al reclamo.", "success")
     else:
