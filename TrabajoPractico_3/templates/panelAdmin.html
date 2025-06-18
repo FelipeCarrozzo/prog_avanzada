@@ -45,7 +45,7 @@
                             <td>{{ reclamo.idUsuario }}</td>
                             <td>
                                 {% if reclamo.usuariosAdheridos %}
-                                    {{ reclamo.usuariosAdheridos | join(', ') }}
+                                    {{ reclamo.usuariosAdheridos | join(' - ') }}
                                 {% else %}
                                     Ninguno
                                 {% endif %}
