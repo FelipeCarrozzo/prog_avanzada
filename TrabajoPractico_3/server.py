@@ -323,6 +323,7 @@ def descargarReporte(formato):
     if rol.startswith("jefe"):
         departamento = rol[4:]
         departamento = re.sub(r'(?<!^)(?=[A-Z])', ' ', departamento).lower()
+    #gestorExportacion=gestorExportacion
     ruta = gestorReportes.exportarReporte(formato, departamento)
 
     import os

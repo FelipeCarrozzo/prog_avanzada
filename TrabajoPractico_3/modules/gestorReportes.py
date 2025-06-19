@@ -10,9 +10,7 @@ class GestorReportes:
     """
 
     def __init__(self, repositorio: RepositorioAbstractoBD):
-        self.__repositorio = repositorio
-        self.__generadorEstadisticas = GeneradorDeEstadisticas()
-        self.__graficador = Graficador()
+        self.__repositorio = repositorio 
 
     def obtenerReclamos(self, departamento=None):
         """
@@ -41,10 +39,11 @@ class GestorReportes:
         reclamos = self.obtenerReclamos(departamento)
         if not reclamos:
             return {}, {}, {}
-
-        cantidades = self.__generadorEstadisticas.obtenerCantidadesReclamos(reclamos)
-        palabrasClave = self.__generadorEstadisticas.obtenerPalabrasClave(reclamos)
-        medianas = self.__generadorEstadisticas.obtenerMedianas(reclamos)
+        
+        generadorEstadisticas = GeneradorDeEstadisticas()
+        cantidades = generadorEstadisticas.obtenerCantidadesReclamos(reclamos)
+        palabrasClave = generadorEstadisticas.obtenerPalabrasClave(reclamos)
+        medianas = generadorEstadisticas.obtenerMedianas(reclamos)
 
         return cantidades, medianas, palabrasClave
     
@@ -55,10 +54,12 @@ class GestorReportes:
             tuple: rutas de los gráficos generados
         """
         depto = departamento or "secretariaTecnica" 
-        rutaGraficoTorta = self.__graficador.graficarCantidadesReclamos(
+        graficador = Graficador()
+
+        rutaGraficoTorta = graficador.graficarCantidadesReclamos(
             cantidades, rutaSalida=f"./data/grafico_torta_{depto}.png"
         )
-        rutaGraficoNube = self.__graficador.graficarPalabrasClave(
+        rutaGraficoNube = graficador.graficarPalabrasClave(
             palabrasClave, rutaSalida=f"./data/grafico_nube_{depto}.png"
         )
         return rutaGraficoTorta, rutaGraficoNube
@@ -70,8 +71,8 @@ class GestorReportes:
         """
         cantidades, medianas, palabrasClave = self.generarEstadisticas(departamento)
         if not cantidades:
-            raise ValueError("No hay reclamos para generar el reporte.")
-        
+            raise ValueError("No hay reclamos para generar el reporte.") #TODO
+        #aalizar el tipo de error
         graficoTorta, graficoNube = self.generarGraficos(cantidades, palabrasClave)
 
         return {
@@ -85,12 +86,12 @@ class GestorReportes:
         Exporta el reporte en PDF o HTML.
         """
         datos = self.generarReporte(departamento)
-
+    
         if formato == 'pdf':
-            exportador = ExportadorPDF()
+            exportador = ExportadorPDF() #no es composición, "usa"
         elif formato == 'html':
             exportador = ExportadorHTML()
         else:
             raise ValueError("Formato de exportación no válido.")
 
-        return exportador.exportar(datos, departamento)
+        return exportador.exportar(datos, departamento) #polimorfismo

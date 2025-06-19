@@ -8,7 +8,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 
 
 class GestorExportacion(ABC):
-    def __init__(self):
+    def __init__(self, tipo):
         pass
     @abstractmethod
     def exportar(self, datosReporte, departamento=None):

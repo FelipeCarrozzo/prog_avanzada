@@ -76,7 +76,7 @@ class GeneradorDeEstadisticas:
         Returns:
             float: Mediana de los tiempos de resolución.
         """
-        monticuloEnProceso = MonticuloMediana()
+        monticuloEnProceso = MonticuloMediana() #no es composición, 
         monticuloResueltos = MonticuloMediana()
 
         for r in reclamos:
