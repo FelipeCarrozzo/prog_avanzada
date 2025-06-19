@@ -6,12 +6,44 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Ayuda</h1>
-    <p>Este es un tutorial de prueba. Si ves este mensaje, el botón de ayuda funciona correctamente.</p>
-</body>
-<div class="botones">
-    <a href="{{ url_for('panelAdmin') }}" class="btn-registro">Volver al Panel</a>
-    <a href="{{ url_for('logout') }}" class="btn-registro">Cerrar sesión</a>
+    <h1>Guía de Uso del Panel Administrativo</h1>
 
-</div>
+    <section>
+        <h2>🔍 Analítica</h2>
+        <p>
+            En esta sección podés ver estadísticas y gráficos sobre los reclamos asignados a tu departamento. 
+            La información incluye:
+        </p>
+        <ul>
+            <li>Gráfico de torta con los estados de los reclamos (pendiente, en proceso, resuelto).</li>
+            <li>Palabras clave más frecuentes en los reclamos.</li>
+            <li>Mediana de tiempo de resolución para reclamos en proceso y resueltos.</li>
+            <li>Opción para descargar el informe en PDF o HTML.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>🛠️ Manejar Reclamos</h2>
+        <p>
+            Desde esta sección podés gestionar los reclamos que pertenecen a tu departamento:
+        </p>
+        <ul>
+            <li>Cambiar el estado de un reclamo (pendiente, en proceso, resuelto).</li>
+            <li>Asignar o modificar el tiempo estimado de resolución.</li>
+            <li>Si sos secretario técnico, también podés reasignar un reclamo a otro departamento.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>🚪 Salir</h2>
+        <p>
+            Utilizá el botón "Cerrar sesión" para salir del sistema de forma segura.
+        </p>
+    </section>
+
+    <div class="botones">
+        <a href="{{ url_for('panelAdmin') }}" class="btn-registro">Volver al Panel</a>
+        <a href="{{ url_for('logout') }}" class="btn-registro">Cerrar sesión</a>
+    </div>
+</body>
 </html>

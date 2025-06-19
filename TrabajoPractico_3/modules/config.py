@@ -9,11 +9,17 @@ import datetime
 
 from modules.usuario import Usuario
 
+# --- App y configuración general ---
 # Crear instancia de Flask y definir la configuración
 app = Flask("server")
 app.config['SECRET_KEY'] = "d87h3dxodj09j30"
+app.config["SESSION_TYPE"] = "filesystem" #guarda las sesiones en el sistema de archivos
+app.config["SESSION_FILE_DIR"] = "./flask_session_cache" #carpeta donde se almacenan las sesione
+app.config["SESSION_PERMANENT"] = False #False = la sesión termina cuando se cierra el navegador
+app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(minutes=15) #true = expira en 5 minutos
 
-#conexión a la base de datos
+
+# --- SQLAlchemy engine ---
 URL_BD = 'sqlite:///data/base_datos.db'
 
 """Crear el motor de conexión a la BD. 'crear_engine' devuelve
@@ -23,16 +29,15 @@ def crear_engine():
     Session = sessionmaker(bind=engine)
     return Session
 
-app.config["SESSION_TYPE"] = "filesystem" #guarda las sesiones en el sistema de archivos
-app.config["SESSION_FILE_DIR"] = "./flask_session_cache" #carpeta donde se almacenan las sesione
-app.config["SESSION_PERMANENT"] = False #False = la sesión termina cuando se cierra el navegador
-app.config["PERMANENT_SESSION_LIFETIME"] = datetime.timedelta(minutes=5) #true = expira en 5 minutos
-
+# --- Session filesystem ---
 Session(app) #aplicar la configuración a la app
 
+# --- Flask-Login ---
 login_manager = LoginManager() #para manejar el login
 login_manager.init_app(app) #conecta la app al flask-login
 login_manager.login_view = "login" # para redirigir a la vista de login si no está autenticado
+login_manager.login_message = "Debes iniciar sesión para acceder a esta página."
+login_manager.login_message_category = "error"
 
 
 """Cargar el usuario actual mediante id para Flask-Login 
@@ -41,5 +46,5 @@ login_manager.login_view = "login" # para redirigir a la vista de login si no es
 def load_user(user_id):
     return Usuario.obtener_por_id(int(user_id))
 
-# Bootstrap
+# --- Bootstrap ---
 Bootstrap(app)

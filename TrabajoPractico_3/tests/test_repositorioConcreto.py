@@ -13,13 +13,17 @@ class TestRepositorioUsuariosBD(unittest.TestCase):
     Utiliza una base de datos SQLite en memoria para pruebas unitarias.
     """
     def setUp(self):
-        # Crea una base de datos en memoria para pruebas
+        """Crea una base de datos SQLite en memoria antes de cada test."""
         engine = create_engine('sqlite:///:memory:')
         Session = sessionmaker(bind=engine)
         self.__session = Session()
         self.repo = RepositorioUsuariosBD(self.__session)
 
     def test_guardarRegistro_y_obtenerRegistrosFiltro(self):
+        """
+        Verifica que un usuario guardado pueda recuperarse correctamente
+        usando un filtro por nombre de usuario.
+        """
         usuario = Usuario(
             id=None,
             nombre="Pablo",
@@ -36,6 +40,10 @@ class TestRepositorioUsuariosBD(unittest.TestCase):
         self.assertEqual(resultado[0].apellido, "Sosa")
 
     def test_actualizarAtributo(self):
+        """
+        Verifica que se pueda actualizar un atributo específico de un usuario
+        (por ejemplo, cambiar el apellido).
+        """
         usuario = Usuario(
             id=None,
             nombre="Ana",
@@ -59,7 +67,7 @@ class TestRepositorioReclamosBD(unittest.TestCase):
     Utiliza una base de datos SQLite en memoria para pruebas unitarias.
     """
     def setUp(self):
-        # Crea una base de datos en memoria y una sesión nueva para cada test
+        """Crea la base en memoria y genera la tabla de reclamos antes de cada test."""
         engine = create_engine('sqlite:///:memory:')
         Session = sessionmaker(bind=engine)
         self.session = Session()
@@ -67,6 +75,10 @@ class TestRepositorioReclamosBD(unittest.TestCase):
         self.repo = RepositorioReclamosBD(self.session)
 
     def test_guardar_y_obtener_registro(self):
+        """
+        Verifica que un reclamo guardado se pueda recuperar correctamente
+        filtrando por el campo 'departamento'.
+        """
         reclamo = Reclamo(
             id=None,
             idUsuario=1,
@@ -85,6 +97,9 @@ class TestRepositorioReclamosBD(unittest.TestCase):
         self.assertEqual(resultados[0].descripcion, "Fuga de agua en el baño")
 
     def test_actualizar_atributo(self):
+        """
+        Verifica que se pueda actualizar el estado de un reclamo ya guardado.
+        """
         reclamo = Reclamo(
             id=None,
             idUsuario=2,
@@ -105,6 +120,10 @@ class TestRepositorioReclamosBD(unittest.TestCase):
         self.assertEqual(actualizado.estado, "resuelto")
 
     def test_obtener_registros_filtro_lista(self):
+        """
+        Verifica que se puedan recuperar múltiples reclamos cuando se filtra
+        por una lista de valores (por ejemplo, varios departamentos).
+        """
         reclamo1 = Reclamo(
             id=None,
             idUsuario=3,

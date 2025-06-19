@@ -10,21 +10,15 @@ from modules.factoriaRepositorios import crearRepositorio
 from flask import send_file, request, send_from_directory
 from modules.gestorReportes import GestorReportes
 from flask_login import login_required, current_user
-from datetime import timedelta
 
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=2) #sesión de 2 horas
-login_manager.login_view = 'login'  # nombre de la vista
-login_manager.login_message = "Debes iniciar sesión para acceder a esta página."
-login_manager.login_message_category = "error"  # para que aparezca como mensaje flash
-
-adminList = [1]
+adminList = [1] 
 repoUsuario, repoReclamo = crearRepositorio()
 gestorUsuarios = GestorUsuarios(repoUsuario)
 gestorReclamos = GestorReclamos(repoReclamo)
-gestor_login = GestorDeLogin(gestorUsuarios, login_manager, adminList)
+gestorLogin = GestorDeLogin(gestorUsuarios, login_manager, adminList)
 gestorReportes = GestorReportes(repoReclamo)
 
-ROLES_ADMIN = ['secretarioTecnico', 'jefeMaestranza', 'jefeSoporteInformático']
+rolesAdmin = ['secretarioTecnico', 'jefeMaestranza', 'jefeSoporteInformático']
 
 @app.route('/')
 def inicio():
@@ -91,12 +85,12 @@ def login():
         except ValueError as e:
             flash(str(e))
         else:
-            gestor_login.loginUsuario(usuario)
+            gestorLogin.loginUsuario(usuario)
 
             session.permanent = True #Mantener sesión activa
-            rol = gestor_login.obtenerRolUsuario()
+            rol = gestorLogin.obtenerRolUsuario()
 
-            if rol in ROLES_ADMIN:
+            if rol in rolesAdmin:
                 return redirect(url_for('panelAdmin'))
             elif rol == 'UsuarioFinal':
                 return redirect(url_for('bienvenido'))
@@ -118,41 +112,45 @@ def listarReclamos():
     username = current_user.nombre
     idUsuario = current_user.id
 
-    filtro_usuario = request.form.get("filtroUsuario", "mios")
-    filtro_departamento = request.form.get("filtroDepartamento", "todos")
+    filtroUsuario = request.form.get("filtroUsuario", "mios")
+    filtroDepartamento = request.form.get("filtroDepartamento", "todos")
 
-    if filtro_usuario == "todos":
+    if filtroUsuario == "todos":
         # Solo reclamos pendientes
-        reclamos_filtrados = repoReclamo.obtenerRegistrosFiltro("estado", "pendiente")
+        reclamosFiltrados = repoReclamo.obtenerRegistrosFiltro("estado", "pendiente")
 
-    elif filtro_usuario == "mios":
+    elif filtroUsuario == "mios":
         # Reclamos creados por el usuario (todos los estados)
-        reclamos_mios = repoReclamo.obtenerRegistrosFiltro("idUsuario", idUsuario)
+        reclamosMios = repoReclamo.obtenerRegistrosFiltro("idUsuario", idUsuario)
 
         # Reclamos a los que se adhirió el usuario (todos los estados)
-        todos_reclamos = repoReclamo.obtenerRegistrosTotales()
-        reclamos_adheridos = [r for r in todos_reclamos if idUsuario in r.usuariosAdheridos]
+        todosReclamos = repoReclamo.obtenerRegistrosTotales()
+        reclamosAdheridos = [r for r in todosReclamos if idUsuario in r.usuariosAdheridos]
 
         # Unir sin duplicados
-        reclamos_filtrados = list({r.id: r for r in reclamos_mios + reclamos_adheridos}.values())
+        reclamosFiltrados = list({r.id: r for r in reclamosMios + reclamosAdheridos}.values())
 
     # Filtrar por departamento si corresponde
-    if filtro_departamento != "todos":
-        reclamos_filtrados = [
-            r for r in reclamos_filtrados if r.departamento == filtro_departamento
+    if filtroDepartamento != "todos":
+        reclamosFiltrados = [
+            r for r in reclamosFiltrados if r.departamento == filtroDepartamento
         ]
 
     return render_template(
         "listarReclamos.html",
-        reclamos=reclamos_filtrados,
+        reclamos=reclamosFiltrados,
         username=username,
         idUsuario=idUsuario,
-        filtro_usuario=filtro_usuario
+        filtro_usuario=filtroUsuario
     )
 
 @app.route("/adherir_a_reclamo/<int:idReclamo>", methods=["POST"])
 @login_required
 def adherir_a_reclamo(idReclamo):
+    """
+    Ruta para adherirse a un reclamo existente.
+    Si el ID del reclamo es 0, se crea un nuevo reclamo.
+    """
     idUsuario = current_user.id
     usuario = repoUsuario.obtenerRegistroFiltro("id", idUsuario)
 
@@ -351,7 +349,7 @@ def logout():
     Limpia la sesión y redirige a la página de inicio.
     """
     idUsuario = current_user.id
-    gestor_login.logoutUsuario()
+    gestorLogin.logoutUsuario()
     flash("Has cerrado sesión exitosamente.", "success") 
     return redirect(url_for('inicio'))
 

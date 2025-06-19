@@ -25,7 +25,7 @@
             <thead>
                 <tr>
                     <th>Descripción</th>
-                    <th>Acción</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -40,7 +40,6 @@
 
                             <form method="POST" action="{{ url_for('adherir_a_reclamo', idReclamo=0) }}">
                                 <input type="hidden" name="descripcion" value="{{ descripcionOriginal }}">
-                                <button type="submit" class="btn-crear-detodasformas">Crear mi reclamo de todas formas</button>
                             </form>
                         </div>
                     </td>
@@ -52,6 +51,7 @@
         <!-- Botón cancelar -->
         <div class="botones">
             <a href="{{ url_for('bienvenido') }}" class="btn-registro">Cancelar y volver</a>
+            <button type="submit" class="btn-crear-detodasformas">Crear mi reclamo de todas formas</button>
         </div>
 
     </div>

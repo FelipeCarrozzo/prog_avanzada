@@ -45,6 +45,10 @@ class TestObtenerReclamosSimilares(unittest.TestCase):
         self.gestor._GestorReclamos__clasificador = FakeClasificador()  # inyecta clasificador fake
 
     def test_similares(self):
+        """
+        Test para obtener reclamos similares a un reclamo específico.
+        Verifica que se obtengan los reclamos similares y se excluyan los resueltos.
+        """
         #arrange
         datos = {"descripcion": "El proyector del aula 2 no funciona"}
         #act

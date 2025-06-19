@@ -13,6 +13,9 @@ class MonticuloBinario:
         return self.__tamanioActual
 
     def devolverListaValores(self):
+        """
+        Devuelve una copia de la lista de valores del montículo.
+        """
         return self.__listaValores.copy()
 
     def infiltrarArriba(self, valor):
@@ -105,13 +108,13 @@ class MonticuloMediana:
       self.__monticuloMax = MonticuloBinario("max")
     
     def agregarValor(self, valor: int):
-        #si el valor es el primero, se agrega directamente al montículo mínimo
-        #valor > obtenerMediana() -> se agrega al montículo mínimo
-        #valor < obtenerMe diana() -> se agrega al montículo máximo
-        # if self.__monticuloMax.tamanioActual == 0 or valor <= self.__monticuloMax.devolverListaValores()[1]:
-        #     self.__monticuloMax.insertar(valor)
-        # else:
-        #     self.__monticuloMin.insertar(valor)
+        """
+        Agrega un nuevo valor al montículo de mediana.
+        Dependiendo del valor, se inserta en el montículo mínimo o máximo.
+        Luego, se balancean los montículos para mantener la propiedad de mediana.
+        args:
+        valor: El valor a agregar al montículo.
+        """
         if self.__monticuloMin.tamanioActual == 0 and self.__monticuloMax.tamanioActual == 0:
             self.__monticuloMin.insertar(valor)
         else:
@@ -131,6 +134,10 @@ class MonticuloMediana:
             self.__monticuloMin.insertar(valorSacado)
     
     def obtenerMediana(self) -> float:
+        """
+        Obtiene la mediana de los valores agregados al montículo.
+        Si los montículos están vacíos, lanza una excepción.
+        """
         if self.__monticuloMin.tamanioActual == 0 and self.__monticuloMax.tamanioActual == 0:
             raise ValueError("No hay valores para calcular la mediana.")
         

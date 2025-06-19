@@ -48,6 +48,7 @@ class TestMonticuloBinario(unittest.TestCase):
 class TestMonticuloMediana(unittest.TestCase):
 
     def setUp(self):
+        """Inicializa un montículo de mediana para cada prueba."""
         self.m = MonticuloMediana()
 
     def test_mediana_incremental(self):
