@@ -10,6 +10,8 @@ from modules.factoriaRepositorios import crearRepositorio
 from flask import send_file, request, send_from_directory
 from modules.gestorReportes import GestorReportes
 from flask_login import login_required, current_user
+from werkzeug.utils import secure_filename
+import os
 
 adminList = [1] 
 repoUsuario, repoReclamo = crearRepositorio()
@@ -188,25 +190,38 @@ def crearReclamos():
     """
     form = ReclamosForm()
     idUsuario = current_user.id
-    idUsuario = current_user.id
     username = current_user.nombre
 
     if form.validate_on_submit():
         descripcion = form.descripcion.data
-        imagen = form.imagen.data
+        imagenFile = form.imagen.data  # esto es un FileStorage
+        rutaImagen = None
+
+        if imagenFile:
+            nombre_seguro = secure_filename(imagenFile.filename)
+            rutaImagen = os.path.join('static/uploads', nombre_seguro)
+            imagenFile.save(rutaImagen)
+
         try:
             reclamoSimilar = gestorReclamos.verificarReclamoExistente(idUsuario, {"descripcion": descripcion})
             if reclamoSimilar:
-                return render_template('adherirAReclamo.html', reclamos=reclamoSimilar, descripcionOriginal=descripcion, imagen=imagen)
+                return render_template(
+                    'adherirAReclamo.html',
+                    reclamos=reclamoSimilar,
+                    descripcionOriginal=descripcion,
+                    imagen=rutaImagen
+                )
         except ValueError as e:
             flash(str(e), "error")
             return redirect(url_for('crearReclamos'))
+
         try:
-            gestorReclamos.crearReclamo(idUsuario, descripcion, imagen)
+            gestorReclamos.crearReclamo(idUsuario, descripcion, rutaImagen)
             flash("Reclamo creado con éxito", "success")
             return redirect(url_for('listarReclamos'))
         except ValueError as e:
             flash(str(e), "error")
+
     return render_template("nuevoReclamo.html", form=form, username=username)
 
 @app.route("/panelAdmin", methods=["GET", "POST"])
