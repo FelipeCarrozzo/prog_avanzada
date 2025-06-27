@@ -10,3 +10,8 @@ flask_session_cache/
 
 # Archivos de log
 *.log
+
+#archivos de graficos, y analiticas
+*.png
+*.pdf
+/data/*.html

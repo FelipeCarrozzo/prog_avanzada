@@ -9,7 +9,7 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
     Hereda de RepositorioAbstractoBD para implementar operaciones CRUD.
     """
     def __init__(self, session):
-        self.__tablaUsuario = ModeloUsuario
+        self.__tablaUsuario = ModeloUsuario #referencia a la clase ModeloUsuario
         self.__session = session
         self.__tablaUsuario.metadata.create_all(self.__session.bind)
     
@@ -144,7 +144,7 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
 class RepositorioReclamosBD(RepositorioAbstractoBD):
     """Repositorio de reclamos en la base de datos."""
     def __init__(self, session):
-        self.__tablaReclamo = ModeloReclamo
+        self.__tablaReclamo = ModeloReclamo #referencia a la clase ModeloReclamo
         self.__session = session
         self.__tablaReclamo.metadata.create_all(self.__session.bind)
     
@@ -160,9 +160,6 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
         modeloReclamo = self.__map_reclamo_a_modelo(reclamo)
         self.__session.add(modeloReclamo)
         self.__session.commit()
-        #tabla intermedia - para cuando IMPLEMENTEMOS EL RECLAMO
-        # usuario = self.__session.query(ModeloUsuario).filter_by(id=reclamo.idUsuario).first()
-        # usuario.reclamosSeguidos.apend(modeloReclamo)
 
     def actualizarAtributo(self, id, atributo, valor):
         """
