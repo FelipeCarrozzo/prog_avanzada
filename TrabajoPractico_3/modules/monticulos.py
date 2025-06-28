@@ -3,10 +3,10 @@ class MonticuloBinario:
     Clase que representa un montículo binario.
     Permite insertar elementos y mantener la propiedad de montículo (min o max).
     """
-    def __init__(self, pTipo):
+    def __init__(self, tipo):
         self.__listaValores = [None]
         self.__tamanioActual = 0
-        self.__tipo = pTipo #"min" o "max"
+        self.__tipo = tipo #"min" o "max"
 
     @property
     def tamanioActual(self):
@@ -22,6 +22,8 @@ class MonticuloBinario:
         '''
         Mueve el elemento en la posición i hacia arriba en el montículo
         hasta que se cumpla la propiedad del montículo.
+        args:
+        valor: El índice del elemento a mover hacia arriba.
         '''
         if self.__tipo == "min":
             while valor // 2 > 0:
@@ -42,6 +44,8 @@ class MonticuloBinario:
         '''
         Mueve el elemento en la posición i hacia abajo en el montículo
         hasta que se cumpla la propiedad del montículo.
+        args:
+        valor: El índice del elemento a mover hacia abajo.
         ''' 
         if self.__tipo == "min":
             while (valor * 2) <= self.__tamanioActual:
@@ -60,10 +64,11 @@ class MonticuloBinario:
                     self.__listaValores[hm] = tmp
                 valor = hm
 
-    def insertar(self,valor):
-        """Inserta un nuevo elemento en el montículo.
+    def insertar(self, valor):
+        """
+        Inserta un nuevo elemento en el montículo.
         args:
-        k: El valor a insertar en el montículo.
+        valor: El valor a insertar en el montículo.
         """
         self.__listaValores.append(valor)
         self.__tamanioActual = self.__tamanioActual + 1
@@ -71,7 +76,9 @@ class MonticuloBinario:
 
     def hijoMinOMax(self, valor):
         """
-        Devuelve el índice del hijo mínimo o máximo de i.
+        Devuelve el índice del hijo mínimo o máximo de un nodo dado.
+        args:
+        valor: El índice del elemento padre.
         """
         if valor * 2 + 1 > self.__tamanioActual:
             return valor * 2
@@ -92,15 +99,13 @@ class MonticuloBinario:
         Elimina el elemento mínimo o máximo del montículo y lo devuelve.
         '''
         if self.__tamanioActual == 0:
-            raise ValueError("El montículo está vacío.")
+            raise IndexError("El montículo está vacío.")
         raiz = self.__listaValores[1]
         self.__listaValores[1] = self.__listaValores[self.__tamanioActual]
         self.__tamanioActual = self.__tamanioActual - 1
         self.__listaValores.pop()
         self.infiltrarAbajo(1)
         return raiz
-
-
 
 class MonticuloMediana:
     def __init__(self):
@@ -124,7 +129,6 @@ class MonticuloMediana:
             else:
                 self.__monticuloMax.insertar(valor)
 
-
         # Balancear los montículos
         if self.__monticuloMin.tamanioActual > self.__monticuloMax.tamanioActual + 1:
             valorSacado = self.__monticuloMin.eliminarMinOMax()
@@ -139,7 +143,7 @@ class MonticuloMediana:
         Si los montículos están vacíos, lanza una excepción.
         """
         if self.__monticuloMin.tamanioActual == 0 and self.__monticuloMax.tamanioActual == 0:
-            raise ValueError("No hay valores para calcular la mediana.")
+            raise IndexError("No hay valores para calcular la mediana.")
         
         if self.__monticuloMin.tamanioActual > self.__monticuloMax.tamanioActual:
             return self.__monticuloMin.devolverListaValores()[1]

@@ -13,8 +13,13 @@ class Graficador:
 
     def graficarCantidadesReclamos(self, cantidades, rutaSalida=None):
         """
-        cantidades: dict con estados de reclamos y sus cantidades
-        ruta_salida: opcional, nombre de archivo PNG de salida
+        Calcula el porcentaje de reclamos por estado y genera un gráfico de torta.
+        Args:
+            cantidades (dict): Diccionario con la cantidad de reclamos por estado.
+            rutaSalida (str): Ruta del archivo PNG de salida. Si es None, muestra el gráfico en pantalla.
+
+        Returns:
+            str: Ruta del archivo generado o None si se mostró en pantalla.
         """
         total = sum(cantidades.values())
         if total == 0:
@@ -44,8 +49,12 @@ class Graficador:
 
     def graficarPalabrasClave(self, palabrasFrecuentes, rutaSalida=None):
         """
-        palabras_frecuentes: lista de (palabra, frecuencia)
-        ruta_salida: opcional, nombre de archivo PNG de salida
+        Genera una nube de palabras a partir de las palabras clave más frecuentes.
+        Args:
+            palabrasFrecuentes (list): Lista de tuplas con palabras y su frecuencia.
+            rutaSalida (str): Ruta del archivo PNG de salida. Si es None, muestra la nube en pantalla.
+        Returns:
+            str: Ruta del archivo generado o None si se mostró en pantalla.
         """
         freqs = dict(palabrasFrecuentes)
 

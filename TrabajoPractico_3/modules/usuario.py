@@ -11,7 +11,7 @@ class Usuario:
         self.__apellido = apellido
         self.__email = email
         self.__nombreUsuario = nombreUsuario
-        self.__rol = rol #usuarioFinal, jefeDepartamento, secretarioTecnico
+        self.__rol = rol 
         self.__password = password
 
 
@@ -26,8 +26,6 @@ class Usuario:
             int: ID del usuario.
         """
         return str(self.__id) # Flask-Login requiere que el ID sea un string
-
-    #setter id?
     
     @property
     def nombre(self):

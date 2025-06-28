@@ -56,12 +56,6 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         modeloUsuario = self.__session.query(ModeloUsuario).filter_by(**{filtro:valor}).first()
         return self.__map_modelo_a_usuario(modeloUsuario) if modeloUsuario else None
 
-    def obtenerModeloPorId(self, id):
-        """
-        Método para obtener un modelo de usuario por su id.
-        """
-        return self.__session.get(ModeloUsuario, id)
-
     def obtenerRegistrosFiltro(self, filtro, valor):
         """
         Método para obtener conjunto de registros de la 
@@ -112,9 +106,10 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         try:
             self.__session.execute(text(f"DROP TABLE IF EXISTS {nombreTabla}"))
             self.__session.commit()
-            print(f"Tabla '{nombreTabla}' eliminada correctamente.")
+            return True
         except Exception as e:
             print(f"Error al eliminar la tabla '{nombreTabla}': {e}")
+            return False
 
 #---------------------------------------------------------------------------
 
@@ -252,9 +247,10 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
         try:
             self.__session.execute(text(f"DROP TABLE IF EXISTS {nombreTabla}"))
             self.__session.commit()
-            print(f"Tabla '{nombreTabla}' eliminada correctamente.")
+            return True
         except Exception as e:
             print(f"Error al eliminar la tabla '{nombreTabla}': {e}")
+            return False
     #--------------------------------------------------------------------------
 
     def __map_reclamo_a_modelo(self, reclamo: Reclamo):

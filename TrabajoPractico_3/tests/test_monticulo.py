@@ -41,7 +41,7 @@ class TestMonticuloBinario(unittest.TestCase):
     def test_vacio(self):
         """Test para intentar eliminar de un montículo vacío."""
         monticulo = MonticuloBinario("min")
-        with self.assertRaises(ValueError):
+        with self.assertRaises(IndexError):
             monticulo.eliminarMinOMax()
 
 
@@ -84,7 +84,7 @@ class TestMonticuloMediana(unittest.TestCase):
     def test_vacio(self):
         """Test para intentar obtener la mediana de un montículo vacío."""
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(IndexError):
             self.m.obtenerMediana()
 
 if __name__ == "__main__":

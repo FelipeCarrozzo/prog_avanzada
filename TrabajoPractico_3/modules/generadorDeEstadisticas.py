@@ -74,9 +74,9 @@ class GeneradorDeEstadisticas:
             reclamos (list): Lista de objetos Reclamo.
 
         Returns:
-            float: Mediana de los tiempos de resolución.
+            dict: Diccionario con las medianas de tiempos de resolución por estado.
         """
-        monticuloEnProceso = MonticuloMediana() #no es composición, 
+        monticuloEnProceso = MonticuloMediana()
         monticuloResueltos = MonticuloMediana()
 
         for r in reclamos:

@@ -10,7 +10,7 @@ class GestorReportes:
     """
 
     def __init__(self, repositorio: RepositorioAbstractoBD):
-        self.__repositorio = repositorio 
+        self.__repositorio = repositorio
 
     def obtenerReclamos(self, departamento=None):
         """
@@ -27,7 +27,6 @@ class GestorReportes:
 
         return reclamos or []
     
-
     def generarEstadisticas(self, departamento=None):
         """
         Calcula estadísticas a partir de los reclamos.

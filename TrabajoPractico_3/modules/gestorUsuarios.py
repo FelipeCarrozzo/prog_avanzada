@@ -9,7 +9,7 @@ class GestorUsuarios:
     Permite registrar, loguear y cargar usuarios.
     """
 
-    def __init__(self, repo: RepositorioAbstractoBD): #es el repositorio de usuarios
+    def __init__(self, repo: RepositorioAbstractoBD): 
         self.__repo = repo
 
     def registrarUsuario(self, nombre, apellido, email, nombreUsuario, rol, password):

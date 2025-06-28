@@ -49,7 +49,6 @@ class ModeloReclamo(Base):
     tiempoResolucion = Column(Integer, nullable=True, default=None)
     departamento = Column(String(20), nullable=False)
     numeroAdheridos = Column(Integer, nullable=False, default=0)
-    # idAdheridos = Column(Integer, nullable=False, default=0)
     descripcion = Column(Text, nullable=False)
     imagen = Column(String(255), nullable=True)
     

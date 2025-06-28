@@ -203,7 +203,7 @@ def crearReclamos():
             imagenFile.save(rutaImagen)
 
         try:
-            reclamoSimilar = gestorReclamos.verificarReclamoExistente(idUsuario, {"descripcion": descripcion})
+            reclamoSimilar = gestorReclamos.verificarReclamoExistente(idUsuario, descripcion)
             if reclamoSimilar:
                 return render_template(
                     'adherirAReclamo.html',
