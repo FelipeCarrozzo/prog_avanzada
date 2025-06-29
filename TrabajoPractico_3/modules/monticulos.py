@@ -129,7 +129,7 @@ class MonticuloMediana:
             else:
                 self.__monticuloMax.insertar(valor)
 
-        # Balancear los montículos
+        #balancear los montículos
         if self.__monticuloMin.tamanioActual > self.__monticuloMax.tamanioActual + 1:
             valorSacado = self.__monticuloMin.eliminarMinOMax()
             self.__monticuloMax.insertar(valorSacado)

@@ -127,7 +127,6 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
 
     def __map_usuario_a_modelo(self, usuario: Usuario):
         return ModeloUsuario(
-            # Cuándo se genera el id automáticamente?
             nombre=usuario.nombre,
             apellido=usuario.apellido,
             email=usuario.email,
@@ -138,7 +137,7 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         
     def __map_modelo_a_usuario(self, modeloUsuario: ModeloUsuario):
         return Usuario(
-            id=modeloUsuario.id,  # Asumiendo que el modelo tiene un campo id
+            id=modeloUsuario.id,
             nombre=modeloUsuario.nombre,
             apellido=modeloUsuario.apellido,
             email=modeloUsuario.email,
@@ -160,7 +159,7 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
         Args:
         reclamo(Reclamo): reclamo a guardar en el registro. """
         
-        # Verifica que el reclamo sea una instancia de la clase Reclamo
+        #reclamo sea instancia de Reclamo
         if not isinstance(reclamo, Reclamo):
             raise ValueError("El parámetro no es una instancia de la clase Reclamo")
         
@@ -278,7 +277,7 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
 
     def __map_reclamo_a_modelo(self, reclamo: Reclamo):
         modelo = ModeloReclamo(
-            idUsuario=reclamo.idUsuario,  # id del usuario creador
+            idUsuario=reclamo.idUsuario,
             fechaYHora=reclamo.fechaYHora,
             estado=reclamo.estado,
             tiempoResolucion=reclamo.tiempoResolucion,

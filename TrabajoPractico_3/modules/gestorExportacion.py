@@ -66,13 +66,13 @@ class ExportadorHTML(GestorExportacion):
         carpeta = "data"
         os.makedirs(carpeta, exist_ok=True)
 
-        # Copiar imágenes y obtener rutas absolutas
+        #copiar imágenes y obtener rutas absolutas
         ruta_torta = os.path.abspath(datosReporte["graficoTorta"])
         ruta_nube = os.path.abspath(datosReporte["graficoNube"])
 
         ruta_html = os.path.join(carpeta, f"{nombre}.html")
 
-                # CSS mínimo embebido
+        # CSS mínimo embebido
         css_content = """
         body {
             font-family: 'Segoe UI', sans-serif;

@@ -64,7 +64,7 @@ def register():
                                                     form_registro.apellido.data, 
                                                     form_registro.email.data,
                                                     form_registro.nombreUsuario.data,
-                                                    form_registro.rol,  # Asignamos el rol directamente
+                                                    form_registro.rol,
                                                     form_registro.password.data)
         except ValueError as e:
             flash(str(e))
@@ -89,7 +89,7 @@ def login():
         else:
             gestorLogin.loginUsuario(usuario)
 
-            session.permanent = True #Mantener sesión activa
+            session.permanent = True #mantener sesión activa
             rol = gestorLogin.obtenerRolUsuario()
 
             if rol in rolesAdmin:
@@ -118,27 +118,27 @@ def listarReclamos():
     filtroDepartamento = request.form.get("filtroDepartamento", "todos")
 
     if filtroUsuario == "todos":
-        # Solo reclamos pendientes
+        #reclamos pendientes
         reclamosFiltrados = repoReclamo.obtenerRegistrosFiltro("estado", "pendiente")
 
     elif filtroUsuario == "mios":
-        # Reclamos creados por el usuario (todos los estados)
+        #creados por el usuario
         reclamosMios = repoReclamo.obtenerRegistrosFiltro("idUsuario", idUsuario)
 
-        # Reclamos a los que se adhirió el usuario (todos los estados)
+        #reclamos a los que se adhirió el usuario
         todosReclamos = repoReclamo.obtenerRegistrosTotales()
         reclamosAdheridos = [r for r in todosReclamos if idUsuario in r.usuariosAdheridos]
 
-        # Unir sin duplicados
+        #unir sin duplicados
         reclamosFiltrados = list({r.id: r for r in reclamosMios + reclamosAdheridos}.values())
 
-    # Se filtra por departamento si corresponde
+    #filtrar por departamento si corresponde
     if filtroDepartamento != "todos":
         reclamosFiltrados = [
             r for r in reclamosFiltrados if r.departamento == filtroDepartamento
         ]
 
-    # Se ordenan por ID de forma descendente
+    #ordenar por ID descendente
     reclamosFiltrados = sorted(reclamosFiltrados, key=lambda r: r.id, reverse=True)
 
     return render_template(
@@ -159,7 +159,7 @@ def adherir_a_reclamo(idReclamo):
     idUsuario = current_user.id
     usuario = repoUsuario.obtenerRegistroFiltro("id", idUsuario)
 
-    # Manejo especial para cancelar y volver
+    #manejo especial para cancelar y volver
     if idReclamo == 99999999 and request.method == "POST":
         rutaImagen = request.form.get("rutaImagen")
         if rutaImagen and os.path.exists(rutaImagen):
@@ -173,7 +173,7 @@ def adherir_a_reclamo(idReclamo):
     #Si el ID es 0, significa "crear nuevo reclamo"
     if idReclamo == 0 and request.method == "POST":
         descripcion = request.form.get("descripcion")
-        rutaImagen = request.form.get("rutaImagen")  # Recupera la ruta de la imagen
+        rutaImagen = request.form.get("rutaImagen") #rutaimagen
         if not descripcion:
             flash("La descripción del reclamo es obligatoria.", "error")
             return redirect(url_for("crearReclamos"))
@@ -185,14 +185,13 @@ def adherir_a_reclamo(idReclamo):
         except ValueError as e:
             flash(str(e), "error")
     
-    # Adherirse a un reclamo existente
+    #adherirse a un reclamo existente
     if idReclamo != 0:
         rutaImagen = request.form.get("rutaImagen")
         if rutaImagen and os.path.exists(rutaImagen):
             try:
                 os.remove(rutaImagen)
             except Exception as e:
-                # Opcional: loguear el error, pero no interrumpir el flujo
                 print(f"Error al borrar imagen temporal: {e}")
 
         if gestorReclamos.adherirAReclamo(idReclamo, usuario):
@@ -216,7 +215,7 @@ def crearReclamos():
 
     if form.validate_on_submit():
         descripcion = form.descripcion.data
-        imagenFile = form.imagen.data  # esto es un FileStorage
+        imagenFile = form.imagen.data  #FileStorage
         rutaImagen = None
 
         if imagenFile:
@@ -264,17 +263,16 @@ def panelAdmin():
     departamento = None
     es_secretario = False
 
-    #POST: procesar cambios en reclamos
     if request.method == "POST":
-        # Recorremos los reclamos existentes
-        reclamos = repoReclamo.obtenerRegistrosTotales()  # O filtrados por departamento
+        #reclamos existentes
+        reclamos = repoReclamo.obtenerRegistrosTotales()
         for reclamo in reclamos:
             rid = reclamo.id
             estado_key = f"estado_{rid}"
             tiempo_key = f"tiempo_{rid}"
             depto_key = f"departamento_{rid}"
 
-            # Si se enviaron datos para este reclamo:
+            #si hay cambios
             if estado_key in request.form:
                 nuevo_estado = request.form[estado_key]
                 repoReclamo.actualizarAtributo(rid, "estado", nuevo_estado)
@@ -290,7 +288,7 @@ def panelAdmin():
         flash("Cambios guardados correctamente.", "success")      
         return redirect(url_for('panelAdmin'))
 
-    #GET: mostrar página con los reclamos
+    #obtener y filtrar reclamos por rol
     if rol.startswith("jefe"):
         departamento = re.sub(r'(?<!^)(?=[A-Z])', ' ', rol[4:]).lower()
         reclamos = repoReclamo.obtenerRegistrosFiltro("departamento", departamento)
@@ -361,11 +359,10 @@ def descargarReporte(formato):
 
     departamento = None
     rol = current_user.rol
-    #obtener departamento si se trata de un jefe
+    #obtener departamento si es jefe
     if rol.startswith("jefe"):
         departamento = rol[4:]
         departamento = re.sub(r'(?<!^)(?=[A-Z])', ' ', departamento).lower()
-    #gestorExportacion=gestorExportacion
     ruta = gestorReportes.exportarReporte(formato, departamento)
 
     import os
