@@ -22,10 +22,14 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         """
         if not isinstance(usuario, Usuario):
             raise ValueError("El parámetro no es una instancia de la clase Usuario")
-        
-        modelo_usuario = self.__map_usuario_a_modelo(usuario)
-        self.__session.add(modelo_usuario)
-        self.__session.commit()
+
+        modeloUsuario = self.__map_usuario_a_modelo(usuario)
+        try:
+            self.__session.add(modeloUsuario)
+            self.__session.commit()
+        except Exception as e:
+            self.__session.rollback() 
+            raise e
 
     def actualizarAtributo(self, id, atributo, valor):
         """
@@ -41,8 +45,12 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         if not instancia:
             raise ValueError(f"Error: Instancia con id {id} no existe.")
         
-        setattr(instancia, atributo, valor)
-        self.__session.commit()
+        try:
+            setattr(instancia, atributo, valor)
+            self.__session.commit()
+        except Exception as e:
+            self.__session.rollback()
+            raise e
 
     def obtenerRegistroFiltro(self, filtro, valor):
         """
@@ -91,11 +99,15 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
         """
         usuario = self.__session.query(ModeloUsuario).filter_by(id=idUsuario).first()
         if usuario:
-            self.__session.delete(usuario)
-            self.__session.commit()
-            return True
+            try:
+                self.__session.delete(usuario)
+                self.__session.commit()
+                return True
+            except Exception as e:
+                self.__session.rollback()
+                raise e
         return False
-    
+
     def eliminarTabla(self, nombreTabla: str):
         """
         Elimina una tabla de la base de datos por su nombre.
@@ -108,8 +120,8 @@ class RepositorioUsuariosBD(RepositorioAbstractoBD):
             self.__session.commit()
             return True
         except Exception as e:
-            print(f"Error al eliminar la tabla '{nombreTabla}': {e}")
-            return False
+            self.__session.rollback()
+            raise e
 
 #---------------------------------------------------------------------------
 
@@ -153,8 +165,12 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
             raise ValueError("El parámetro no es una instancia de la clase Reclamo")
         
         modeloReclamo = self.__map_reclamo_a_modelo(reclamo)
-        self.__session.add(modeloReclamo)
-        self.__session.commit()
+        try:
+            self.__session.add(modeloReclamo)
+            self.__session.commit()
+        except Exception as e:
+            self.__session.rollback()
+            raise e
 
     def actualizarAtributo(self, id, atributo, valor):
         """
@@ -169,9 +185,12 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
 
         if not instancia:
             raise ValueError(f"Error: Instancia con id {id} no existe.")
-        
-        setattr(instancia, atributo, valor)
-        self.__session.commit()
+        try:
+            setattr(instancia, atributo, valor)
+            self.__session.commit()
+        except Exception as e:
+            self.__session.rollback()
+            raise e
 
     def agregarUsuarioAReclamo(self, idReclamo, usuarioDominio):
         usuarioModelo = self.__session.query(ModeloUsuario).get(usuarioDominio.id)
@@ -232,9 +251,13 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
         """
         reclamo = self.__session.query(ModeloReclamo).filter_by(id=id).first()
         if reclamo:
-            self.__session.delete(reclamo)
-            self.__session.commit()
-            return True
+            try:
+                self.__session.delete(reclamo)
+                self.__session.commit()
+                return True
+            except Exception as e:
+                self.__session.rollback()
+                raise e
         return False
  
     def eliminarTabla(self, nombreTabla: str):
@@ -249,7 +272,7 @@ class RepositorioReclamosBD(RepositorioAbstractoBD):
             self.__session.commit()
             return True
         except Exception as e:
-            print(f"Error al eliminar la tabla '{nombreTabla}': {e}")
+            raise(f"Error al eliminar la tabla '{nombreTabla}': {e}")
             return False
     #--------------------------------------------------------------------------
 
