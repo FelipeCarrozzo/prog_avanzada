@@ -72,7 +72,7 @@ class Reclamo:
 
     @estado.setter
     def estado(self, value):
-        estadosValidos = ['pendiente', 'en proceso', 'resuelto', 'invalido']
+        estadosValidos = ['pendiente', 'en proceso', 'resuelto', 'inválido']
         if value not in estadosValidos:
             raise ValueError(f"Estado inválido: '{value}'. Los estados permitidos son: {', '.join(estadosValidos)}.")
         self.__estado = value

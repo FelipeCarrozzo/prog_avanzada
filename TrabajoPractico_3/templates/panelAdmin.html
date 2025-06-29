@@ -54,7 +54,7 @@
 
                             <td>
                                 <select name="estado_{{ reclamo.id }}">
-                                    {% for estado in ['pendiente', 'en proceso', 'resuelto', 'invalido'] %}
+                                    {% for estado in ['pendiente', 'en proceso', 'resuelto', 'inválido'] %}
                                         <option value="{{ estado }}" {% if reclamo.estado == estado %}selected{% endif %}>
                                             {{ estado.capitalize() }}
                                         </option>

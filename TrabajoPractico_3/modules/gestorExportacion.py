@@ -66,12 +66,6 @@ class ExportadorHTML(GestorExportacion):
         carpeta = "data"
         os.makedirs(carpeta, exist_ok=True)
 
-        # Copiar style.css si no existe
-        ruta_css_origen = os.path.join("static", "style.css")
-        ruta_css_destino = os.path.join(carpeta, "style.css")
-        if os.path.exists(ruta_css_origen) and not os.path.exists(ruta_css_destino):
-            shutil.copy(ruta_css_origen, ruta_css_destino)
-
         # Copiar imágenes y obtener rutas absolutas
         ruta_torta = os.path.abspath(datosReporte["graficoTorta"])
         ruta_nube = os.path.abspath(datosReporte["graficoNube"])
@@ -85,6 +79,10 @@ class ExportadorHTML(GestorExportacion):
             background-color: #f5f7fa;
             color: #2c3e50;
             padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         h1, h2 {
             color: #2c3e50;

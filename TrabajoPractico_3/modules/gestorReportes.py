@@ -74,7 +74,7 @@ class GestorReportes:
         """
         cantidades, medianas, palabrasClave = self.generarEstadisticas(departamento)
         if not cantidades:
-            raise NoDataError("No hay reclamos para generar el reporte.") #TODO
+            raise NoDataError("No hay reclamos para generar el reporte.") 
         graficoTorta, graficoNube = self.generarGraficos(cantidades, palabrasClave)
 
         return {

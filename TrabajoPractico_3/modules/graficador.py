@@ -27,21 +27,21 @@ class Graficador:
 
         porcentajes = {estado: (count / total) * 100 for estado, count in cantidades.items()}
 
-        plt.figure(figsize=(40, 34))
+        plt.rcParams.update({'font.size': 20}) 
+        plt.figure(figsize=(12, 8))
         plt.pie(
             porcentajes.values(),
             autopct='%1.1f%%',
-            startangle=140
+            startangle=140,
+            pctdistance=0.85 
         )
-
-        plt.rcParams.update({'font.size': 60})
         plt.title(f"Porcentaje de reclamos por estado\n(Cantidad total: {total})")
         plt.axis('equal')
         plt.tight_layout()
-        plt.legend([f"{estado} ({cantidades[estado]})" for estado in porcentajes], loc='upper right', fontsize=60)
+        plt.legend([f"{estado} ({cantidades[estado]})" for estado in porcentajes], loc='upper right', fontsize=20)
 
         if rutaSalida:
-            plt.savefig(rutaSalida)
+            plt.savefig(rutaSalida, bbox_inches='tight')
             plt.close()
             return rutaSalida
         else:

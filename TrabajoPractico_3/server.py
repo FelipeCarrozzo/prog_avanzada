@@ -132,11 +132,14 @@ def listarReclamos():
         # Unir sin duplicados
         reclamosFiltrados = list({r.id: r for r in reclamosMios + reclamosAdheridos}.values())
 
-    # Filtrar por departamento si corresponde
+    # Se filtra por departamento si corresponde
     if filtroDepartamento != "todos":
         reclamosFiltrados = [
             r for r in reclamosFiltrados if r.departamento == filtroDepartamento
         ]
+
+    # Se ordenan por ID de forma descendente
+    reclamosFiltrados = sorted(reclamosFiltrados, key=lambda r: r.id, reverse=True)
 
     return render_template(
         "listarReclamos.html",
@@ -217,11 +220,11 @@ def crearReclamos():
         rutaImagen = None
 
         if imagenFile:
-            carpeta_destino = os.path.join('data', 'imagenesReportes')
-            os.makedirs(carpeta_destino, exist_ok=True)
+            carpetaDestino = os.path.join('data', 'imagenesReclamos')
+            os.makedirs(carpetaDestino, exist_ok=True)
 
-            nombre_seguro = secure_filename(imagenFile.filename)
-            rutaImagen = os.path.join(carpeta_destino, nombre_seguro)
+            nombreSeguro = secure_filename(imagenFile.filename)
+            rutaImagen = os.path.join(carpetaDestino, nombreSeguro)
             imagenFile.save(rutaImagen)
 
         try:

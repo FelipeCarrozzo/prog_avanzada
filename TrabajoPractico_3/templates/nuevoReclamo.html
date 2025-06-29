@@ -34,7 +34,14 @@
                             <form method="POST" enctype="multipart/form-data">
                                 {{ form.hidden_tag() }}
                                 <p>{{ form.descripcion.label }}<br>{{ form.descripcion() }}</p>
-                                <p>{{ form.imagen.label }}<br>{{ form.imagen(class="form-control", accept="image/*") }}</p>
+                                <p>{{ form.imagen.label }}<br>{{ form.imagen(class="form-control", accept=".jpg,.jpeg,.png") }}</p>
+                                {% if form.imagen.errors %}
+                                    <div class="error text-center">
+                                        {% for error in form.imagen.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                                 <p>{{ form.submit() }}</p>
                             </form>
 
