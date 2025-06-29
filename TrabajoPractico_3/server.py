@@ -8,7 +8,7 @@ from modules.gestorLogin import GestorDeLogin
 from modules.formularios import RegistroForm, LoginForm, ReclamosForm
 from modules.factoriaRepositorios import crearRepositorio
 from flask import send_file, request, send_from_directory
-from modules.gestorReportes import GestorReportes
+from modules.gestorReportes import GestorReportes, NoDataError
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import os
@@ -333,7 +333,8 @@ def analitica():
 
     try:
         datosReporte = gestorReportes.generarReporte(departamento)
-    except IndexError:
+    except NoDataError as e:
+        flash(str(e), "error")
         datosReporte = {}  #no hay datos para graficar
 
     if departamento == None:

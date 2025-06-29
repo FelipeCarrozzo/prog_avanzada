@@ -3,6 +3,10 @@ from modules.graficador import Graficador
 from modules.gestorExportacion import GestorExportacion, ExportadorPDF, ExportadorHTML
 from modules.repositorioAbstractoBD import RepositorioAbstractoBD
 
+class NoDataError(Exception):
+    """Se lanza cuando no hay datos suficientes para realizar la operación solicitada."""
+    pass
+
 class GestorReportes:
     """
     Clase para gestionar la generación de reportes de reclamos.
@@ -70,8 +74,7 @@ class GestorReportes:
         """
         cantidades, medianas, palabrasClave = self.generarEstadisticas(departamento)
         if not cantidades:
-            raise ValueError("No hay reclamos para generar el reporte.") #TODO
-        #aalizar el tipo de error
+            raise NoDataError("No hay reclamos para generar el reporte.") #TODO
         graficoTorta, graficoNube = self.generarGraficos(cantidades, palabrasClave)
 
         return {
