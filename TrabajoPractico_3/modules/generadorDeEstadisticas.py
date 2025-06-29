@@ -89,12 +89,12 @@ class GeneradorDeEstadisticas:
 
         try:
             medianas["enProceso"] = monticuloEnProceso.obtenerMediana()
-        except ValueError:
+        except IndexError:
             medianas["enProceso"] = "No hay datos disponibles"
 
         try:
             medianas["resueltos"] = monticuloResueltos.obtenerMediana()
-        except ValueError:
+        except IndexError:
             medianas["resueltos"] = "No hay datos disponibles"
 
         return medianas

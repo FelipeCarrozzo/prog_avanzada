@@ -30,6 +30,7 @@ def inicio():
     """
     # Registro de usuarios administrativos
     archivoDatos = "./data/datosAdmins.txt"
+    repoReclamo.eliminarRegistro(23)
 
     with open(archivoDatos, 'r', encoding='utf-8') as file:
         for line in file:
@@ -308,7 +309,7 @@ def analitica():
 
     try:
         datosReporte = gestorReportes.generarReporte(departamento)
-    except ValueError:
+    except IndexError:
         datosReporte = {}  #no hay datos para graficar
 
     if departamento == None:
