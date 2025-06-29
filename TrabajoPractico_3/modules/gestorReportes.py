@@ -87,7 +87,7 @@ class GestorReportes:
         datos = self.generarReporte(departamento)
     
         if formato == 'pdf':
-            exportador = ExportadorPDF() #no es composición, "usa"
+            exportador = ExportadorPDF()
         elif formato == 'html':
             exportador = ExportadorHTML()
         else:

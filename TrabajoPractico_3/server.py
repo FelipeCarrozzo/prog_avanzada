@@ -30,8 +30,6 @@ def inicio():
     """
     # Registro de usuarios administrativos
     archivoDatos = "./data/datosAdmins.txt"
-    repoReclamo.eliminarRegistro(23)
-
     with open(archivoDatos, 'r', encoding='utf-8') as file:
         for line in file:
             nombre, apellido, email, nombreUsuario, rol, password = line.strip().split(',')
@@ -157,23 +155,37 @@ def adherir_a_reclamo(idReclamo):
     idUsuario = current_user.id
     usuario = repoUsuario.obtenerRegistroFiltro("id", idUsuario)
 
-    #Si el ID es 0, significa "crear nuevo reclamo"
+    #crear nuevo reclamo
     if idReclamo == 0 and request.method == "POST":
         descripcion = request.form.get("descripcion")
-        imagen = None  # Podrías permitir que también venga por form si querés
+        imagen_file = request.files.get("imagen")
+        imagen = None
+
         if not descripcion:
             flash("La descripción del reclamo es obligatoria.", "error")
             return redirect(url_for("crearReclamos"))
+
+        #guardar imagen
+        if imagen_file and imagen_file.filename != "":
+            from werkzeug.utils import secure_filename
+            import os
+
+            upload_folder = os.path.join("static", "imagenes_reclamos")
+            os.makedirs(upload_folder, exist_ok=True)
+
+            filename = secure_filename(imagen_file.filename)
+            filepath = os.path.join(upload_folder, filename)
+            imagen_file.save(filepath)
+            imagen = filepath
 
         try:
             gestorReclamos.crearReclamo(idUsuario, descripcion, imagen)
             flash("Reclamo creado con éxito", "success")
             return redirect(url_for('listarReclamos'))
-        
         except ValueError as e:
             flash(str(e), "error")
-    
-    # Adherirse a un reclamo existente
+            return redirect(url_for("crearReclamos"))
+
     if gestorReclamos.adherirAReclamo(idReclamo, usuario):
         flash("Te has adherido exitosamente al reclamo.", "success")
     else:
@@ -195,7 +207,7 @@ def crearReclamos():
 
     if form.validate_on_submit():
         descripcion = form.descripcion.data
-        imagenFile = form.imagen.data  # esto es un FileStorage
+        imagenFile = form.imagen.data  #esto es un FileStorage
         rutaImagen = None
 
         if imagenFile:

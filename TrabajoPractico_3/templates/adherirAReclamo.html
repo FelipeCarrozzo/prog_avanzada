@@ -51,9 +51,12 @@
         <!-- Botón cancelar -->
         <div class="botones">
             <a href="{{ url_for('bienvenido') }}" class="btn-registro">Cancelar y volver</a>
-            <button type="submit" class="btn-crear-detodasformas">Crear mi reclamo de todas formas</button>
+            <form method="POST" action="{{ url_for('adherir_a_reclamo', idReclamo=0) }}" enctype="multipart/form-data" style="display:inline;">
+                <input type="hidden" name="descripcion" value="{{ descripcionOriginal }}">
+                <input type="file" name="imagen" accept="image/*">
+                <button type="submit" class="btn-crear-detodasformas">Crear mi reclamo de todas formas</button>
+            </form>
         </div>
-
     </div>
 </body>
 </html>
