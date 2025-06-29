@@ -93,4 +93,4 @@ class GestorReportes:
         else:
             raise ValueError("Formato de exportación no válido.")
 
-        return exportador.exportar(datos, departamento) #polimorfismo
+        return exportador.exportar(datos, departamento) 

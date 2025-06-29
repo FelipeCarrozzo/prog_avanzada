@@ -105,5 +105,5 @@ class GestorReclamos:
 
         # ordeno de mayor a menor parecido y devuelvo sólo los objetos
         similares.sort(key=lambda x: x[1], reverse=True)
-          
-        return [{"id": r.id, "descripcion": r.descripcion} for r, _ in similares]
+
+        return [{"id": r.id, "descripcion": r.descripcion, "usuariosAdheridos": r.usuariosAdheridos, "idUsuario": r.idUsuario} for r, _ in similares]

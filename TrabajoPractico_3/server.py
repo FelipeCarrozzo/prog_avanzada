@@ -22,6 +22,8 @@ gestorReportes = GestorReportes(repoReclamo)
 
 rolesAdmin = ['secretarioTecnico', 'jefeMaestranza', 'jefeSoporteInformático']
 
+repoReclamo.eliminarRegistro(37)
+
 @app.route('/')
 def inicio():
     """
@@ -30,6 +32,7 @@ def inicio():
     """
     # Registro de usuarios administrativos
     archivoDatos = "./data/datosAdmins.txt"
+
     with open(archivoDatos, 'r', encoding='utf-8') as file:
         for line in file:
             nombre, apellido, email, nombreUsuario, rol, password = line.strip().split(',')
@@ -155,41 +158,46 @@ def adherir_a_reclamo(idReclamo):
     idUsuario = current_user.id
     usuario = repoUsuario.obtenerRegistroFiltro("id", idUsuario)
 
-    #crear nuevo reclamo
+    # Manejo especial para cancelar y volver
+    if idReclamo == 99999999 and request.method == "POST":
+        rutaImagen = request.form.get("rutaImagen")
+        if rutaImagen and os.path.exists(rutaImagen):
+            try:
+                os.remove(rutaImagen)
+            except Exception as e:
+                print(f"Error al borrar imagen temporal: {e}")
+        flash("Acción cancelada. No se creó ningún reclamo.", "success")
+        return redirect(url_for("bienvenido"))
+ 
+    #Si el ID es 0, significa "crear nuevo reclamo"
     if idReclamo == 0 and request.method == "POST":
         descripcion = request.form.get("descripcion")
-        imagen_file = request.files.get("imagen")
-        imagen = None
-
+        rutaImagen = request.form.get("rutaImagen")  # Recupera la ruta de la imagen
         if not descripcion:
             flash("La descripción del reclamo es obligatoria.", "error")
             return redirect(url_for("crearReclamos"))
 
-        #guardar imagen
-        if imagen_file and imagen_file.filename != "":
-            from werkzeug.utils import secure_filename
-            import os
-
-            upload_folder = os.path.join("static", "imagenes_reclamos")
-            os.makedirs(upload_folder, exist_ok=True)
-
-            filename = secure_filename(imagen_file.filename)
-            filepath = os.path.join(upload_folder, filename)
-            imagen_file.save(filepath)
-            imagen = filepath
-
         try:
-            gestorReclamos.crearReclamo(idUsuario, descripcion, imagen)
+            gestorReclamos.crearReclamo(idUsuario, descripcion, rutaImagen)
             flash("Reclamo creado con éxito", "success")
             return redirect(url_for('listarReclamos'))
         except ValueError as e:
             flash(str(e), "error")
-            return redirect(url_for("crearReclamos"))
+    
+    # Adherirse a un reclamo existente
+    if idReclamo != 0:
+        rutaImagen = request.form.get("rutaImagen")
+        if rutaImagen and os.path.exists(rutaImagen):
+            try:
+                os.remove(rutaImagen)
+            except Exception as e:
+                # Opcional: loguear el error, pero no interrumpir el flujo
+                print(f"Error al borrar imagen temporal: {e}")
 
-    if gestorReclamos.adherirAReclamo(idReclamo, usuario):
-        flash("Te has adherido exitosamente al reclamo.", "success")
-    else:
-        flash("No fue posible adherirse al reclamo (ya estás adherido o reclamo no existe).", "error")
+        if gestorReclamos.adherirAReclamo(idReclamo, usuario):
+            flash("Te has adherido exitosamente al reclamo.", "success")
+        else:
+            flash("No fue posible adherirse al reclamo (ya estás adherido o reclamo no existe).", "error")
 
     return redirect(url_for("listarReclamos"))
 
@@ -207,12 +215,15 @@ def crearReclamos():
 
     if form.validate_on_submit():
         descripcion = form.descripcion.data
-        imagenFile = form.imagen.data  #esto es un FileStorage
+        imagenFile = form.imagen.data  # esto es un FileStorage
         rutaImagen = None
 
         if imagenFile:
+            carpeta_destino = os.path.join('data', 'imagenesReportes')
+            os.makedirs(carpeta_destino, exist_ok=True)
+
             nombre_seguro = secure_filename(imagenFile.filename)
-            rutaImagen = os.path.join('static/uploads', nombre_seguro)
+            rutaImagen = os.path.join(carpeta_destino, nombre_seguro)
             imagenFile.save(rutaImagen)
 
         try:
@@ -222,7 +233,8 @@ def crearReclamos():
                     'adherirAReclamo.html',
                     reclamos=reclamoSimilar,
                     descripcionOriginal=descripcion,
-                    imagen=rutaImagen
+                    rutaImagen=rutaImagen,
+                    idUsuario=idUsuario
                 )
         except ValueError as e:
             flash(str(e), "error")
@@ -374,7 +386,7 @@ def ayuda():
 @login_required
 def logout():
     """
-    Ruta para cerrar sesión del usuario actual.
+    Ruta para cerrar sesión del usuario current_user.
     Limpia la sesión y redirige a la página de inicio.
     """
     idUsuario = current_user.id

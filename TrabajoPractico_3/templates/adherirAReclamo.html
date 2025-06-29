@@ -35,11 +35,17 @@
                     <td>
                         <div class="acciones">
                             <form method="POST" action="{{ url_for('adherir_a_reclamo', idReclamo=reclamo['id']) }}">
-                                <button type="submit" class="btn-registro">Adherirme</button>
+                                <input type="hidden" name="rutaImagen" value="{{ rutaImagen }}">
+                                {% if idUsuario in reclamo['usuariosAdheridos'] or idUsuario == reclamo['idUsuario'] %}
+                                    <span class="ya-adherido">Ya adherido</span>
+                                {% else %}
+                                    <button type="submit" class="btn-registro">Adherirme</button>
+                                {% endif %}
                             </form>
 
                             <form method="POST" action="{{ url_for('adherir_a_reclamo', idReclamo=0) }}">
                                 <input type="hidden" name="descripcion" value="{{ descripcionOriginal }}">
+                                
                             </form>
                         </div>
                     </td>
@@ -48,13 +54,16 @@
             </tbody>
         </table>
 
-        <!-- Botón cancelar -->
+        <!-- Botones cancelar y crear reclamo de todas formas -->
         <div class="botones">
-            <a href="{{ url_for('bienvenido') }}" class="btn-registro">Cancelar y volver</a>
             <form method="POST" action="{{ url_for('adherir_a_reclamo', idReclamo=0) }}" enctype="multipart/form-data" style="display:inline;">
                 <input type="hidden" name="descripcion" value="{{ descripcionOriginal }}">
-                <input type="file" name="imagen" accept="image/*">
+                <input type="hidden" name="rutaImagen" value="{{ rutaImagen }}">
                 <button type="submit" class="btn-crear-detodasformas">Crear mi reclamo de todas formas</button>
+            </form>
+            <form method="POST" action="{{ url_for('adherir_a_reclamo', idReclamo=99999999) }}" style="display:inline;">
+                <input type="hidden" name="rutaImagen" value="{{ rutaImagen }}">
+                <button type="submit" class="btn-registro">Cancelar y volver</button>
             </form>
         </div>
     </div>
