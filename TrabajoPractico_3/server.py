@@ -22,8 +22,6 @@ gestorReportes = GestorReportes(repoReclamo)
 
 rolesAdmin = ['secretarioTecnico', 'jefeMaestranza', 'jefeSoporteInformático']
 
-repoReclamo.eliminarRegistro(37)
-
 @app.route('/')
 def inicio():
     """
