@@ -61,6 +61,31 @@ class TestRepositorioUsuariosBD(unittest.TestCase):
         actualizado = self.repo.obtenerRegistrosFiltro("nombreUsuario", "anag")[0]
         self.assertEqual(actualizado.apellido, "Gómez")
 
+    def test_obtenerRegistroFiltro_no_encontrado(self):
+        """
+        Verifica que al buscar un usuario con un nombre de usuario que no existe,
+        el resultado sea None.
+        """
+        resultado = self.repo.obtenerRegistroFiltro("nombreUsuario", "noexiste")
+        self.assertIsNone(resultado)
+
+    def test_eliminarRegistro_existente(self):
+        """
+        Verifica que se pueda eliminar un usuario existente de la base de datos.
+        """
+        usuario = Usuario(None, "Juan", "Perez", "jp@example.com", "juanp", "UsuarioFinal", "pass")
+        self.repo.guardarRegistro(usuario)
+        guardado = self.repo.obtenerRegistrosFiltro("nombreUsuario", "juanp")[0]
+        self.assertTrue(self.repo.eliminarRegistro(guardado.id))
+        self.assertEqual(self.repo.obtenerRegistrosFiltro("nombreUsuario", "juanp"), [])
+
+    def test_eliminarRegistro_inexistente(self):
+        """
+        Verifica que al intentar eliminar un usuario con un ID inexistente,
+        el método retorne False.
+        """
+        self.assertFalse(self.repo.eliminarRegistro(9999))
+
 class TestRepositorioReclamosBD(unittest.TestCase):
     """
     Clase de prueba para el repositorio de reclamos en la base de datos.
@@ -113,7 +138,6 @@ class TestRepositorioReclamosBD(unittest.TestCase):
             usuariosAdheridos=[]
         )
         self.repo.guardarRegistro(reclamo)
-        # Obtener el id generado
         guardado = self.repo.obtenerRegistrosFiltro("descripcion", "No funciona la impresora")[0]
         self.repo.actualizarAtributo(guardado.id, "estado", "resuelto")
         actualizado = self.repo.obtenerRegistrosFiltro("id", guardado.id)[0]
@@ -155,6 +179,50 @@ class TestRepositorioReclamosBD(unittest.TestCase):
         descripciones = [r.descripcion for r in resultados]
         self.assertIn("Luz quemada", descripciones)
         self.assertIn("Puerta rota", descripciones)
+
+    def test_eliminarRegistro_existente(self):
+        """
+        Verifica que se pueda eliminar un reclamo existente de la base de datos.
+        """
+        reclamo = Reclamo(None, 1, "2025-06-17 10:00:00", "pendiente", None, "maestranza", 0, "Test reclamo", None, [])
+        self.repo.guardarRegistro(reclamo)
+        guardado = self.repo.obtenerRegistrosFiltro("descripcion", "Test reclamo")[0]
+        self.assertTrue(self.repo.eliminarRegistro(guardado.id))
+        self.assertEqual(self.repo.obtenerRegistrosFiltro("descripcion", "Test reclamo"), [])
+
+    def test_eliminarRegistro_inexistente(self):
+        """
+        Verifica que al intentar eliminar un reclamo con un ID inexistente,
+        el método retorne False.
+        """
+        self.assertFalse(self.repo.eliminarRegistro(9999))
+
+    def test_obtenerRegistroFiltro_no_encontrado(self):
+        """
+        Verifica que al buscar un reclamo con una descripción inexistente,
+        se retorne None.
+        """
+        resultado = self.repo.obtenerRegistroFiltro("descripcion", "noexiste")
+        self.assertIsNone(resultado)
+
+    def test_agregarUsuarioAReclamo(self):
+        """
+        Verifica que se pueda adherir un usuario a un reclamo y que no se pueda
+        adherir el mismo usuario más de una vez al mismo reclamo.
+        """
+        usuario = Usuario(None, "Mario", "Lopez", "mario@example.com", "mariol", "UsuarioFinal", "pass")
+        from modules.repositorioConcretoBD import RepositorioUsuariosBD
+        repoUsuarios = RepositorioUsuariosBD(self.session)
+        repoUsuarios.guardarRegistro(usuario)
+        usuario_db = repoUsuarios.obtenerRegistrosFiltro("nombreUsuario", "mariol")[0]
+
+        reclamo = Reclamo(None, usuario_db.id, "2025-06-17 10:00:00", "pendiente", None, "maestranza", 0, "Reclamo test", None, [])
+        self.repo.guardarRegistro(reclamo)
+        reclamo_db = self.repo.obtenerRegistrosFiltro("descripcion", "Reclamo test")[0]
+
+        self.assertTrue(self.repo.agregarUsuarioAReclamo(reclamo_db.id, usuario_db))
+        #Se intenta adherir de nuevo (debe devolver False)
+        self.assertFalse(self.repo.agregarUsuarioAReclamo(reclamo_db.id, usuario_db))
 
 if __name__ == "__main__":
     unittest.main()
