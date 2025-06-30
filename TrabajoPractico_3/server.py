@@ -370,7 +370,7 @@ def descargarReporte(formato):
     El formato puede ser 'pdf' o 'html'.
     Si el formato no es soportado, redirige a la página de inicio con un mensaje de error.
     """
-    if current_user.rol != "UsuarioFinal":
+    if current_user.rol not in rolesAdmin:
         flash("No tenés permisos para acceder a esta página.", "error")
         return redirect(url_for("bienvenido"))
     
