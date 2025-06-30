@@ -47,7 +47,9 @@ def bienvenido():
     Ruta que renderiza la página de bienvenida.
     Muestra el nombre de usuario actual si está autenticado.
     """
-
+    if current_user.rol != "UsuarioFinal":
+        flash("No tenés permisos para acceder a esta página.", "error")
+        return redirect(url_for("panelAdmin"))
     return render_template('bienvenido.html', username=current_user.nombre)
 
 @app.route("/register", methods= ["GET", "POST"])
@@ -111,6 +113,10 @@ def listarReclamos():
     Si el filtro es 'todos', muestra todos los reclamos pendientes.
     Ambos casos pueden filtrarse por departamento.
     """
+    if current_user.rol != "UsuarioFinal":
+        flash("No tenés permisos para acceder a esta página.", "error")
+        return redirect(url_for("panelAdmin"))
+
     username = current_user.nombre
     idUsuario = current_user.id
 
@@ -156,6 +162,10 @@ def adherir_a_reclamo(idReclamo):
     Ruta para adherirse a un reclamo existente.
     Si el ID del reclamo es 0, se crea un nuevo reclamo.
     """
+    if current_user.rol != "UsuarioFinal":
+        flash("No tenés permisos para acceder a esta página.", "error")
+        return redirect(url_for("panelAdmin"))
+    
     idUsuario = current_user.id
     usuario = repoUsuario.obtenerRegistroFiltro("id", idUsuario)
 
@@ -209,6 +219,10 @@ def crearReclamos():
     Ruta que renderiza la página de reclamos.
     Muestra los reclamos del usuario actual si está autenticado.
     """
+    if current_user.rol != "UsuarioFinal":
+        flash("No tenés permisos para acceder a esta página.", "error")
+        return redirect(url_for("panelAdmin"))
+    
     form = ReclamosForm()
     idUsuario = current_user.id
     username = current_user.nombre
@@ -325,6 +339,10 @@ def analitica():
     """
     idUsuario = current_user.id
     rol = current_user.rol
+    if rol not in rolesAdmin:
+        flash("No tenés permisos para acceder a esta página.", "error")
+        return redirect(url_for("bienvenido"))
+    
     departamento = None
     if rol.startswith("jefe"):
         departamento = rol[4:]
@@ -352,6 +370,10 @@ def descargarReporte(formato):
     El formato puede ser 'pdf' o 'html'.
     Si el formato no es soportado, redirige a la página de inicio con un mensaje de error.
     """
+    if current_user.rol != "UsuarioFinal":
+        flash("No tenés permisos para acceder a esta página.", "error")
+        return redirect(url_for("bienvenido"))
+    
     idUsuario = current_user.id
     if formato not in ['pdf', 'html']:
         flash("Formato no soportado")
@@ -379,6 +401,9 @@ def ayuda():
     """
     Ruta para mostrar la página de ayuda.
     """
+    if current_user.rol not in rolesAdmin:
+        flash("No tenés permisos para acceder a esta página.", "error")
+        return redirect(url_for("bienvenido"))
     return render_template("ayuda.html")
 
 @app.route("/logout")
