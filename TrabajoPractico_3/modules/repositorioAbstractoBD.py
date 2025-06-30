@@ -33,21 +33,23 @@ class RepositorioAbstractoBD(ABC):
         pass
 
     @abstractmethod
-    def obtenerRegistroFiltro(self, filtro):
+    def obtenerRegistroFiltro(self, filtro, valor):
         """
         Método abstracto para obtener un registro de la base de datos basado en un filtro.
 
         param filtro: Filtro para buscar el registro.
+        param valor: Valor a buscar.
         return: Registro que coincide con el filtro.
         """
         pass
 
     @abstractmethod
-    def obtenerRegistrosFiltro(self, filtro):
+    def obtenerRegistrosFiltro(self, filtro, valor):
         """
         Método abstracto para obtener múltiples registros de la base de datos basados en un filtro.
 
         param filtro: Filtro para buscar los registros.
+        param valor: Valor a buscar.
         return: Lista de registros que coinciden con el filtro.
         """
         pass
@@ -58,5 +60,19 @@ class RepositorioAbstractoBD(ABC):
         Método abstracto para obtener todos los registros de la base de datos.
 
         return: Lista de todos los registros.
+        """
+        pass
+    
+    @abstractmethod
+    def eliminarRegistro(self, id):
+        """
+        Elimina un registro de la base de datos por su id.
+        """
+        pass
+
+    @abstractmethod
+    def eliminarTabla(self, nombreTabla):
+        """
+        Elimina una tabla de la base de datos por su nombre.
         """
         pass
