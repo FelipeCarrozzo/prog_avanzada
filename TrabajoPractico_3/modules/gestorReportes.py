@@ -76,11 +76,13 @@ class GestorReportes:
         if not cantidades:
             raise NoDataError("No hay reclamos para generar el reporte.") 
         graficoTorta, graficoNube = self.generarGraficos(cantidades, palabrasClave)
-
+        reclamos = self.obtenerReclamos(departamento)
+        
         return {
             "graficoTorta": graficoTorta,
             "graficoNube": graficoNube,
-            "medianas": medianas
+            "medianas": medianas,
+            "reclamos": reclamos
         }
 
     def exportarReporte(self, formato, departamento=None):
