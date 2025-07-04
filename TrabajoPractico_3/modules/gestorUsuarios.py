@@ -18,7 +18,10 @@ class GestorUsuarios:
         """
         #verifico si no está registrado
         if self.__repo.obtenerRegistroFiltro("email", email):
-            raise ValueError("El usuario ya está registrado, por favor inicie sesión")
+            raise ValueError("Ya existe un usuario registrado con ese email")
+
+        if self.__repo.obtenerRegistroFiltro("nombreUsuario", nombreUsuario):
+            raise ValueError("El nombre de usuario ya está en uso. Elegí otro.")
 
         #genero la contraseña hasheada
         passEncriptada = generate_password_hash(password= password,

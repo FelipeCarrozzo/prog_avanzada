@@ -97,6 +97,9 @@ class MonticuloBinario:
     def eliminarMinOMax(self):
         '''
         Elimina el elemento mínimo o máximo del montículo y lo devuelve.
+        Raises:
+            IndexError: Si el montículo está vacío.
+        
         '''
         if self.__tamanioActual == 0:
             raise IndexError("El montículo está vacío.")

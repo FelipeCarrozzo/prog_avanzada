@@ -22,6 +22,7 @@ gestorReportes = GestorReportes(repoReclamo)
 
 rolesAdmin = ['secretarioTecnico', 'jefeMaestranza', 'jefeSoporteInformático']
 
+
 @app.route('/')
 def inicio():
     """
